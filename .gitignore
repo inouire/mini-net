@@ -1,0 +1,7 @@
+/web/bundles/
+/app/bootstrap*
+/app/cache/*
+/app/logs/*
+/src/Acme*
+/vendor/
+/app/config/parameters.ini
