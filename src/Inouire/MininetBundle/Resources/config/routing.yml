@@ -1,0 +1,3 @@
+InouireMininetBundle_homepage:
+    pattern:  /home
+    defaults: { _controller: InouireMininetBundle:Default:index }

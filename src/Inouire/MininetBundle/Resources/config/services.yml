@@ -1,0 +1,7 @@
+parameters:
+#    inouire_mininet.example.class: Inouire\MininetBundle\Example
+
+services:
+#    inouire_mininet.example:
+#        class: %inouire_mininet.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
