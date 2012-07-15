@@ -1,3 +1,11 @@
-InouireMininetBundle_homepage:
+root:
+    pattern:  /
+    defaults: { _controller: InouireMininetBundle:Default:root }
+    
+home:
     pattern:  /home
-    defaults: { _controller: InouireMininetBundle:Default:index }
+    defaults: { _controller: InouireMininetBundle:Default:home }
+
+album:
+    pattern:  /album
+    defaults: { _controller: InouireMininetBundle:Default:album }

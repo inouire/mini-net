@@ -2,12 +2,103 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        
+        <title>{% block title %}Mini-net : réseau social familial{% endblock %}</title>
+        
+        {% block stylesheets %}
+            <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+            <style type="text/css">
+                body {
+                    padding-top: 60px;
+                    padding-bottom: 40px;
+                }
+            </style>
+            <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+            <link href="lightbox/css/lightbox.css" rel="stylesheet" />
+        {% endblock %}
+        
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block header %}
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="{{ path('home') }}">Mini-net</a>
+
+					{% set currentPath = app.request.attributes.get('_route') %}
+					{% set classHome = '' %}
+					{% set classAlbum = '' %}
+					{% if currentPath == 'home' %}
+						{% set classHome = ' active' %}
+					{% elseif currentPath == 'album' %}
+						{% set classAlbum = ' active' %}
+					{% endif %}    
+
+					<!-- nav menu -->
+					{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+					<div class="nav-collapse">
+						<ul class="nav">
+							<li class="{{ classHome }}"><a href="{{ path('home') }}">Accueil</a></li>
+							<li class="{{ classAlbum }}"><a href="{{ path('album') }}">Albums</a></li>
+						</ul>
+					</div>
+					{% endif %}
+					
+					<!-- menu for user management-->
+					{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+					<div class="btn-group pull-right">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							<i class="icon-user"></i> 
+							{{ app.user.username }}
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<!--<li><a href="">Profile</a></li>
+							<li class="divider"></li>-->
+							<li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
+						</ul>
+					</div>
+					<div class="btn btn-success pull-right">Ajouter des nouvelles</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+        {% endblock %}
+        
+        <div class="container">
+        
+        {% block body %}
+        {% endblock %}
+        
+        {% block footer %}
+			<hr>
+			<center>
+				<p>Catapulté par <span class="label label-info">mini-net</span>, le réseau social familial le plus simple au monde</p>
+				<p>Construit avec 
+					<span class="label label-success">Symfony2</span>,
+					<span class="label label-success">jQuery</span>, 
+					<span class="label label-success">Bootstrap</span> et 
+					<span class="label label-success">Lightbox</span>
+				</p>
+			</center>
+        {% endblock %}
+        
+        </div><!-- container-->
+        
+        {% block javascripts %}
+            <script src="jquery/jquery-1.7.2.min.js"></script>
+            <script src="bootstrap/js/bootstrap.js"></script>
+            <script src="lightbox/js/lightbox.js"></script>
+        {% endblock %}
+        
     </body>
 </html>
