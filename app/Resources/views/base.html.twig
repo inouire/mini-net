@@ -6,18 +6,18 @@
         <meta name="description" content="">
         <meta name="author" content="">
         
-        <title>{% block title %}Mini-net : réseau social familial{% endblock %}</title>
+        <title>{% block title %}Mini-net : le réseau social familial{% endblock %}</title>
         
         {% block stylesheets %}
-            <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+            <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
             <style type="text/css">
                 body {
                     padding-top: 60px;
                     padding-bottom: 40px;
                 }
             </style>
-            <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-            <link href="lightbox/css/lightbox.css" rel="stylesheet" />
+            <link href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" rel="stylesheet">
+            <link href="{{ asset('lightbox/css/lightbox.css') }}" rel="stylesheet" />
         {% endblock %}
         
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
@@ -95,9 +95,9 @@
         </div><!-- container-->
         
         {% block javascripts %}
-            <script src="jquery/jquery-1.7.2.min.js"></script>
-            <script src="bootstrap/js/bootstrap.js"></script>
-            <script src="lightbox/js/lightbox.js"></script>
+            <script src="{{ asset('jquery/jquery-1.7.2.min.js') }}"></script>
+            <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
+            <script src="{{ asset('lightbox/js/lightbox.js') }}"></script>
         {% endblock %}
         
     </body>
