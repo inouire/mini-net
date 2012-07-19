@@ -52,6 +52,13 @@ class Post{
     private $comments;
 
 	/**
+     * @var boolean $published
+     *
+     * @ORM\Column(name="published", type="boolean")
+     */
+	private $published;
+	
+	/**
 	 * Get the author of the post 
 	 * @return \Inouire\UserBundle\Entity\User
 	 */
@@ -129,5 +136,25 @@ class Post{
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set published
+     *
+     * @param boolean $published
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean 
+     */
+    public function getPublished()
+    {
+        return $this->published;
     }
 }
