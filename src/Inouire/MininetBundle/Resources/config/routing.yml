@@ -11,6 +11,40 @@ album:
     pattern:  /album
     defaults: { _controller: InouireMininetBundle:Default:album }
 
+
+#routes for actions on posts
+new_post:
+    pattern:  /post
+    defaults: { _controller: InouireMininetBundle:Post:new }
+
+edit_post:
+    pattern:  /post/{post_id}
+    requirements:
+        post_id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Post:edit }   
+
+update_post_content:
+    pattern:  /post/{post_id}
+    requirements:
+        post_id:  \d+
+        _method:  UPDATE
+    defaults: { _controller: InouireMininetBundle:Post:updateContent }
+    
+update_post_status:
+    pattern:  /post/{post_id}
+    requirements:
+        post_id:  \d+
+        _method:  POST
+    defaults: { _controller: InouireMininetBundle:Post:updateStatus }
+
+delete_post:
+    pattern:  /post/{post_id}
+    requirements:
+        post_id:  \d+
+        _method:  DELETE
+    defaults: { _controller: InouireMininetBundle:Post:delete }
+    
 #routes for actions on comments
 post_comment:
     pattern:  /post/{post_id}/comment

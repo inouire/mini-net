@@ -15,6 +15,8 @@ class Post{
 
     public function __construct(){
         $this->date = new \Datetime();
+        $this->published = false;
+        $this->content = "";
     }
     
     /**
