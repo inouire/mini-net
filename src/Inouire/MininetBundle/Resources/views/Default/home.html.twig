@@ -184,6 +184,16 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
                 if(confirm("Êtes vous sur de vouloir supprimer ce commentaire ?")){
                     $('#comment-'+comment_id).fadeOut(250);
                     //comment_to_delete.parentNode.removeChild(comment_to_delete);
+                    console.log("Making DELETE request for comment "+comment_id);
+                    $.ajax({
+					   url : '/post/23/comment/'+comment_id,
+					   type : 'DELETE',
+					   //dataType: 'json',
+					   success : function(code_html, statut){
+						   console.log("Axaj call has been a success");
+						   console.log("data:"+code_html);
+						}
+					});
                 }
             }
             

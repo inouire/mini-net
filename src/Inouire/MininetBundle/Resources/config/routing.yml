@@ -1,3 +1,4 @@
+#main routes
 root:
     pattern:  /
     defaults: { _controller: InouireMininetBundle:Default:root }
@@ -9,3 +10,26 @@ home:
 album:
     pattern:  /album
     defaults: { _controller: InouireMininetBundle:Default:album }
+
+#routes for actions on comments
+post_comment:
+    pattern:  /post/{post_id}/comment
+    requirements:
+        post_id:  \d+
+        _method:  POST
+        _format:  json | html
+    defaults: { _controller: InouireMininetBundle:Comment:postComment }
+
+delete_comment:
+    pattern:  /post/{post_id}/comment/{comment_id}
+    requirements:
+        post_id:  \d+
+        comment_id:  \d+
+        _method:  DELETE
+        _format:  json | html
+    defaults: { _controller: InouireMininetBundle:Comment:deleteComment }
+    
+    
+test:
+    pattern:  /test
+    defaults: { _controller: InouireMininetBundle:Default:test }
