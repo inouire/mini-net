@@ -67,8 +67,10 @@
 							<li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
 						</ul>
 					</div>
-					<div class="btn btn-success pull-right">Ajouter des nouvelles</div>
-					{% endif %}
+					<a href="{{ path('new_post') }}">
+                        <div class="btn btn-success pull-right">Ajouter des nouvelles</div>
+					</a>
+                    {% endif %}
 				</div>
 			</div>
 		</div>

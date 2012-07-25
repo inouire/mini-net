@@ -1,0 +1,104 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body {
+            padding-top: 160px;
+            padding-bottom: 40px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    
+    <div class="row">
+        <div class="span2">
+            
+            {% if post.published == true %}
+                <h3>{{ post.date | date("d M Y") }}</h3>
+                <span class="label label-success">publié</span>
+            {% else %}
+                <h3>Aujourd'hui</h3>
+                <span class="label label-warning">non publié</span>
+            {% endif %}
+            
+        </div>
+        <div class="span8 mininet-post" id="24">
+            <form method="post" action="#" id="728">
+                <button type="submit" class="btn" id="save-button"><i class="icon-download"></i> Sauvegarder</button>
+                <button type="submit" class="btn btn-success pull-right" id="publish-button"><i class="icon-ok icon-white"></i> Publier</button>
+                <br /><br />
+                <textarea style="width: 100%" id="textarea" rows="10">{{ post.content }}</textarea>
+            </form>
+        </div>
+    </div>
+    
+    <hr>
+    <!--<div class="row">
+        <div class="span10 offset2">
+            <ul class="thumbnails">
+                <!--<li class="span2">
+                    <button class="close delete-comment" id="798">&times;</button>
+                    <a href="./img/101.jpg" class="thumbnail" rel="lightbox[111]">
+                        <img src="./img/101.jpg" alt="">
+                    </a>
+                </li>
+                <li class="span2">
+                    <button class="close delete-comment" id="798">&times;</button>
+                    <a href="./img/102.jpg" class="thumbnail" rel="lightbox[111]">
+                        <img src="./img/102.jpg" alt="">
+                    </a>
+                </li>
+                <li class="span2">
+                    <button class="close delete-comment" id="798">&times;</button>
+                    <a href="./img/104.jpg" class="thumbnail" rel="lightbox[111]">
+                        <img src="./img/104.jpg" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>-->
+    <div class="row">
+        <div class="span12">
+            <center>
+                <button class="btn btn-primary" id="picture-button"><i class="icon-picture icon-white"></i> Ajouter une photo</button>
+            </center>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(document).ready(function(){
+            
+            function savePostListener(e){
+                console.log("Save button clicked");
+                e.preventDefault();
+                var post_id = e.target.parentNode.id;
+                console.log("Id du post:"+post_id);
+            }
+            
+            function publishPostListener(e){
+                console.log("Publish button clicked");
+                e.preventDefault();
+                var post_id = e.target.parentNode.id;
+                console.log("Id du post:"+post_id);
+            }
+            
+            //adding listener on save button
+            var save_button = document.getElementById("save-button");
+            console.log(""+save_button.id);
+            save_button.addEventListener('click', savePostListener, false);
+            
+            //adding listener on publish button
+            var publish_button = document.getElementById("publish-button");
+            console.log(""+publish_button.id);
+            publish_button.addEventListener('click', publishPostListener, false);
+        
+
+        });
+    </script>
+{% endblock %}
+

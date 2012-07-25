@@ -10,6 +10,10 @@ use Inouire\MininetBundle\Entity\Comment;
 class PostController extends Controller
 {
     
+    public function viewAction($post_id){
+        return new Response('<html><body>View post action</body></html>');
+    }
+    
     public function newAction(){
         
         //get current user and user id
@@ -36,19 +40,30 @@ class PostController extends Controller
             return $this->redirect($this->generateUrl( 'edit_post',array('post_id' => $unpublished_post->getId() )));            
         }                
         
-        return new Response('<html><body>New post action</body></html>');
     }
    
     public function editAction($post_id){
-        return new Response('<html><body>Edit post action</body></html>');
+        
+        //get current user and user id
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user_id = $user->getId();
+        
+        //get corresponding post
+        $em = $this->getDoctrine()->getEntityManager();
+        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+        
+        //check that this post exists and that it belongs to this user
+        if($post==null || $post->getAuthor()->getId() != $user_id){
+            //TODO properly handle error cases
+            return;
+        }
+        
+        return $this->render('InouireMininetBundle:Default:editPost.html.twig',
+							  array('post'=> $post));
     }
     
     public function updateContentAction($post_id){
         return new Response('<html><body>Update post content action</body></html>');
-    }
-    
-    public function updateStatusAction($post_id){
-        return new Response('<html><body>Update post status action</body></html>');
     }
     
     public function deleteAction($post_id){

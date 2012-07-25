@@ -13,31 +13,32 @@ album:
 
 
 #routes for actions on posts
-new_post:
-    pattern:  /post
-    defaults: { _controller: InouireMininetBundle:Post:new }
-
-edit_post:
+view_post:
     pattern:  /post/{post_id}
     requirements:
         post_id:  \d+
         _method:  GET
+    defaults: { _controller: InouireMininetBundle:Post:view }
+    
+new_post:
+    pattern:  /post/new
+    requirements:
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Post:new }
+
+edit_post:
+    pattern:  /post/{post_id}/edit
+    requirements:
+        post_id:  \d+
     defaults: { _controller: InouireMininetBundle:Post:edit }   
 
 update_post_content:
     pattern:  /post/{post_id}
     requirements:
         post_id:  \d+
-        _method:  UPDATE
+        _method:  POST
     defaults: { _controller: InouireMininetBundle:Post:updateContent }
     
-update_post_status:
-    pattern:  /post/{post_id}
-    requirements:
-        post_id:  \d+
-        _method:  POST
-    defaults: { _controller: InouireMininetBundle:Post:updateStatus }
-
 delete_post:
     pattern:  /post/{post_id}
     requirements:
