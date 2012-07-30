@@ -1,0 +1,111 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body {
+            padding-top: 160px;
+            padding-bottom: 40px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    
+    <div class="row">
+        <div class="span2">
+            <h3>{{ post.date | date("d M Y") }}</h3>
+        </div>
+        <div class="span6">
+            <h3>{{ post.author }}</h3>
+            <p>{{ post.htmlcontent | raw }}</p> 
+        </div>
+        <div class="span4">
+            <div id="comments-{{ post.id }}">
+                {% for comment in post.comments %}
+                    {% if app.user.username == comment.author %}
+                        <div class="alert alert-success" id="comment-{{comment.id}}">
+                            <strong>{{ comment.author }}: </strong>
+                            {{ comment.content }}
+                            <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <strong>{{ comment.author }}: </strong>
+                            {{ comment.content }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
+                <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
+                    <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
+                </div>
+                <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+            </form>   
+        </div>
+    </div>  
+    
+    <hr>
+    
+    <div class="row">
+        <div class="span10 offset2">
+            <ul class="thumbnails">
+                <li class="span2">
+                    <button class="close delete-comment" id="798">&times;</button>
+                    <a href="./img/101.jpg" class="thumbnail" rel="lightbox[111]">
+                        <img src="./img/101.jpg" alt="">
+                    </a>
+                </li>
+                <li class="span2">
+                    <button class="close delete-comment" id="798">&times;</button>
+                    <a href="./img/102.jpg" class="thumbnail" rel="lightbox[111]">
+                        <img src="./img/102.jpg" alt="">
+                    </a>
+                </li>
+                <li class="span2">
+                    <button class="close delete-comment" id="798">&times;</button>
+                    <a href="./img/104.jpg" class="thumbnail" rel="lightbox[111]">
+                        <img src="./img/104.jpg" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(document).ready(function(){
+            
+            function savePostListener(e){
+                console.log("Save button clicked");
+                e.preventDefault();
+                var post_id = e.target.parentNode.id;
+                console.log("Id du post:"+post_id);
+            }
+            
+            function publishPostListener(e){
+                console.log("Publish button clicked");
+                e.preventDefault();
+                var post_id = e.target.parentNode.id;
+                console.log("Id du post:"+post_id);
+            }
+            
+            //adding listener on save button
+            var save_button = document.getElementById("save-button");
+            console.log(""+save_button.id);
+            save_button.addEventListener('click', savePostListener, false);
+            
+            //adding listener on publish button
+            var publish_button = document.getElementById("publish-button");
+            console.log(""+publish_button.id);
+            publish_button.addEventListener('click', publishPostListener, false);
+        
+
+        });
+    </script>
+{% endblock %}
+

@@ -2,50 +2,50 @@
 
 {% block body %}
     
-		{% for post in post_list %}
-		
-		<div class="row">
-			<div class="span2">
-				<h3>{{ post.date | date("d M Y") }}</h3>
-				<!-- TODO: animate this label -->
-				<!--<span class="label label-warning">nouveau</span>-->
-			</div>
-			<div class="span6">
-				<h3>{{ post.author }}</h3>
-				<p>{{ post.content }}</p> 
-			</div>
-			<div class="span4">
-				<div id="comments-{{ post.id }}">
-					{% for comment in post.comments %}
-						{% if app.user.username == comment.author %}
-							<div class="alert alert-success" id="comment-{{comment.id}}">
-								<strong>{{ comment.author }}: </strong>
-								{{ comment.content }}
-								<button class="close delete-comment" id="{{comment.id}}">&times;</button>
-							</div>
-						{% else %}
-							<div class="alert alert-info">
-								<strong>{{ comment.author }}: </strong>
-								{{ comment.content }}
-							</div>
-						{% endif %}
-					{% endfor %}
-				</div>
-				<form class="form-inline pull-right" id="comment-form-{{ post.id }}">
-					<div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
-						<span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
-					</div>
-					<button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-				</form>   
-			</div>
-		</div>
+        {% for post in post_list %}
+        
+        <div class="row">
+            <div class="span2">
+                <h3>{{ post.date | date("d M Y") }}</h3>
+                <!-- TODO: animate this label -->
+                <!--<span class="label label-warning">nouveau</span>-->
+            </div>
+            <div class="span6">
+                <h3>{{ post.author }}</h3>
+                <p>{{ post.htmlcontent | raw }}</p> 
+            </div>
+            <div class="span4">
+                <div id="comments-{{ post.id }}">
+                    {% for comment in post.comments %}
+                        {% if post.author == comment.author %}
+                            <div class="alert alert-success" id="comment-{{comment.id}}">
+                                <strong>{{ comment.author }}: </strong>
+                                {{ comment.content }}
+                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <strong>{{ comment.author }}: </strong>
+                                {{ comment.content }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
+                    <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
+                        <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
+                    </div>
+                    <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                </form>   
+            </div>
+        </div>
     
-		<hr>
-		
-		{% endfor %}
-		
-		
-	<div class="row">
+        <hr>
+        
+        {% endfor %}
+        
+        
+    <div class="row">
         <div class="span2">
             <h3>Entry date</h3> 
             <span class="label label-warning">new</span>
@@ -141,7 +141,7 @@
       <div class="row">
         <div class="span4">
           <h2>28/11/11<span class="badge badge-info pull-right">4</span></h2>
-          	
+            
            <p>Donec id elit non mi porta gravida at eget metus. Fusce 
 dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
 fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
@@ -169,8 +169,8 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
 {% endblock %}
 
 {% block javascripts %}
-	{{ parent() }}
-	<script>
+    {{ parent() }}
+    <script>
        
         jQuery(document).ready(function(){
             
@@ -186,14 +186,14 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
                     //comment_to_delete.parentNode.removeChild(comment_to_delete);
                     console.log("Making DELETE request for comment "+comment_id);
                     $.ajax({
-					   url : '/post/23/comment/'+comment_id,
-					   type : 'DELETE',
-					   //dataType: 'json',
-					   success : function(code_html, statut){
-						   console.log("Axaj call has been a success");
-						   console.log("data:"+code_html);
-						}
-					});
+                       url : '/post/23/comment/'+comment_id,
+                       type : 'DELETE',
+                       //dataType: 'json',
+                       success : function(code_html, statut){
+                           console.log("Axaj call has been a success");
+                           console.log("data:"+code_html);
+                        }
+                    });
                 }
             }
             
@@ -217,25 +217,25 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
                     var current_form = document.getElementById('comment-form-'+post_id);
                     console.log("Making POST request");
                     $.post(
-					   '/post/'+post_id+'/comment',
-					   { comment: comment_content },
-					   function(data, statut){
-						    if(statut=="success"){
-							}
-							console.log("Axaj call has been a success");
-							console.log(statut);
-							console.log(data); 
-							console.log(data.comment.id); 
-							console.log(data.comment.content);
-							console.log(post_id);
-							var comments = document.getElementById('comments-'+post_id);
-							//insérer cet élément proprement... histoire de ne pas tout casser
-							comments.innerHTML += '<div class=\"alert alert-success\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>Edouard: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
-							var comment = document.getElementById('comment-'+data.comment.id);
-							$('#comment-'+data.comment.id).fadeIn(100);
-							comment.addEventListener('click', deleteCommentListener, false);
-					   },'json'
-					);
+                       '/post/'+post_id+'/comment',
+                       { comment: comment_content },
+                       function(data, statut){
+                            if(statut=="success"){
+                            }
+                            console.log("Axaj call has been a success");
+                            console.log(statut);
+                            console.log(data); 
+                            console.log(data.comment.id); 
+                            console.log(data.comment.content);
+                            console.log(post_id);
+                            var comments = document.getElementById('comments-'+post_id);
+                            //insérer cet élément proprement... histoire de ne pas tout casser
+                            comments.innerHTML += '<div class=\"alert alert-success\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>Edouard: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                            var comment = document.getElementById('comment-'+data.comment.id);
+                            $('#comment-'+data.comment.id).fadeIn(100);
+                            comment.addEventListener('click', deleteCommentListener, false);
+                       },'json'
+                    );
                     current_form.reset();
                     
                 }

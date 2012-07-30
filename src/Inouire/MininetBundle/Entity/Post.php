@@ -141,6 +141,13 @@ class Post{
     }
 
     /**
+     * Get content, with <br /> tags instead of carriage return
+     */
+    public function getHtmlContent(){
+        return str_replace("\n","<br />",$this->content);
+    }
+    
+    /**
      * Set published
      *
      * @param boolean $published

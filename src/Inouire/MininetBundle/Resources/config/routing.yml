@@ -37,14 +37,14 @@ update_post_content:
     requirements:
         post_id:  \d+
         _method:  POST
-    defaults: { _controller: InouireMininetBundle:Post:updateContent }
+    defaults: { _controller: InouireMininetBundle:Post:update }
     
 delete_post:
     pattern:  /post/{post_id}
     requirements:
         post_id:  \d+
         _method:  DELETE
-    defaults: { _controller: InouireMininetBundle:Post:delete }
+    defaults: { _controller: InouireMininetBundle:Post:update }
     
 #routes for actions on comments
 post_comment:

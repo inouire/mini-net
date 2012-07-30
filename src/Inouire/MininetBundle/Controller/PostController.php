@@ -10,10 +10,34 @@ use Inouire\MininetBundle\Entity\Comment;
 class PostController extends Controller
 {
     
+    /*
+     * Controler for the page for viewing the content of a post
+     */
     public function viewAction($post_id){
-        return new Response('<html><body>View post action</body></html>');
+        
+        //get corresponding post
+        $em = $this->getDoctrine()->getEntityManager();
+        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+        
+        //check that this post exists
+        if($post==null){
+            //TODO return a more accurate redirection
+            return $this->redirect($this->generateUrl('home'));     
+        }else{
+            return $this->render('InouireMininetBundle:Post:viewPost.html.twig',
+                array(
+                    'post'=> $post
+                )
+            );
+        }
+
     }
     
+   /*
+     * Controler for the page to create a new post
+     * If a non-published post already exits for the current user,
+     * use this one instead of creating a new post
+     */
     public function newAction(){
         
         //get current user and user id
@@ -24,10 +48,10 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
         $unpublished_post = $post_repo->findOneBy( array('published' => 0,
-                                                      'author'=> $user_id),
-                                                array(),
-                                                1,
-                                                0);
+                                                   'author'=> $user_id),
+                                                   array(),
+                                                   1,
+                                                   0);
         if($unpublished_post == null){
             //if no current post for this user, create one and redirect to it
             $post = new Post();
@@ -42,11 +66,13 @@ class PostController extends Controller
         
     }
    
+    /*
+     * Controler for the page to edit a post
+     */
     public function editAction($post_id){
         
         //get current user and user id
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $user_id = $user->getId();
+        $user_id = $this->container->get('security.context')->getToken()->getUser()->getId();
         
         //get corresponding post
         $em = $this->getDoctrine()->getEntityManager();
@@ -54,19 +80,68 @@ class PostController extends Controller
         
         //check that this post exists and that it belongs to this user
         if($post==null || $post->getAuthor()->getId() != $user_id){
-            //TODO properly handle error cases
-            return;
+            return $this->redirect($this->generateUrl('home'));
+        }else{
+            return $this->render('InouireMininetBundle:Post:editPost.html.twig',
+                                array('post'=> $post));
         }
         
-        return $this->render('InouireMininetBundle:Default:editPost.html.twig',
-							  array('post'=> $post));
     }
     
-    public function updateContentAction($post_id){
-        return new Response('<html><body>Update post content action</body></html>');
+    /*
+     * Controler for post/delete requests around post
+     */
+    public function updateAction($post_id){
+        
+        //get content of POST request
+        $request = $this->getRequest();
+        $post_content = $request->request->get('content');
+        $is_published = (boolean)$request->request->get('published');
+        
+        //get corresponding post
+        $em = $this->getDoctrine()->getEntityManager();
+        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+        
+        //get current user id
+        $user_id = $this->container->get('security.context')->getToken()->getUser()->getId();
+        
+        //check that this post exists and that it belongs to this user
+        if($post==null ){
+            $response_status = 'error';
+            $response_message = 'post '.$post_id.' does not exist';
+        }else if( $post->getAuthor()->getId() != $user_id){
+            $response_status = 'error';
+            $response_message = 'post '.$post_id.' does not belong to you';
+        } else {
+            
+            //get source route: update or delete ?
+            //shall I use HTTP request type instead ?
+            $routeName = $request->get('_route');
+            if( $routeName == 'delete_post'){
+                //delete post
+                $em->remove($post);
+                $response_message = 'post '.$post_id.' has been deleted';
+            }else{
+               //update content and status
+                $post->setContent($post_content);
+                $post->setPublished($is_published);
+                $response_message = 'post '.$post_id.' has been updated';
+            }
+            
+            //persit changes in the database
+            $em->flush();
+            $response_status = 'ok';
+            
+        }
+        
+        //render json response
+        return $this->render('InouireMininetBundle:Post:ajaxResponse.json.twig',
+            array(
+                'status'=> $response_status,
+                'message' => $response_message
+            )
+        );
     }
     
-    public function deleteAction($post_id){
-        return new Response('<html><body>Delete post action</body></html>');
-    }
+
 }
