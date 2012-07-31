@@ -12,6 +12,9 @@
             </div>
             <div class="span6">
                 <h3>{{ post.author }}</h3>
+                {% if post.author == app.user.username %}
+                <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
+                {% endif %}
                 <p>{{ post.htmlcontent | raw }}</p> 
             </div>
             <div class="span4">

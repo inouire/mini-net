@@ -26,7 +26,7 @@
         <div class="span8 mininet-post" id="24">
             <form method="post" action="#" id="{{ post.id }}">
                 {% if post.published == true %}
-                    <button type="submit" class="btn pull-right" id="save-button"><i class="icon-download"></i> Sauvegarder</button>
+                    <button type="submit" class="btn pull-right" id="publish-button"><i class="icon-download"></i> Sauvegarder</button>
                 {% else %}
                     <button type="submit" class="btn" id="save-button"><i class="icon-download"></i> Sauvegarder</button>
                     <button type="submit" class="btn btn-success pull-right" id="publish-button"><i class="icon-ok icon-white"></i> Publier</button>
@@ -86,7 +86,7 @@
                 console.log("Making POST request");
                 $.post(
                    '/post/'+post_id,
-                   { content: post_content , published : false },
+                   { content: post_content , published : 0 },
                    function(data, statut){
                         console.log(data);
                         if(statut=="success"){
@@ -107,7 +107,7 @@
                 console.log("Making POST request");
                 $.post(
                    '/post/'+post_id,
-                   { content: post_content , published : true },
+                   { content: post_content , published : 1 },
                    function(data, statut){
                         console.log(data);
                         if(statut=="success"){
@@ -117,17 +117,15 @@
                 );
             }
             
-            //adding listener on save button
-            var save_button = document.getElementById("save-button");
-            console.log(""+save_button.id);
-            save_button.addEventListener('click', savePostListener, false);
-            
             //adding listener on publish button
             var publish_button = document.getElementById("publish-button");
             console.log(""+publish_button.id);
             publish_button.addEventListener('click', publishPostListener, false);
-        
-
+            
+            //adding listener on save button
+            var save_button = document.getElementById("save-button");
+            console.log(""+save_button.id);
+            save_button.addEventListener('click', savePostListener, false);
         });
     </script>
 {% endblock %}
