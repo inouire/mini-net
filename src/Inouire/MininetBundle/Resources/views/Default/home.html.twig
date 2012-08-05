@@ -2,37 +2,37 @@
 
 {% block body %}
     
-        {% for post in post_list %}
+    {% for post in post_list %}
         
         <div class="row">
             <div class="span2">
                 <h3>{{ post.date | localeDate('long') }}</h3>
-                <!-- TODO: animate this label -->
-                <!--<span class="label label-warning">nouveau</span>-->
+                {# TODO: animate this label 
+                <span class="label label-warning">nouveau</span> #}
             </div>
             <div class="span6">
                 <h3>{{ post.author }}</h3>
-                {% if post.author == app.user.username %}
+        {% if post.author == app.user.username %}
                 <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
-                {% endif %}
+        {% endif %}
                 <p>{{ post.htmlcontent | raw }}</p> 
             </div>
             <div class="span4">
                 <div id="comments-{{ post.id }}">
-                    {% for comment in post.comments %}
-                        {% if comment.author == app.user.username %}
-                            <div class="alert alert-success" id="comment-{{comment.id}}">
-                                <strong>{{ comment.author }}: </strong>
-                                {{ comment.content }}
-                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
-                            </div>
-                        {% else %}
-                            <div class="alert alert-info">
-                                <strong>{{ comment.author }}: </strong>
-                                {{ comment.content }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+        {% for comment in post.comments %}
+            {% if comment.author == app.user.username %}
+                    <div class="alert alert-success" id="comment-{{comment.id}}">
+                        <strong>{{ comment.author }}: </strong>
+                        {{ comment.content }}
+                        <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                    </div>
+            {% else %}
+                    <div class="alert alert-info">
+                        <strong>{{ comment.author }}: </strong>
+                        {{ comment.content }}
+                    </div>
+            {% endif %}
+        {% endfor %}
                 </div>
                 <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
                     <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
@@ -45,7 +45,7 @@
     
         <hr>
         
-        {% endfor %}
+    {% endfor %}
         
         
     <div class="row">

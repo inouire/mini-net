@@ -27,11 +27,6 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
                     <a class="brand" href="{{ path('home') }}">Mini-net</a>
 
                     {% set currentPath = app.request.attributes.get('_route') %}
@@ -51,26 +46,19 @@
                             <li class="{{ classAlbum }}"><a href="{{ path('album') }}">Albums</a></li>
                         </ul>
                     </div>
+                    <ul class="nav pull-right">
+                        <a class="btn btn-success" href="{{ path('new_post') }}">
+                            Ajouter des nouvelles
+                        </a>
+                        <li class="divider-vertical"></li>
+                        <a class="btn" id="user-logout-button" href="{{ path('fos_user_security_logout') }}">
+                            <i class="icon-user" id="user-logout-icon"></i> 
+                            {{ app.user.username }}
+                        </a>
+
+                    </ul>
                     {% endif %}
                     
-                    <!-- menu for user management-->
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <div class="btn-group pull-right">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="icon-user"></i> 
-                            {{ app.user.username }}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <!--<li><a href="">Profile</a></li>
-                            <li class="divider"></li>-->
-                            <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
-                        </ul>
-                    </div>
-                    <a href="{{ path('new_post') }}">
-                        <div class="btn btn-success pull-right">Ajouter des nouvelles</div>
-                    </a>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -100,6 +88,18 @@
             <script src="{{ asset('jquery/jquery-1.7.2.min.js') }}"></script>
             <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
             <script src="{{ asset('lightbox/js/lightbox.js') }}"></script>
+            <script>
+                function mouseOverLogoutListener(e){
+                    document.getElementById("user-logout-button").className='btn btn-danger';
+                    document.getElementById("user-logout-icon").className='icon-arrow-right icon-white';
+                }
+                function mouseOutLogoutListener(e){
+                    document.getElementById("user-logout-button").className='btn';
+                    document.getElementById("user-logout-icon").className='icon-user';
+                }
+                document.getElementById("user-logout-button").addEventListener('mouseover', mouseOverLogoutListener, false);
+                document.getElementById("user-logout-button").addEventListener('mouseout', mouseOutLogoutListener, false);
+            </script>
         {% endblock %}
         
     </body>
