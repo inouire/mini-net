@@ -6,7 +6,7 @@
         
         <div class="row">
             <div class="span2">
-                <h3>{{ post.date | date("d M Y") }}</h3>
+                <h3>{{ post.date | localeDate('long') }}</h3>
                 <!-- TODO: animate this label -->
                 <!--<span class="label label-warning">nouveau</span>-->
             </div>
@@ -20,7 +20,7 @@
             <div class="span4">
                 <div id="comments-{{ post.id }}">
                     {% for comment in post.comments %}
-                        {% if post.author == comment.author %}
+                        {% if comment.author == app.user.username %}
                             <div class="alert alert-success" id="comment-{{comment.id}}">
                                 <strong>{{ comment.author }}: </strong>
                                 {{ comment.content }}
@@ -233,7 +233,7 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
                             console.log(post_id);
                             var comments = document.getElementById('comments-'+post_id);
                             //insérer cet élément proprement... histoire de ne pas tout casser
-                            comments.innerHTML += '<div class=\"alert alert-success\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>Edouard: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                            comments.innerHTML += '<div class=\"alert alert-success\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
                             var comment = document.getElementById('comment-'+data.comment.id);
                             $('#comment-'+data.comment.id).fadeIn(100);
                             comment.addEventListener('click', deleteCommentListener, false);
