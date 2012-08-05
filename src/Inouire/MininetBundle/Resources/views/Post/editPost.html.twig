@@ -3,8 +3,9 @@
 {% block stylesheets %}
     {{ parent() }}
     <style type="text/css">
+        {# Specific padding for this page as there is very few content#}
         body {
-            padding-top: 160px;
+            padding-top: 140px;
             padding-bottom: 40px;
         }
     </style>
@@ -14,34 +15,36 @@
     
     <div class="row">
         <div class="span2">
-            {% if post.published == true %}
-                <h3>{{ post.date | date("d M Y") }}</h3>
-                <span class="label label-success">publié</span>
-            {% else %}
-                <h3>Aujourd'hui</h3>
-                <span class="label label-warning">non publié</span>
-            {% endif %}
+    {% if post.published == true %}
+            <h3>{{ post.date | localeDate('long') }}</h3>
+            <span class="label label-success">publié</span>
+    {% else %}
+            <h3>Aujourd'hui</h3>
+            <span class="label label-warning">non publié</span>
+    {% endif %}
             
         </div>
-        <div class="span8 mininet-post" id="24">
+        <div class="span8">
             <form method="post" action="#" id="{{ post.id }}">
-                {% if post.published == true %}
-                    <button type="submit" class="btn pull-right" id="publish-button"><i class="icon-download"></i> Sauvegarder</button>
-                {% else %}
-                    <button type="submit" class="btn" id="save-button"><i class="icon-download"></i> Sauvegarder</button>
-                    <button type="submit" class="btn btn-success pull-right" id="publish-button"><i class="icon-ok icon-white"></i> Publier</button>
-                {% endif %}
+    {% if post.published == true %}
+                <a href="#" class="btn btn-danger pull-left" id="delete-button"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a>
+                <button type="submit" class="btn pull-right" id="publish-button"><i class="icon-download" id="publish-icon"></i> Mettre à jour</button>
+    {% else %}
+                <button type="submit" class="btn" id="save-button"><i class="icon-download" id="save-icon"></i> Sauvegarder</button>
+                <button type="submit" class="btn btn-success pull-right" id="publish-button"><i class="icon-ok icon-white" id="publish-icon"></i> Publier</button>
+    {% endif %}
                 <br /><br />
-                <textarea style="width: 100%" id="textarea" rows="10">{{ post.content }}</textarea>
+                <textarea style="width: 100%" id="edit-area" rows="10">{{ post.content }}</textarea>
             </form>
         </div>
     </div>
     
     <hr>
-    <!--<div class="row">
+    {#
+    <div class="row">
         <div class="span10 offset2">
             <ul class="thumbnails">
-                <!--<li class="span2">
+                <li class="span2">
                     <button class="close delete-comment" id="798">&times;</button>
                     <a href="./img/101.jpg" class="thumbnail" rel="lightbox[111]">
                         <img src="./img/101.jpg" alt="">
@@ -61,11 +64,12 @@
                 </li>
             </ul>
         </div>
-    </div>-->
+    </div>
+    #}
     <div class="row">
         <div class="span12">
             <center>
-                <button class="btn btn-primary" id="picture-button"><i class="icon-picture icon-white"></i> Ajouter une photo</button>
+                <button class="btn btn-primary" disabled id="picture-button"><i class="icon-picture icon-white"></i> Ajouter une photo</button>
             </center>
         </div>
     </div>
@@ -76,56 +80,83 @@
     <script>
         jQuery(document).ready(function(){
             
+            function disableAllControls(toggle){
+    {% if post.published == true %}
+                document.getElementById("delete-button").disabled = toggle;
+    {% else %}
+                document.getElementById("save-button").disabled = toggle;
+    {% endif %}
+                document.getElementById("publish-button").disabled = toggle;
+                document.getElementById("edit-area").disabled = toggle;
+            }
+            
+            function updatePostAjax(post_id,post_published){
+                var post_content = document.getElementById("edit-area").value;
+                console.log("Post id: "+post_id);
+                console.log("Post content: "+post_content);
+                console.log("Making ajax POST request...");
+                $.post(
+                   '/post/'+post_id,
+                   { content: post_content , published : post_published },
+                   function(data, statut){
+                        console.log(data);
+                        if(statut=="success"){
+                            console.log("Axaj call has been a success");
+                            disableAllControls(false);
+                            if(post_published == 1){
+                                window.location.href = "{{ path('home') }}";
+                            }
+                        }
+                   },'json'
+                );
+            }
+            
             function savePostListener(e){
+                disableAllControls(true);
                 console.log("Save button clicked");
                 e.preventDefault();
                 var post_id = e.target.parentNode.id;
-                console.log("Id du post: "+post_id);
-                var post_content = document.getElementById("textarea").value;
-                console.log("Content du post: "+post_content);
-                console.log("Making POST request");
-                $.post(
-                   '/post/'+post_id,
-                   { content: post_content , published : 0 },
-                   function(data, statut){
-                        console.log(data);
-                        if(statut=="success"){
-                            console.log("Axaj call has been a success");
-                        }
-                        
-                   },'json'
-                );
+                updatePostAjax(post_id,0);
             }
             
             function publishPostListener(e){
+                disableAllControls(true);
                 console.log("Publish button clicked");
                 e.preventDefault();
                 var post_id = e.target.parentNode.id;
-                console.log("Id du post:"+post_id);
-                var post_content = document.getElementById("textarea").value;
-                console.log("Content du post: "+post_content);
-                console.log("Making POST request");
-                $.post(
-                   '/post/'+post_id,
-                   { content: post_content , published : 1 },
-                   function(data, statut){
-                        console.log(data);
-                        if(statut=="success"){
-                            console.log("Axaj call has been a success");
-                        }
-                   },'json'
-                );
+                updatePostAjax(post_id,1);
+    
             }
             
-            //adding listener on publish button
-            var publish_button = document.getElementById("publish-button");
-            console.log(""+publish_button.id);
-            publish_button.addEventListener('click', publishPostListener, false);
+            function deletePostListener(e){
+                console.log("Delete button clicked");
+                e.preventDefault();
+                var post_id = e.target.parentNode.id;
+                if(confirm("Êtes vous sur de vouloir supprimer définitivement cet article ?\n(les commentaires ainsi que les photos attachées seront perdus)")){
+                    $.ajax({
+                        url : '/post/'+post_id,
+                        type : 'DELETE',
+                        dataType : 'json',
+                        success : function(data, statut){
+                            console.log("Axaj call has been a success");
+                            console.log(data);
+                            window.location.href = "{{ path('home') }}";
+                        },
+                        error : function(data, statut, error){
+                            console.log("Error during ajax call");
+                        },
+                    });
+                }
+            }
             
-            //adding listener on save button
-            var save_button = document.getElementById("save-button");
-            console.log(""+save_button.id);
-            save_button.addEventListener('click', savePostListener, false);
+    {% if post.published == true %}
+            document.getElementById("delete-button").addEventListener('click', deletePostListener, false);
+    {% else %}
+            document.getElementById("save-button").addEventListener('click', savePostListener, false);
+    {% endif %}
+                
+            document.getElementById("publish-button").addEventListener('click', publishPostListener, false);
+
         });
     </script>
 {% endblock %}

@@ -21,6 +21,13 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
 
+#BCC configuration
+services:
+    bcc.twig.extension:
+        class: BCC\ExtraToolsBundle\Twig\TwigExtension
+        tags:
+            -  { name: twig.extension }
+            
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%

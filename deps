@@ -65,4 +65,8 @@
 [FOSUserBundle]
     git=git://github.com/FriendsOfSymfony/FOSUserBundle.git
     target=bundles/FOS/UserBundle
-	version=v1.2.4
+    version=v1.2.4
+    
+[BCCExtraToolsBundle]
+    git=http://github.com/michelsalib/BCCExtraToolsBundle.git
+    target=/bundles/BCC/ExtraToolsBundle

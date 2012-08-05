@@ -16,8 +16,7 @@ class PostController extends Controller
     public function viewAction($post_id){
         
         //get corresponding post
-        $em = $this->getDoctrine()->getEntityManager();
-        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+        $post = $this->getPostById($post_id);
         
         //check that this post exists
         if($post==null){
@@ -41,27 +40,33 @@ class PostController extends Controller
     public function newAction(){
         
         //get current user and user id
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $user_id = $user->getId();
+        $user = $this->getCurrentUser();
         
         //check if this user has a current non-published post
         $em = $this->getDoctrine()->getEntityManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
-        $unpublished_post = $post_repo->findOneBy( array('published' => 0,
-                                                   'author'=> $user_id),
-                                                   array(),
-                                                   1,
-                                                   0);
+        $unpublished_post = $post_repo->findOneBy(array(
+            'published' => 0,
+            'author'=> $user->getId()),
+            array(),
+            1,
+            0
+        );
+        
         if($unpublished_post == null){
             //if no current post for this user, create one and redirect to it
             $post = new Post();
             $post->setAuthor($user);
             $em->persist($post);
             $em->flush();
-            return $this->redirect($this->generateUrl( 'edit_post',array('post_id' => $post->getId() )));            
+            return $this->redirect($this->generateUrl('edit_post',array(
+                'post_id' => $post->getId()
+            )));            
         }else{
             //else redirect to the current draft post for this user
-            return $this->redirect($this->generateUrl( 'edit_post',array('post_id' => $unpublished_post->getId() )));            
+            return $this->redirect($this->generateUrl('edit_post',array(
+                'post_id' => $unpublished_post->getId()
+            )));            
         }                
         
     }
@@ -71,19 +76,23 @@ class PostController extends Controller
      */
     public function editAction($post_id){
         
-        //get current user and user id
-        $user_id = $this->container->get('security.context')->getToken()->getUser()->getId();
+        //get current user
+        $user = $this->getCurrentUser();
         
         //get corresponding post
-        $em = $this->getDoctrine()->getEntityManager();
-        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+        $post = $this->getPostById($post_id);
         
-        //check that this post exists and that it belongs to this user
-        if($post==null || $post->getAuthor()->getId() != $user_id){
+        //check that this post exists, and that it belongs to this user
+        if($post==null){
             return $this->redirect($this->generateUrl('home'));
+        }else if( $post->getAuthor() != $user ){//the user is not the author-> view only
+            return $this->redirect($this->generateUrl('view_post',array(
+                'post_id' => $post->getId()
+            )));  
         }else{
-            return $this->render('InouireMininetBundle:Post:editPost.html.twig',
-                                array('post'=> $post));
+            return $this->render('InouireMininetBundle:Post:editPost.html.twig',array(
+                'post'=> $post
+            ));
         }
         
     }
@@ -99,23 +108,24 @@ class PostController extends Controller
         $is_published = (boolean)$request->request->get('published');
         
         //get corresponding post
-        $em = $this->getDoctrine()->getEntityManager();
-        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+        $post = $this->getPostById($post_id);
         
         //get current user id
-        $user_id = $this->container->get('security.context')->getToken()->getUser()->getId();
+        $user = $this->getCurrentUser();
+        
+        //get entity manager
+        $em = $this->getDoctrine()->getEntityManager();
         
         //check that this post exists and that it belongs to this user
         if($post==null ){
             $response_status = 'error';
             $response_message = 'post '.$post_id.' does not exist';
-        }else if( $post->getAuthor()->getId() != $user_id){
+        }else if( $post->getAuthor() != $user){
             $response_status = 'error';
             $response_message = 'post '.$post_id.' does not belong to you';
         } else {
             
-            //get source route: update or delete ?
-            //shall I use HTTP request type instead ?
+            //get source route to know wether it's an update or delete action
             $routeName = $request->get('_route');
             if( $routeName == 'delete_post'){
                 //delete post
@@ -135,12 +145,28 @@ class PostController extends Controller
         }
         
         //render json response
-        return $this->render('InouireMininetBundle:Post:ajaxResponse.json.twig',
-            array(
-                'status'=> $response_status,
-                'message' => $response_message
-            )
-        );
+        return $this->render('InouireMininetBundle:Post:ajaxResponse.json.twig',array(
+            'status'=> $response_status,
+            'message' => $response_message
+        ));
+    }
+    
+    /**
+     * Util function: retrieve a post from database by its id
+     */
+    public function getPostById($post_id){
+        //get entity manager
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        //get the post from the Post repository
+        return $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+    }
+    
+    /**
+     * Util function: retrieve current user from security context
+     */
+    public function getCurrentUser(){
+        return $this->container->get('security.context')->getToken()->getUser();
     }
     
 
