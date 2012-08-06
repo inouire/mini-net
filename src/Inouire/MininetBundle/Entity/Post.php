@@ -117,6 +117,13 @@ class Post{
         return $this->date;
     }
 
+    /*
+     * Set post date and time to now
+     */
+    public function touchDate(){
+        $this->date = new \Datetime();
+    }
+    
     /**
      * Set content
      *

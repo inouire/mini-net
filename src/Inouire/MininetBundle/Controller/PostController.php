@@ -136,6 +136,10 @@ class PostController extends Controller
                 $em->remove($post);
                 $response_message = 'post '.$post_id.' has been deleted';
             }else{
+                //if first publication, set date to now
+                if( $is_published && !$post->getPublished() ){
+                    $post->touchDate();
+                }
                //update content and status
                 $post->setContent($post_content);
                 $post->setPublished($is_published);
