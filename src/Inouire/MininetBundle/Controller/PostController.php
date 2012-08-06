@@ -128,6 +128,10 @@ class PostController extends Controller
             //get source route to know wether it's an update or delete action
             $routeName = $request->get('_route');
             if( $routeName == 'delete_post'){
+                //delete all comments on this post
+                foreach( $post->getComments() as $comment ){
+                    $em->remove($comment);
+                }
                 //delete post
                 $em->remove($post);
                 $response_message = 'post '.$post_id.' has been deleted';

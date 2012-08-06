@@ -28,11 +28,11 @@ class Post{
      */
     private $id;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="Inouire\UserBundle\Entity\User")
-	 */
-	private $author;
-	
+    /**
+     * @ORM\ManyToOne(targetEntity="Inouire\UserBundle\Entity\User")
+     */
+    private $author;
+    
 
     /**
      * @var datetime $date
@@ -53,24 +53,24 @@ class Post{
      */
     private $comments;
 
-	/**
+    /**
      * @var boolean $published
      *
      * @ORM\Column(name="published", type="boolean")
      */
-	private $published;
-	
-	/**
-	 * Get the author of the post 
-	 * @return \Inouire\UserBundle\Entity\User
-	 */
+    private $published;
+    
+    /**
+     * Get the author of the post 
+     * @return \Inouire\UserBundle\Entity\User
+     */
     public function getAuthor(){
         return $this->author;
     }
 
-	/**
-	 * Set the author of the post 
-	 */
+    /**
+     * Set the author of the post 
+     */
     public function setAuthor(\Inouire\UserBundle\Entity\User $author){
         $this->author = $author;
     }
@@ -82,9 +82,9 @@ class Post{
         return $this->comments;
     }
 
-	/**
-	 * Add a comment for this post
-	 */
+    /**
+     * Add a comment for this post
+     */
     public function addComment(\Inouire\MininetBundle\Entity\Comment $comment){
         $this->comments[] = $comment;
         $comment->setPost($this);
@@ -95,8 +95,7 @@ class Post{
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId(){
         return $this->id;
     }
 
@@ -105,8 +104,7 @@ class Post{
      *
      * @param datetime $date
      */
-    public function setDate($date)
-    {
+    public function setDate($date){
         $this->date = $date;
     }
 
@@ -115,8 +113,7 @@ class Post{
      *
      * @return datetime 
      */
-    public function getDate()
-    {
+    public function getDate(){
         return $this->date;
     }
 
@@ -125,8 +122,7 @@ class Post{
      *
      * @param text $content
      */
-    public function setContent($content)
-    {
+    public function setContent($content){
         $this->content = $content;
     }
 
@@ -135,8 +131,7 @@ class Post{
      *
      * @return text 
      */
-    public function getContent()
-    {
+    public function getContent(){
         return $this->content;
     }
 
@@ -152,8 +147,7 @@ class Post{
      *
      * @param boolean $published
      */
-    public function setPublished($published)
-    {
+    public function setPublished($published){
         $this->published = $published;
     }
 
@@ -162,8 +156,7 @@ class Post{
      *
      * @return boolean 
      */
-    public function getPublished()
-    {
+    public function getPublished(){
         return $this->published;
     }
 }
