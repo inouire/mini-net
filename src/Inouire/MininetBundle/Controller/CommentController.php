@@ -10,15 +10,12 @@ use Inouire\MininetBundle\Entity\Comment;
 class CommentController extends Controller
 {
     
-    public function postCommentAction($post_id){
-        
-        $logger = $this->get('logger');
-        $logger->info("POST COMMENT request");
-        
-        //get content of POST
+    public function postCommentAction(){
+
+        //get content of HTTP POST request
         $request = $this->getRequest();
+        $post_id = $request->request->get('post_id');
         $comment_content = $request->request->get('comment');
-        $logger->info("POST content: ".$comment_content);
         
         //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -29,9 +26,10 @@ class CommentController extends Controller
         
         //check that this post exists
         if($post==null){
-            $logger->info("The associated post id doesn't exist: ".$post_id);
-            //TODO properly handle error cases
-            return;
+            return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
+                'status'=> 'error',
+                'message' => 'post '+$post_id+' does not exist'
+            ));
         }
         
         //create comment
@@ -44,57 +42,56 @@ class CommentController extends Controller
         $em->persist($comment);
         $em->flush();
         
-        if( $request->isXmlHttpRequest() ){
-            //TODO build better response
-            return new Response('{ "comment" : { "id": '.$comment->getId().', "content": "'.$comment_content.'" } }');
-        }else{
-            return $this->redirect($this->generateUrl('home'));
-        }
-
-
+        //render json response
+        return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
+            'status'=> 'ok',
+            'message' => 'comment added to post '.$post_id,
+            'comment_id' => $comment->getId(),
+            'comment_content' => $comment_content
+        ));
+            
     }
     
-    public function deleteCommentAction($post_id,$comment_id){
-        $logger = $this->get('logger');
-        $logger->info("DELETE COMMENT request");
-        
-        //get current user
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        
+    public function deleteCommentAction($comment_id){
+
         //get requested comment
         $em = $this->getDoctrine()->getEntityManager();
         $comment = $em->getRepository('InouireMininetBundle:Comment')->find($comment_id);
         
-        //get corresponding post
-        //$post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+        //get current user
+        $user = $this->container->get('security.context')->getToken()->getUser();
         
         //check that this comment exists
         if($comment==null){
-            $logger->info("The associated comment id doesn't exist: ".$comment_id);
-            //TODO properly handle error cases
-            return;
+            return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
+                'status'=> 'error',
+                'message' => 'comment '+$comment_id+' does not exist'
+            ));
         }
         
         //check that the user is the author of this comment
-        if($user->getId() != $comment->getAuthor()->getId()){
-            $logger->info("Error not the author !");
-            //TODO build better response
-            return new Response('{ error }');
+        if($user != $comment->getAuthor() ){
+            return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
+                'status'=> 'error',
+                'message' => 'you are not the author of comment '+$comment_id
+            ));
         }
 
-        $id = $comment->getId();
-        $content = $comment->getContent();
+        //remember the id and the content before deletion
+        $comment_id = $comment->getId();
+        $comment_content = $comment->getContent();
         
         //remove comment
         $em->remove($comment);
         $em->flush();
         
-        if( $this->getRequest()->isXmlHttpRequest() ){
-            //TODO build better response
-            return new Response('{ "comment" : { "id": '.$id.', "content": "'.$content.'" } }');
-        }else{
-            return $this->redirect($this->generateUrl('home'));
-        }
+        //render json response
+        return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
+            'status'=> 'ok',
+            'message' => 'comment '.$comment_id.' deleted',
+            'comment_id' => $comment_id,
+            'comment_content' => $comment_content
+        ));
     }
     
 }

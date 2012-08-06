@@ -22,8 +22,6 @@ view_post:
     
 new_post:
     pattern:  /post/new
-    requirements:
-        _method:  GET
     defaults: { _controller: InouireMininetBundle:Post:new }
 
 edit_post:
@@ -37,6 +35,7 @@ update_post_content:
     requirements:
         post_id:  \d+
         _method:  POST
+        _format:  json
     defaults: { _controller: InouireMininetBundle:Post:update }
     
 delete_post:
@@ -44,27 +43,22 @@ delete_post:
     requirements:
         post_id:  \d+
         _method:  DELETE
+        _format:  json
     defaults: { _controller: InouireMininetBundle:Post:update }
     
 #routes for actions on comments
 post_comment:
-    pattern:  /post/{post_id}/comment
+    pattern:  /comment
     requirements:
-        post_id:  \d+
         _method:  POST
-        _format:  json | html
+        _format:  json
     defaults: { _controller: InouireMininetBundle:Comment:postComment }
 
 delete_comment:
-    pattern:  /post/{post_id}/comment/{comment_id}
+    pattern:  /comment/{comment_id}
     requirements:
-        post_id:  \d+
         comment_id:  \d+
         _method:  DELETE
-        _format:  json | html
+        _format:  json
     defaults: { _controller: InouireMininetBundle:Comment:deleteComment }
     
-    
-test:
-    pattern:  /test
-    defaults: { _controller: InouireMininetBundle:Default:test }

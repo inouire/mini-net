@@ -50,7 +50,7 @@
         
     {% endfor %}
         
-        
+    {#    
     <div class="row">
         <div class="span2">
             <h3>Entry date</h3> 
@@ -142,7 +142,7 @@
     </div>
     
     <hr>
-          
+    #}
       <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
@@ -192,7 +192,7 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
                     //comment_to_delete.parentNode.removeChild(comment_to_delete);
                     console.log("Making DELETE request for comment "+comment_id);
                     $.ajax({
-                       url : '/post/23/comment/'+comment_id,
+                       url : '/comment/'+comment_id,
                        type : 'DELETE',
                        //dataType: 'json',
                        success : function(code_html, statut){
@@ -223,23 +223,21 @@ Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
                     var current_form = document.getElementById('comment-form-'+post_id);
                     console.log("Making POST request");
                     $.post(
-                       '/post/'+post_id+'/comment',
-                       { comment: comment_content },
+                       '/comment',
+                       { post_id: post_id, comment: comment_content },
                        function(data, statut){
                             if(statut=="success"){
+                                console.log("Axaj call has been a success");
+                                console.log(statut);
+                                console.log(data); 
+                                var comments = document.getElementById('comments-'+post_id);
+                                //insérer cet élément proprement... histoire de ne pas tout casser
+                                comments.innerHTML += '<div class=\"alert alert-success\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                var comment = document.getElementById('comment-'+data.comment.id);
+                                $('#comment-'+data.comment.id).fadeIn(100);
+                                comment.addEventListener('click', deleteCommentListener, false);
                             }
-                            console.log("Axaj call has been a success");
-                            console.log(statut);
-                            console.log(data); 
-                            console.log(data.comment.id); 
-                            console.log(data.comment.content);
-                            console.log(post_id);
-                            var comments = document.getElementById('comments-'+post_id);
-                            //insérer cet élément proprement... histoire de ne pas tout casser
-                            comments.innerHTML += '<div class=\"alert alert-success\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
-                            var comment = document.getElementById('comment-'+data.comment.id);
-                            $('#comment-'+data.comment.id).fadeIn(100);
-                            comment.addEventListener('click', deleteCommentListener, false);
+                            
                        },'json'
                     );
                     current_form.reset();

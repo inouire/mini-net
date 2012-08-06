@@ -11,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Inouire\MininetBundle\Entity\CommentRepository")
  */
 class Comment{
-	
-	public function __construct(){
+    
+    public function __construct(){
         $this->date = new \Datetime();
     }
     
@@ -25,29 +25,29 @@ class Comment{
      */
     private $id;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="Inouire\UserBundle\Entity\User")
-	 */
-	private $author;
-	
+    /**
+     * @ORM\ManyToOne(targetEntity="Inouire\UserBundle\Entity\User")
+     */
+    private $author;
+    
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="Inouire\MininetBundle\Entity\Post",inversedBy="comments")
-	 */
-	private $post;
-	
+    /**
+     * @ORM\ManyToOne(targetEntity="Inouire\MininetBundle\Entity\Post",inversedBy="comments")
+     */
+    private $post;
+    
 
-	/**
-	 * Get the author of the comment 
-	 * @return \Inouire\UserBundle\Entity\User
-	 */
+    /**
+     * Get the author of the comment 
+     * @return \Inouire\UserBundle\Entity\User
+     */
     public function getAuthor(){
         return $this->author;
     }
 
-	/**
-	 * Set the author of the comment 
-	 */
+    /**
+     * Set the author of the comment 
+     */
     public function setAuthor(\Inouire\UserBundle\Entity\User $author){
         $this->author = $author;
     }
@@ -60,9 +60,9 @@ class Comment{
         return $this->post;
     }
 
-	/**
-	 * Set the corresponding post
-	 */
+    /**
+     * Set the corresponding post
+     */
     public function setPost(\Inouire\MininetBundle\Entity\Post $post){
         $this->post = $post;
     }
@@ -87,8 +87,7 @@ class Comment{
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId(){
         return $this->id;
     }
 
@@ -97,8 +96,7 @@ class Comment{
      *
      * @param datetime $date
      */
-    public function setDate($date)
-    {
+    public function setDate($date){
         $this->date = $date;
     }
 
@@ -107,8 +105,7 @@ class Comment{
      *
      * @return datetime 
      */
-    public function getDate()
-    {
+    public function getDate(){
         return $this->date;
     }
 
@@ -117,8 +114,7 @@ class Comment{
      *
      * @param text $content
      */
-    public function setContent($content)
-    {
+    public function setContent($content){
         $this->content = $content;
     }
 
@@ -127,8 +123,7 @@ class Comment{
      *
      * @return text 
      */
-    public function getContent()
-    {
+    public function getContent(){
         return $this->content;
     }
 }
