@@ -40,12 +40,10 @@
 
                     <!-- nav menu -->
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                            <li class="{{ classHome }}"><a href="{{ path('home') }}">Accueil</a></li>
-                            <li class="{{ classAlbum }}"><a href="{{ path('album') }}">Albums</a></li>
-                        </ul>
-                    </div>
+                    <ul class="nav">
+                        <li class="{{ classHome }}"><a href="{{ path('home') }}">Accueil</a></li>
+                        <li class="{{ classAlbum }}"><a href="{{ path('album') }}">Albums</a></li>
+                    </ul>
                     <ul class="nav pull-right">
                         <a class="btn btn-success" href="{{ path('new_post') }}">
                             Ajouter des nouvelles
@@ -72,13 +70,7 @@
         {% block footer %}
             <hr>
             <center>
-                <p>Catapulté par <span class="label label-info">mini-net</span>, le réseau social familial le plus simple au monde</p>
-                <!--<p>Construit avec 
-                    <span class="label label-success">Symfony2</span>,
-                    <span class="label label-success">jQuery</span>, 
-                    <span class="label label-success">Bootstrap</span> et 
-                    <span class="label label-success">Lightbox</span>
-                </p>-->
+                <p><span class="label label-info">mini-net</span> , le réseau social familial le plus simple au monde</p>
             </center>
         {% endblock %}
         

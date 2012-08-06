@@ -11,10 +11,13 @@
                 <span class="label label-warning">nouveau</span> #}
             </div>
             <div class="span6">
-                <h3>{{ post.author }}</h3>
+                <h3>
+                    {{ post.author }}
         {% if post.author == app.user.username %}
-                <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
-        {% endif %}
+                    <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
+        {% endif %}                
+                </h3>
+
                 <p>{{ post.htmlcontent | raw }}</p> 
             </div>
             <div class="span4">
