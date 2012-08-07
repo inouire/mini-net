@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class PostRepository extends EntityRepository
 {
+    
+    /*
+     * Get all the post of a given month of a year
+     */
+    public function getMonthlyPosts($year,$month){
+        
+        $qb = $this->createQueryBuilder('post');
+        
+        $qb->where('post.date BETWEEN :monthBeginning AND :monthEnd')
+           ->setParameter('monthBeginning',  new \Datetime($year.'-'.$month.'-01'))
+           ->setParameter('monthEnd', new \Datetime($year.'-'.$month.'-31'))
+           ->orderBy('post.date', 'ASC');
+        
+        return $qb->getQuery()
+                  ->getResult();
+    }
 }

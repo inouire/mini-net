@@ -7,6 +7,13 @@ home:
     pattern:  /home
     defaults: { _controller: InouireMininetBundle:Default:home }
 
+posts:
+    pattern:  /posts/{year}/{month}
+    requirements:
+        year:  \d+
+        month: \d+
+    defaults: { _controller: InouireMininetBundle:Default:posts }
+    
 album:
     pattern:  /album
     defaults: { _controller: InouireMininetBundle:Default:album }
