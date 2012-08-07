@@ -16,7 +16,7 @@
     <div class="row">
         <div class="span2">
     {% if post.published == true %}
-            <h3>{{ post.date | localeDate('long') }}</h3>
+            <h3>{{ post.date | localeDate(null,null,null,'dd MMM Y') }}</h3>
             <span class="label label-success">publié</span>
     {% else %}
             <h3>Aujourd'hui</h3>

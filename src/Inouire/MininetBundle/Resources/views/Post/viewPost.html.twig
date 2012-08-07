@@ -18,7 +18,7 @@
         </div>
         <div class="span6">
             <h3>{{ post.author }}</h3>
-            <p>{{ post.htmlcontent | raw }}</p> 
+            {{ post.htmlcontent | raw }} 
         </div>
         <div class="span4">
             <div id="comments-{{ post.id }}">

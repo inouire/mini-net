@@ -146,7 +146,7 @@ class Post{
      * Get content, with <br /> tags instead of carriage return
      */
     public function getHtmlContent(){
-        return str_replace("\n","<br />",$this->content);
+	return "<p>".str_replace("\n","</p>\n<p>",$this->content)."</p>";
     }
     
     /**
