@@ -63,7 +63,7 @@
     version=origin/2.0
 
 [FOSUserBundle]
-    git=git://github.com/FriendsOfSymfony/FOSUserBundle.git
+    git=http://github.com/FriendsOfSymfony/FOSUserBundle.git
     target=bundles/FOS/UserBundle
     version=v1.2.4
     
