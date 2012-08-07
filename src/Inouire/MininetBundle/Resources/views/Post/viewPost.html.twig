@@ -14,7 +14,7 @@
     
     <div class="row">
         <div class="span2">
-            <h3>{{ post.date | date("d M Y") }}</h3>
+            <h3>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h3>
         </div>
         <div class="span6">
             <h3>{{ post.author }}</h3>

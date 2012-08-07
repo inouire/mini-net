@@ -6,7 +6,7 @@
         
         <div class="row">
             <div class="span2">
-                <h3>{{ post.date | localeDate(null,null,null,'EEEE d MMM') }}</h3>
+                <h3>{{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}</h3>
                 {# TODO: animate this label 
                 <span class="label label-warning">nouveau</span> #}
             </div>
