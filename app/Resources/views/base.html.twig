@@ -27,7 +27,7 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="{{ path('home') }}">Mini-net</a>
+                    <a class="brand" href="{{ path('root') }}">Mini-net</a>
 
                     {% set currentPath = app.request.attributes.get('_route') %}
                     {% set classHome = '' %}
@@ -39,12 +39,12 @@
                     {% endif %}    
 
                     <!-- nav menu -->
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <ul class="nav">
                         <li class="{{ classHome }}"><a href="{{ path('home') }}">Accueil</a></li>
                         <li class="{{ classAlbum }}"><a href="{{ path('album') }}">Albums</a></li>
                     </ul>
-                    <ul class="nav pull-right">
+                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		     <ul class="nav pull-right">
                         <a class="btn btn-success" href="{{ path('new_post') }}">
                             Ajouter des nouvelles
                         </a>
