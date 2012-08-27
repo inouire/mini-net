@@ -160,7 +160,7 @@ class Post{
         $content = str_replace('/!\\','<i class="icon-warning-sign"></i>',$content);
         
         //add horizontal separator
-        $content = preg_replace('/([-]{3}[-]+)/i','<hr>',$content);
+        $content = preg_replace('/([-]{3}[-]+)/i','--------------------------------------------------',$content);
         
         //add star
         $content = str_replace('*','<i class="icon-asterisk"></i>',$content);
