@@ -143,10 +143,22 @@ class Post{
     }
 
     /**
-     * Get content, with <br /> tags instead of carriage return
+     * Get content of the post, with html enhancements
      */
     public function getHtmlContent(){
-	return str_replace("\n","<br />",$this->content);
+        
+        //remove opening braces
+        $content = str_replace('<','',$this->content);
+
+        //replace hyperlinks (but doesn't check link validity at all)
+        $hyperlink_pattern = '/((http|https):\/\/[^\s]+)/i';
+        $hyperlink = '<a href="$1">$1</a>';
+        $content = preg_replace($hyperlink_pattern, $hyperlink, $content);
+
+        //replace carriage return
+        $content = str_replace("\n","<br />",$content);
+        
+        return $content;
     }
     
     /**
