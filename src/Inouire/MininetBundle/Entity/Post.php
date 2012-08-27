@@ -147,9 +147,21 @@ class Post{
      */
     public function getHtmlContent(){
         
-        //remove opening braces
-        $content = str_replace('<','',$this->content);
-
+        //retrieve plain content
+        $content = $this->content;
+        
+        //remove opening braces (security)
+        $content = str_replace('<','',$content);
+        
+        //add arrows
+        $content = str_replace(array('->','=>'),'<i class="icon-arrow-right"></i>',$content);
+        
+        //add warning sign
+        $content = str_replace('/!\\','<i class="icon-warning-sign"></i>',$content);
+        
+        //add star
+        $content = str_replace('*','<i class="icon-asterisk"></i>',$content);
+        
         //replace hyperlinks (but doesn't check link validity at all)
         $hyperlink_pattern = '/((http|https):\/\/[^\s]+)/i';
         $hyperlink = '<a href="$1">$1</a>';
