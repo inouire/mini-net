@@ -19,16 +19,24 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
         
-        //retrieve last 12 published posts from database
+        //retrieve last 6 published posts from database
         $post_list = $post_repo->findBy(
             array('published' => true),
             array('date' => 'desc'),
-            12,
+            6,
             0
+        );
+        
+        $post_secondary_list = $post_repo->findBy(
+            array('published' => true),
+            array('date' => 'desc'),
+            6,
+            6
         );
 
         return $this->render('InouireMininetBundle:Default:home.html.twig',array(
-            'post_list'=> $post_list
+            'post_list'=> $post_list,
+            'post_secondary_list' => $post_secondary_list
         ));
     }
     

@@ -6,17 +6,16 @@
         
         <div class="row">
             <div class="span2">
-                <h3>{{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}</h3>
-                {# TODO: animate this label 
-                <span class="label label-warning">nouveau</span> #}
+                <h4>{{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}</h4>
+                {# TODO: animate this label <span class="label label-warning">nouveau</span> #}
             </div>
             <div class="span6">
-                <h3>
+                <h4>
                     <a href="{{ path('view_post',{'post_id':post.id }) }}" >{{ post.author }}</a>
         {% if post.author == app.user.username %}
                     <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
         {% endif %}                
-                </h3>
+                </h4>
 
                 <p>{{ post.htmlcontent | raw }}</p>
  
@@ -51,6 +50,30 @@
         
     {% endfor %}
         
+    <div class="row">
+    {% for post in post_secondary_list %}
+    
+    
+        <div class="span4">
+            <h4>
+                <a href="{{ path('view_post',{'post_id':post.id }) }}" >
+        {{ post.author }} - 
+        {{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}
+                </a>
+                {% if post.comments != null %}
+                <span class="badge badge-info pull-right">{{ post.comments | length }}</span>
+                {% endif %}
+            </h4>
+            
+            <p>{{ post.htmlcontent | raw }}</p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+      
+    {% endfor %}
+    </div>
+    
     {#    
     <div class="row">
         <div class="span2">
@@ -144,34 +167,7 @@
     
     <hr>
     #}
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="span4">
-          <h2>28/11/11<span class="badge badge-info pull-right">4</span></h2>
-            
-           <p>Donec id elit non mi porta gravida at eget metus. Fusce 
-dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
-fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
-mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details »</a></p>
-        </div>
-        <div class="span4">
-          <h2>Heading <span class="badge pull-right">0</span></h2>
-           <p>Donec id elit non mi porta gravida at eget metus. Fusce 
-dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
-fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
-mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn" href="#">View details »</a></p>
-       </div>
-        <div class="span4">
-          <h2>Heading <span class="badge badge-info pull-right">2</span></h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis 
-in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. 
-Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
- ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#">View details »</a></p>
-        </div>
-      </div>
+      
 
 {% endblock %}
 
