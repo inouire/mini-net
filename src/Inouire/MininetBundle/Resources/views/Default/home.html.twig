@@ -12,9 +12,9 @@
             <div class="span6">
                 <h4>
                     <a href="{{ path('view_post',{'post_id':post.id }) }}" >{{ post.author }}</a>
-        {% if post.author == app.user.username %}
+                {% if post.author == app.user.username %}
                     <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
-        {% endif %}                
+                {% endif %}                
                 </h4>
 
                 <p>{{ post.htmlcontent | raw }}</p>
@@ -36,11 +36,13 @@
                     </div>
             {% endif %}
         {% endfor %}
+                
                 </div>
                 <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
                     <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
                         <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
                     </div>
+                    <img id="comment-wheel-{{ post.id }}" src="/lightbox/images/loading_small.gif" style="display: none"/>
                     <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
                 </form>   
             </div>
@@ -215,7 +217,10 @@
                     e.target.innerHTML="Envoyer »";
                     comment_input.focus();
                 }else{
+                    
                     $('#comment-block-'+post_id).fadeOut(100);
+                    $('#comment-wheel-'+post_id).fadeIn(100);
+                    e.target.innerHTML='<img src="/public/lightbox/images/loading_small.gif"/>';
                     e.target.innerHTML="Commenter";
                     var current_form = document.getElementById('comment-form-'+post_id);
                     console.log("Making POST request");
@@ -232,6 +237,7 @@
                                 comments.innerHTML += '<div class=\"alert alert-success\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
                                 var comment = document.getElementById('comment-'+data.comment.id);
                                 $('#comment-'+data.comment.id).fadeIn(100);
+                                $('#comment-wheel-'+post_id).fadeOut(100);
                                 comment.addEventListener('click', deleteCommentListener, false);
                             }
                             
