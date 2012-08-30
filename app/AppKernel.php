@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new BCC\ExtraToolsBundle\BCCExtraToolsBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
             new Inouire\MininetBundle\InouireMininetBundle(),
             new Inouire\UserBundle\InouireUserBundle(),
         );

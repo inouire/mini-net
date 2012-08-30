@@ -28,6 +28,18 @@ services:
         tags:
             -  { name: twig.extension }
             
+# Image manipulation configuration
+liip_imagine:
+    filter_sets:
+        small_thumb:
+            quality: 95
+            filters:
+                thumbnail: { size: [180, 120], mode: outbound }
+        big_thumb:
+            quality: 95
+            filters:
+                thumbnail: { size: [360, 240], mode: outbound }
+                
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
