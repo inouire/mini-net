@@ -59,7 +59,7 @@
                 {% for image in post.images %}
                 <li class="span2" id="image-{{image.id}}">
                     <button class="close delete-image-button" id="{{image.id}}">&times;</button>
-                    <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                    <a href="{{ image.webpath  | imagine_filter('maxi_size') }}" class="thumbnail" rel="lightbox[{{post.id}}]">
                          <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
                     </a>
                 </li>

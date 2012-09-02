@@ -1,4 +1,6 @@
 /web/bundles/
+/web/img/
+/web/media/
 /app/bootstrap*
 /app/cache/*
 /app/logs/*
