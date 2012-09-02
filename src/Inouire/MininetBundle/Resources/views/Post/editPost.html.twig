@@ -16,10 +16,10 @@
     <div class="row">
         <div class="span2">
     {% if post.published == true %}
-            <h3>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h3>
+            <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
             <span class="label label-success">publié</span>
     {% else %}
-            <h3>Aujourd'hui</h3>
+            <h4>Aujourd'hui</h4>
             <span class="label label-warning">non publié</span>
     {% endif %}
             
@@ -39,40 +39,32 @@
         </div>
     </div>
     
-    <hr>
-    {#
+    <center>
+        <a href="{{ path('form_image',{'post_id': post.id })}}" class="btn btn-primary" id="picture-button">
+            <i class="icon-picture icon-white"></i> Ajouter une photo
+        </a>
+        <br /><br />
+    </center>
+    
+    {% if post.hasImages %}
     <div class="row">
-        <div class="span10 offset2">
+        <div class="span8 offset2">
             <ul class="thumbnails">
+                {% for image in post.images %}
                 <li class="span2">
-                    <button class="close delete-comment" id="798">&times;</button>
-                    <a href="./img/101.jpg" class="thumbnail" rel="lightbox[111]">
-                        <img src="./img/101.jpg" alt="">
+                    <button class="close delete-image" id="image.id">&times;</button>
+                    <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                         <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
                     </a>
                 </li>
-                <li class="span2">
-                    <button class="close delete-comment" id="798">&times;</button>
-                    <a href="./img/102.jpg" class="thumbnail" rel="lightbox[111]">
-                        <img src="./img/102.jpg" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <button class="close delete-comment" id="798">&times;</button>
-                    <a href="./img/104.jpg" class="thumbnail" rel="lightbox[111]">
-                        <img src="./img/104.jpg" alt="">
-                    </a>
-                </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
-    #}
-    <div class="row">
-        <div class="span12">
-            <center>
-                <button class="btn btn-primary" disabled id="picture-button"><i class="icon-picture icon-white"></i> Ajouter une photo</button>
-            </center>
-        </div>
-    </div>
+    {% endif %}
+    
+                
+
 {% endblock %}
 
 {% block javascripts %}

@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 
+
+
 {% block body %}
     
     {% for post in post_list %}
@@ -13,7 +15,7 @@
             
             <div class="span6">
                 <h4>
-                    <a href="{{ path('view_post',{'post_id':post.id }) }}" >{{ post.author }}</a>
+                    <a href="{{ path('view_post',{'post_id': post.id }) }}" >{{ post.author }}</a>
                 {% if post.author == app.user.username %}
                     <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
                 {% endif %}                
@@ -51,7 +53,6 @@
             
             <div class="span4">
 
-        
             {% if post.hasImages %}
                 {% for image in post.images %}
                     <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
@@ -114,10 +115,6 @@
     </div>
     
         
-
-    
-      
-
 {% endblock %}
 
 {% block javascripts %}
