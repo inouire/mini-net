@@ -40,9 +40,15 @@
     </div>
     
     <center>
-        <a href="{{ path('form_image',{'post_id': post.id })}}" class="btn btn-primary" id="picture-button">
+        <button class="btn btn-primary" id="add-image-button">
             <i class="icon-picture icon-white"></i> Ajouter une photo
-        </a>
+        </button>
+        <form action="{{ path('add_image') }}" id="image-upload-form" method="post" {{ form_enctype(form) }} style="display: none">
+            {{ form_errors(form) }}
+            {{ form_row(form.file) }}
+            {{ form_rest(form) }}
+            <input type="submit" />
+        </form>
         <br /><br />
     </center>
     
@@ -138,6 +144,11 @@
                 }
             }
             
+            function addImageListener(e){
+                console.log("Add image clicked");
+                $('#image-upload-form').fadeIn(400);
+            }
+            
             function deleteImageListener(e){
                 console.log("Delete image clicked");
                 var image_id = e.target.id;
@@ -165,6 +176,9 @@
     {% endif %}
                 
             document.getElementById("publish-button").addEventListener('click', publishPostListener, false);
+            
+            //adding listener on upload image button
+            document.getElementById("add-image-button").addEventListener('click', addImageListener, false);
             
             //adding listener on all delete image buttons
             var delete_images_buttons = document.querySelectorAll(".delete-image-button");

@@ -13,22 +13,6 @@ use Symfony\Component\HttpFoundation\File\File;
 class ImageController extends Controller
 {
     
-    public function formImageAction($post_id){
-        
-        //create form for this post
-        $image = new Image();
-        $image->post_id = $post_id;
-        
-        $form = $this->createFormBuilder($image)
-            ->add('file','file')
-            ->add('post_id','hidden')
-            ->getForm();
-            
-        return $this->render('InouireMininetBundle:Default:imageForm.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-    
     public function addImageAction(){
         
         $image = new Image();

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\Comment;
+use Inouire\MininetBundle\Entity\Image;
 
 class PostController extends Controller
 {
@@ -90,8 +91,19 @@ class PostController extends Controller
                 'post_id' => $post->getId()
             )));  
         }else{
+            
+            //create form for image (event if it is hided)
+            $image = new Image();
+            $image->post_id = $post_id;
+            
+            $form = $this->createFormBuilder($image)
+                ->add('file','file')
+                ->add('post_id','hidden')
+                ->getForm();
+        
             return $this->render('InouireMininetBundle:Post:editPost.html.twig',array(
-                'post'=> $post
+                'post'=> $post,
+                'form' => $form->createView(),
             ));
         }
         

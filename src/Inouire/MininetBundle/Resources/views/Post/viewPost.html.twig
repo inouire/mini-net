@@ -14,10 +14,10 @@
     
     <div class="row">
         <div class="span2">
-            <h3>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h3>
+            <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
         </div>
         <div class="span6">
-            <h3>{{ post.author }}</h3>
+            <h4>{{ post.author }}</h4>
             {{ post.htmlcontent | raw }} 
         </div>
         <div class="span4">
@@ -47,31 +47,6 @@
     </div>  
     
     <hr>
-    
-    <div class="row">
-        <div class="span10 offset2">
-            <ul class="thumbnails">
-                <li class="span2">
-                    <button class="close delete-comment" id="798">&times;</button>
-                    <a href="./img/101.jpg" class="thumbnail" rel="lightbox[111]">
-                        <img src="./img/101.jpg" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <button class="close delete-comment" id="798">&times;</button>
-                    <a href="./img/102.jpg" class="thumbnail" rel="lightbox[111]">
-                        <img src="./img/102.jpg" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <button class="close delete-comment" id="798">&times;</button>
-                    <a href="./img/104.jpg" class="thumbnail" rel="lightbox[111]">
-                        <img src="./img/104.jpg" alt="">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
 
 {% endblock %}
 

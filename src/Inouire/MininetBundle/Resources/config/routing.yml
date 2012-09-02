@@ -70,13 +70,6 @@ delete_comment:
     defaults: { _controller: InouireMininetBundle:Comment:deleteComment }
 
 #routes for actions on images
-form_image:
-    pattern:  /post/{post_id}/image
-    requirements:
-        post_id:  \d+
-        _method:  GET
-    defaults: { _controller: InouireMininetBundle:Image:formImage }   
-
 add_image:
     pattern:  /image
     requirements:
