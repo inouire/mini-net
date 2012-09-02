@@ -58,7 +58,7 @@
                     {% if post.images|length == 1 %}
                         {% for image in post.images %}
                         <li class="span4">
-                            <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                            <a href="{{ image.webpath | imagine_filter('maxi_size') }}" class="thumbnail" rel="lightbox[{{post.id}}]">
                                  <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
                             </a>
                         </li>
