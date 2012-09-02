@@ -5,10 +5,12 @@
     {% for post in post_list %}
         
         <div class="row">
+        
             <div class="span2">
                 <h4>{{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}</h4>
                 {# TODO: animate this label <span class="label label-warning">nouveau</span> #}
             </div>
+            
             <div class="span6">
                 <h4>
                     <a href="{{ path('view_post',{'post_id':post.id }) }}" >{{ post.author }}</a>
@@ -18,25 +20,60 @@
                 </h4>
 
                 <p>{{ post.htmlcontent | raw }}</p>
- 
-            </div>
-            <div class="span4">
-                <div id="comments-{{ post.id }}">
-        {% for comment in post.comments %}
-            {% if comment.author == app.user.username %}
-                    <div class="alert alert-success" id="comment-{{comment.id}}">
-                        <strong>{{ comment.author }}: </strong>
-                        {{ comment.content }}
-                        <button class="close delete-comment" id="{{comment.id}}">&times;</button>
-                    </div>
-            {% else %}
-                    <div class="alert alert-info">
-                        <strong>{{ comment.author }}: </strong>
-                        {{ comment.content }}
-                    </div>
-            {% endif %}
-        {% endfor %}
                 
+                {% if post.hasImages %}
+                    <div id="comments-{{ post.id }}">
+                    {% for comment in post.comments %}
+                        {% if comment.author == app.user.username %}
+                            <div class="alert alert-success" id="comment-{{comment.id}}">
+                                <strong>{{ comment.author }}: </strong>
+                                {{ comment.content }}
+                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <strong>{{ comment.author }}: </strong>
+                                {{ comment.content }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                    <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
+                        <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
+                            <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
+                        </div>
+                        <img id="comment-wheel-{{ post.id }}" src="/lightbox/images/loading_small.gif" style="display: none"/>
+                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                    </form>  
+                {% endif %}
+                
+            </div>
+            
+            <div class="span4">
+
+        
+            {% if post.hasImages %}
+                {% for image in post.images %}
+                    <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
+                    </a>
+                {% endfor %}
+            {% else %}
+                <div id="comments-{{ post.id }}">
+                    {% for comment in post.comments %}
+                        {% if comment.author == app.user.username %}
+                            <div class="alert alert-success" id="comment-{{comment.id}}">
+                                <strong>{{ comment.author }}: </strong>
+                                {{ comment.content }}
+                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <strong>{{ comment.author }}: </strong>
+                                {{ comment.content }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
                     <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
@@ -44,7 +81,8 @@
                     </div>
                     <img id="comment-wheel-{{ post.id }}" src="/lightbox/images/loading_small.gif" style="display: none"/>
                     <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-                </form>   
+                </form>  
+            {% endif %}
             </div>
         </div>
     
@@ -54,7 +92,6 @@
         
     <div class="row">
     {% for post in post_secondary_list %}
-    
     
         <div class="span4">
             <h4>
@@ -76,99 +113,9 @@
     {% endfor %}
     </div>
     
-    {#    
-    <div class="row">
-        <div class="span2">
-            <h3>Entry date</h3> 
-            <span class="label label-warning">new</span>
-        </div>
-        <div class="span6">
-            <button class="close">&times;</button>
-            <h3>Author</h3>
-            <p>Entry content blabla</p>
-            
-            <div class="alert alert-info"><strong>Commenter#1: </strong>a comment</div>
-            <div class="alert alert-info"><strong>Commenter#2: </strong>another comment</div>
-            <div class="alert alert-success"><strong>Author: </strong>response<button class="close">&times;</button></div>
-            <form class="form-inline pull-right">
-                <div class="input-prepend">
-                    <span class="add-on">Author:</span><input class="input-xlarge" id="prependedInput" size="16" type="text" placeholder="mon commentaire">
-                  </div>
-                <button type="submit" class="btn">Commenter »</button>
-            </form>         
-        </div>
         
-        <div class="span4">
-            <ul class="thumbnails">
-                <li class="span2">
-                    <a href="http://placehold.it/260x180" class="thumbnail" rel="lightbox[111]">
-                        <img src="http://placehold.it/260x180" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <a href="http://placehold.it/260x180" class="thumbnail" rel="lightbox[111]">
-                        <img src="http://placehold.it/260x180" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <a href="http://placehold.it/260x180" class="thumbnail" rel="lightbox[111]">
-                        <img src="http://placehold.it/260x180" alt="">
-                    </a>
-                </li>
-                <li class="span2">
-                    <a href="http://placehold.it/260x180" class="thumbnail" rel="lightbox[111]">
-                        <img src="http://placehold.it/260x180" alt="">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+
     
-    <div class="row">
-        <div class="span10 offset2">
-            <hr>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="span2">
-            <span class="label label-warning">nouveau</span>
-        </div>
-        <div class="span6">
-            <h3>Author</h3>
-            <p>Another entry content</p>
-        </div>
-        <div class="span4">
-            <div class="alert alert-info"><strong>Commenter: </strong>comment blah</div>
-            <div class="alert alert-success"><strong>Author: </strong>comment blah blah</div>
-            <p class="pull-right"><a class="btn" href="#">Commenter »</a></p>
-        </div>
-    </div>
-    
-    <hr>
-    
-    <div class="row">
-        <div class="span2">
-            <h3>Another date</h3>
-        </div>
-        <div class="span6">
-            <h3>Author</h3>
-            <p>bla bla bla, bli ?</p>
-            <p class="pull-right"><a class="btn" href="#">Commenter »</a></p>
-        </div>
-        <div class="span4">
-            <ul class="thumbnails">
-                <li class="span4">
-                    <a href="http://placehold.it/260x180" class="thumbnail" rel="lightbox">
-                        <img src="http://placehold.it/260x180" alt="">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
-    <hr>
-    #}
       
 
 {% endblock %}

@@ -52,6 +52,11 @@ class Post{
      * @ORM\OneToMany(targetEntity="Inouire\MininetBundle\Entity\Comment", mappedBy="post")
      */
     private $comments;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Inouire\MininetBundle\Entity\Image", mappedBy="post")
+     */
+    private $images;
 
     /**
      * @var boolean $published
@@ -88,6 +93,21 @@ class Post{
     public function addComment(\Inouire\MininetBundle\Entity\Comment $comment){
         $this->comments[] = $comment;
         $comment->setPost($this);
+    }
+    
+    /**
+     * Get all the images attached to this post
+     */
+    public function getImages(){
+        return $this->images;
+    }
+
+    /**
+     * Add an image to this post
+     */
+    public function addImage(\Inouire\MininetBundle\Entity\Image $image){
+        $this->images[] = $image;
+        $image->setPost($this);
     }
     
     /**
@@ -142,6 +162,16 @@ class Post{
         return $this->content;
     }
 
+    /**
+     * Check if the post has one or more images associated
+     */
+    public function getHasImages(){
+        if(count($this->images) > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * Get content of the post, with html enhancements
      */

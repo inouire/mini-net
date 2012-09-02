@@ -68,4 +68,27 @@ delete_comment:
         _method:  DELETE
         _format:  json
     defaults: { _controller: InouireMininetBundle:Comment:deleteComment }
-    
+
+#routes for actions on images
+form_image:
+    pattern:  /post/{post_id}/image
+    requirements:
+        post_id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Image:formImage }   
+
+add_image:
+    pattern:  /image
+    requirements:
+        _method:  POST
+    defaults: { _controller: InouireMininetBundle:Image:addImage }   
+
+get_image:
+    pattern:  /image/{image_id}
+    requirements:
+        image_id:  \d+
+    defaults: { _controller: InouireMininetBundle:Image:getImage }   
+
+test_form:
+    pattern:  /test/form
+    defaults: { _controller: InouireMininetBundle:Image:new }   

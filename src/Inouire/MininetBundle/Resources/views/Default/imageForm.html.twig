@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<center>
+    <form action="{{ path('add_image') }}" method="post" {{ form_enctype(form) }}>
+        
+        {{ form_errors(form) }}
+
+        {{ form_row(form.file) }}
+
+        {{ form_rest(form) }}
+        
+        <input type="submit" />
+    </form>
+</center>
+
+{% endblock %}
