@@ -54,11 +54,26 @@
             <div class="span4">
 
             {% if post.hasImages %}
-                {% for image in post.images %}
-                    <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
-                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
-                    </a>
-                {% endfor %}
+                <ul class="thumbnails">
+                    {% if post.images|length == 1 %}
+                        {% for image in post.images %}
+                        <li class="span4">
+                            <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                                 <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
+                            </a>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        {% for image in post.images %}
+                        <li class="span2">
+                            <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                                 <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
+                            </a>
+                        </li>
+                        {% endfor %}
+                    {% endif %}
+                    
+                </ul>
             {% else %}
                 <div id="comments-{{ post.id }}">
                     {% for comment in post.comments %}

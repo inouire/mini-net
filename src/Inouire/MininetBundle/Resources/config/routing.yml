@@ -87,8 +87,12 @@ get_image:
     pattern:  /image/{image_id}
     requirements:
         image_id:  \d+
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Image:getImage }   
 
-test_form:
-    pattern:  /test/form
-    defaults: { _controller: InouireMininetBundle:Image:new }   
+delete_image:
+    pattern:  /image/{image_id}
+    requirements:
+        image_id:  \d+
+        _method:  DELETE
+    defaults: { _controller: InouireMininetBundle:Image:deleteImage }   

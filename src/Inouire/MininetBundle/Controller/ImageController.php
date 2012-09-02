@@ -85,5 +85,43 @@ class ImageController extends Controller
         
     }
     
+    /*
+     * Controller for delete action on an image
+     */ 
+    public function deleteImageAction($image_id){
+        
+        //get entity manager
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        //get image
+        $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
+        
+        //get current user
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        
+        //check that this image exists and that it belongs to this user
+        if($image==null ){
+            $response_status = 'error';
+            $response_message = 'image '.$image_id.' does not exist';
+        }else if( $image->getPost()->getAuthor() != $user){
+            $response_status = 'error';
+            $response_message = 'image '.$image_id.' does not belong to you';
+        } else {
+            //delete image
+            $em->remove($image);
+            $response_status = 'ok';
+            $response_message = 'image '.$image_id.' has been deleted';
+  
+            //persit changes in the database
+            $em->flush();
+        }
+        
+        //render json response
+        return $this->render('InouireMininetBundle:Post:ajaxResponse.json.twig',array(
+            'status'=> $response_status,
+            'message' => $response_message
+        ));
+    }
+    
     
 }

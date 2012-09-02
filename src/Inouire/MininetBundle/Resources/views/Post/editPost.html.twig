@@ -51,8 +51,8 @@
         <div class="span8 offset2">
             <ul class="thumbnails">
                 {% for image in post.images %}
-                <li class="span2">
-                    <button class="close delete-image" id="image.id">&times;</button>
+                <li class="span2" id="image-{{image.id}}">
+                    <button class="close delete-image-button" id="{{image.id}}">&times;</button>
                     <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
                          <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
                     </a>
@@ -63,8 +63,6 @@
     </div>
     {% endif %}
     
-                
-
 {% endblock %}
 
 {% block javascripts %}
@@ -117,7 +115,6 @@
                 e.preventDefault();
                 var post_id = e.target.parentNode.id;
                 updatePostAjax(post_id,1);
-    
             }
             
             function deletePostListener(e){
@@ -141,6 +138,26 @@
                 }
             }
             
+            function deleteImageListener(e){
+                console.log("Delete image clicked");
+                var image_id = e.target.id;
+                if(confirm("Êtes vous sur de vouloir supprimer cette photo ?")){
+                    $.ajax({
+                        url : '/image/'+image_id,
+                        type : 'DELETE',
+                        dataType : 'json',
+                        success : function(data, statut){
+                            console.log("Axaj call has been a success");
+                            console.log(data);
+                            $('#image-'+image_id).fadeOut(400);
+                        },
+                        error : function(data, statut, error){
+                            console.log("Error during ajax call");
+                        },
+                    });
+                }
+            }
+            
     {% if post.published == true %}
             document.getElementById("delete-button").addEventListener('click', deletePostListener, false);
     {% else %}
@@ -148,6 +165,12 @@
     {% endif %}
                 
             document.getElementById("publish-button").addEventListener('click', publishPostListener, false);
+            
+            //adding listener on all delete image buttons
+            var delete_images_buttons = document.querySelectorAll(".delete-image-button");
+            for(var k=0;k<delete_images_buttons.length;k++){
+                delete_images_buttons[k].addEventListener('click', deleteImageListener, false);
+            }
 
         });
     </script>
