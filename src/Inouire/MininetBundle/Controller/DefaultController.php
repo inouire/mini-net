@@ -4,6 +4,7 @@ namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Inouire\MininetBundle\Entity\Post;
+use Inouire\MininetBundle\Entity\Image;
 use Inouire\MininetBundle\Entity\Comment;
 
 class DefaultController extends Controller
@@ -55,7 +56,19 @@ class DefaultController extends Controller
     }
     
     public function albumAction(){
-        return $this->render('InouireMininetBundle:Default:album.html.twig');
+        
+        //get entity manager and image repository
+        $em = $this->getDoctrine()->getEntityManager();
+        $image_repo = $em->getRepository('InouireMininetBundle:Image');
+        
+        $image_list = $image_repo->findBy(
+            array(),
+            array('id' => 'desc')
+        );
+        
+        return $this->render('InouireMininetBundle:Default:album.html.twig',array(
+            'image_list' => $image_list
+        ));
     }
     
     
