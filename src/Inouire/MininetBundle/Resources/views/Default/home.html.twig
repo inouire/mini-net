@@ -1,10 +1,42 @@
 {% extends '::base.html.twig' %}
 
 
-
 {% block body %}
     
     {% for post in post_list %}
+        
+        
+        {% if post.hasImages %}
+            {% if post.images|length == 1 %}
+                {% set contentWidth = 'span6' %}
+                {% set imagesWidth = 'span4' %}
+                {% set thumbWidth = 'span4' %}
+                {% set thumbSize = 'big_thumb' %}
+            {% elseif post.images|length == 2 %}
+                {% set contentWidth = 'span4' %}
+                {% set imagesWidth = 'span6' %}
+                {% set thumbWidth = 'span3' %}
+                {% set thumbSize = 'big_thumb' %}
+            {% elseif  post.images|length == 3 %}
+                {% set contentWidth = 'span4' %}
+                {% set imagesWidth = 'span6' %}
+                {% set thumbWidth = 'span2' %}
+                {% set thumbSize = 'small_thumb' %}
+            {% elseif  post.images|length == 4 %}
+                {% set contentWidth = 'span6' %}
+                {% set imagesWidth = 'span4' %}
+                {% set thumbWidth = 'span2' %}
+                {% set thumbSize = 'small_thumb' %}
+            {% else %}
+                {% set contentWidth = 'span4' %}
+                {% set imagesWidth = 'span6' %}
+                {% set thumbWidth = 'span2' %}
+                {% set thumbSize = 'small_thumb' %}
+            {% endif %} 
+        {% else %}
+            {% set contentWidth = 'span6' %}
+            {% set imagesWidth = 'span4' %}
+        {% endif %}    
         
         <div class="row">
         
@@ -13,7 +45,7 @@
                 {# TODO: animate this label <span class="label label-warning">nouveau</span> #}
             </div>
             
-            <div class="span6">
+            <div class="{{ contentWidth }}">
                 <h4>
                     <a href="{{ path('view_post',{'post_id': post.id }) }}" >{{ post.author }}</a>
                 {% if post.author == app.user.username %}
@@ -25,20 +57,18 @@
                 
                 {% if post.hasImages %}
                     <div id="comments-{{ post.id }}">
-                    {% for comment in post.comments %}
-                        {% if comment.author == app.user.username %}
-                            <div class="alert alert-success" id="comment-{{comment.id}}">
-                                <strong>{{ comment.author }}: </strong>
-                                {{ comment.content }}
+                        {% for comment in post.comments %}
+                            {% if comment.author.id == post.author.id %}
+                                 <div class="alert alert-info very-close" id="comment-{{comment.id}}">
+                            {% else %}
+                                 <div class="alert alert-success very-close" id="comment-{{comment.id}}">
+                            {% endif %}
+                                  <strong>{{ comment.author }}: </strong>{{ comment.content }}
+                            {% if comment.author == app.user.username %}
                                 <button class="close delete-comment" id="{{comment.id}}">&times;</button>
-                            </div>
-                        {% else %}
-                            <div class="alert alert-info">
-                                <strong>{{ comment.author }}: </strong>
-                                {{ comment.content }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                                </div>
+                        {% endfor %}
                     </div>
                     <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
                         <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
@@ -51,46 +81,32 @@
                 
             </div>
             
-            <div class="span4">
-
+            <div class="{{ imagesWidth }}">
             {% if post.hasImages %}
                 <ul class="thumbnails">
-                    {% if post.images|length == 1 %}
-                        {% for image in post.images %}
-                        <li class="span4">
-                            <a href="{{ image.webpath | imagine_filter('maxi_size') }}" class="thumbnail" rel="lightbox[{{post.id}}]">
-                                 <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
-                            </a>
-                        </li>
-                        {% endfor %}
-                    {% else %}
-                        {% for image in post.images %}
-                        <li class="span2">
-                            <a href="{{ image.webpath | imagine_filter('maxi_size') }}" class="thumbnail" rel="lightbox[{{post.id}}]">
-                                 <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
-                            </a>
-                        </li>
-                        {% endfor %}
-                    {% endif %}
-                    
+                    {% for image in post.images %}
+                    <li class="{{ thumbWidth}}">
+                        <a href="{{ image.webpath | imagine_filter('maxi_size') }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                             <img src="{{ image.webpath | imagine_filter(thumbSize) }}" />
+                        </a>
+                    </li>
+                    {% endfor %}
                 </ul>
             {% else %}
                 <div id="comments-{{ post.id }}">
                     {% for comment in post.comments %}
-                        {% if comment.author == app.user.username %}
-                            <div class="alert alert-success" id="comment-{{comment.id}}">
-                                <strong>{{ comment.author }}: </strong>
-                                {{ comment.content }}
-                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
-                            </div>
+                        {% if comment.author.id == post.author.id %}
+                             <div class="alert alert-info very-close" id="comment-{{comment.id}}">
                         {% else %}
-                            <div class="alert alert-info">
-                                <strong>{{ comment.author }}: </strong>
-                                {{ comment.content }}
-                            </div>
+                             <div class="alert alert-success very-close" id="comment-{{comment.id}}">
                         {% endif %}
+                              <strong>{{ comment.author }}: </strong>{{ comment.content }}
+                        {% if comment.author == app.user.username %}
+                            <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                        {% endif %}
+                            </div>
                     {% endfor %}
-                </div>
+                    </div>
                 <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
                     <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
                         <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
@@ -103,7 +119,7 @@
         </div>
     
         <hr>
-        
+
     {% endfor %}
         
     <div class="row">
@@ -193,7 +209,7 @@
                                 console.log(data); 
                                 var comments = document.getElementById('comments-'+post_id);
                                 //insérer cet élément proprement... histoire de ne pas tout casser
-                                comments.innerHTML += '<div class=\"alert alert-success\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                comments.innerHTML += '<div class=\"alert very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
                                 var comment = document.getElementById('comment-'+data.comment.id);
                                 $('#comment-'+data.comment.id).fadeIn(100);
                                 $('#comment-wheel-'+post_id).fadeOut(100);

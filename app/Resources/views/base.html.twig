@@ -11,9 +11,17 @@
         {% block stylesheets %}
             <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
             <style type="text/css">
+                {# TODO relocate this in a dedicated css file #}
                 body {
                     padding-top: 60px;
                     padding-bottom: 40px;
+                }
+                .very-close{
+                    margin-top:3px;
+                    margin-bottom:3px;
+                    padding: 4px;
+                    padding-left: 8px;
+                    max-width: 100%;
                 }
             </style>
             <link href="{{ asset('lightbox/css/lightbox.css') }}" rel="stylesheet" />
