@@ -22,7 +22,7 @@ Install all the needed softwares:
 ``` bash
 $ apt-get install apache2
 $ apt-get install mysql-server
-$ apt-get install php5 php5-mysql php5-sqlite php-apc php5-intl
+$ apt-get install php5 php5-mysql php5-sqlite php-apc php5-intl php5-gd
 $ apt-get install git
 ```
 
@@ -34,6 +34,9 @@ $ git clone https://github.com/inouire/mini-net.git
 ```
 
 Copy app/config/parameters.ini.default to app/config/parameters.ini
+``` bash
+$ cp app/config/parameters.ini.default app/config/parameters.ini
+```
 Edit it with your database and locale settings
 
 Automatically get project dependencies with vendors script
@@ -65,15 +68,17 @@ Tip: if you intend to run a production environement, modifiy web/.htaccess like 
 </IfModule>
 ```
  
-Give your web server read access, and set write permission for web server on app/cache et app/logs
+Give your web server read access, and set write permission for web server on app/cache, app/logs and web directory
 ``` bash
 $ chgrp -R www-data *
 $ chmod g+rwx app/{cache,logs}
+$ chmod g+rwx web/*
 ```
 
 Edit /etc/php5/apache2/php.ini to set configuration recommended by Symfony
 * set date.timezone (for example Europe/Paris)
 * set short open tags to Off
+* set max upload size to 10M (only images need to be uploaded in mini-net)
 
 Restart your web server to take config into account
 
