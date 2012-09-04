@@ -8,7 +8,8 @@ use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
-
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
 
 class ImageController extends Controller
 {
@@ -54,6 +55,10 @@ class ImageController extends Controller
                 $em->persist($image);
                 $em->flush();
 
+                //automatic image resize (for low disk footprint)
+                //TODO handle errors
+                $this->resizeImage($image);
+                
                 return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
                 
             }   
@@ -64,8 +69,47 @@ class ImageController extends Controller
         }
     }
     
+    private function resizeImage($image){
+        
+        //open image
+        $imagine = new Imagine();
+        $image_to_resize = $imagine->open($image->getAbsolutePath());
+        
+        //compute new size
+        $actual_size = $image_to_resize->getSize();
+        //TODO should be wiser
+        $new_size = $actual_size->heighten(600);
+        
+        //resize and save to disk
+        $save_options = array('quality' => 95);
+        $image_to_resize->resize($new_size)
+                        ->save($image->getAbsolutePath(),$save_options);
+    }
+    
     public function getImageAction($image_id){
-
+        
+        $response_status = 'ok';
+        $response_message = 'it works';
+        
+        //get entity manager
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        //get image
+        $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
+        
+        //check that this image exists
+        if($image==null ){
+            $response_status = 'error';
+            $response_message = 'image '.$image_id.' does not exist';
+        } else {
+            //TODO stream image
+        }
+        
+        //render json response
+        return $this->render('InouireMininetBundle:Post:ajaxResponse.json.twig',array(
+            'status'=> $response_status,
+            'message' => $response_message
+        ));
         
     }
     
