@@ -75,15 +75,17 @@ class ImageController extends Controller
         $imagine = new Imagine();
         $image_to_resize = $imagine->open($image->getAbsolutePath());
         
-        //compute new size
+        //get actual size
         $actual_size = $image_to_resize->getSize();
-        //TODO should be wiser
-        $new_size = $actual_size->heighten(600);
         
-        //resize and save to disk
-        $save_options = array('quality' => 95);
-        $image_to_resize->resize($new_size)
-                        ->save($image->getAbsolutePath(),$save_options);
+        //if necessary, resize to a height of 600, and save to disk with the same name
+        if( $actual_size->getHeight() > 600 ){
+            $new_size = $actual_size->heighten(600);
+            $save_options = array('quality' => 90);
+            $image_to_resize->resize($new_size)
+                            ->save($image->getAbsolutePath(),$save_options);
+        }
+        
     }
     
     public function getImageAction($image_id){
