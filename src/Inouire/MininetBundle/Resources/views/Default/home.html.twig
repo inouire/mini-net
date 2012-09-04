@@ -59,9 +59,9 @@
                     <div id="comments-{{ post.id }}">
                         {% for comment in post.comments %}
                             {% if comment.author.id == post.author.id %}
+                                 <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
+			    {% else %}
                                  <div class="alert alert-info very-close" id="comment-{{comment.id}}">
-                            {% else %}
-                                 <div class="alert alert-success very-close" id="comment-{{comment.id}}">
                             {% endif %}
                                   <strong>{{ comment.author }}: </strong>{{ comment.content }}
                             {% if comment.author == app.user.username %}
@@ -95,15 +95,15 @@
             {% else %}
                 <div id="comments-{{ post.id }}">
                     {% for comment in post.comments %}
-                        {% if comment.author.id == post.author.id %}
-                             <div class="alert alert-info very-close" id="comment-{{comment.id}}">
-                        {% else %}
-                             <div class="alert alert-success very-close" id="comment-{{comment.id}}">
-                        {% endif %}
-                              <strong>{{ comment.author }}: </strong>{{ comment.content }}
-                        {% if comment.author == app.user.username %}
-                            <button class="close delete-comment" id="{{comment.id}}">&times;</button>
-                        {% endif %}
+			    {% if comment.author.id == post.author.id %}
+                                 <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
+                            {% else %}
+                                 <div class="alert alert-info very-close" id="comment-{{comment.id}}">
+                            {% endif %}
+                                  <strong>{{ comment.author }}: </strong>{{ comment.content }}
+                            {% if comment.author == app.user.username %}
+                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                            {% endif %} 
                             </div>
                     {% endfor %}
                     </div>
