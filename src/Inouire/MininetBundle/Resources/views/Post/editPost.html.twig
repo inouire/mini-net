@@ -57,11 +57,17 @@
         <div class="span9 offset2">
             <ul class="thumbnails">
                 {% for image in post.images %}
+                
                 <li class="span3" id="image-{{image.id}}">
-                    <button class="close delete-image-button" id="{{image.id}}">&times;</button>
-                    <a href="{{ image.webpath  }}" class="thumbnail" rel="lightbox[{{post.id}}]">
-                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
-                    </a>
+                    <!--<button class="close delete-image-button" id="{{image.id}}">&times;</button>-->
+                    
+                    <div class="thumbnail">
+                        <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
+                        <i class="icon-repeat" ></i>
+                        <div class="pull-right" >
+                            <i class="icon-trash delete-image-button" id="{{image.id}}"></i>
+                        </div>
+                    </div>
                 </li>
                 {% endfor %}
             </ul>

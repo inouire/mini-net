@@ -60,7 +60,7 @@
                         {% for comment in post.comments %}
                             {% if comment.author.id == post.author.id %}
                                  <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
-			    {% else %}
+                {% else %}
                                  <div class="alert alert-info very-close" id="comment-{{comment.id}}">
                             {% endif %}
                                   <strong>{{ comment.author }}: </strong>{{ comment.content }}
@@ -95,7 +95,7 @@
             {% else %}
                 <div id="comments-{{ post.id }}">
                     {% for comment in post.comments %}
-			    {% if comment.author.id == post.author.id %}
+                {% if comment.author.id == post.author.id %}
                                  <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
                             {% else %}
                                  <div class="alert alert-info very-close" id="comment-{{comment.id}}">
