@@ -11,7 +11,7 @@
             <ul class="thumbnails">
             {% for image in image_list %}
                 <li class="span2">
-                    <a href="{{ image.webpath | imagine_filter('maxi_size') }}" class="thumbnail" rel="lightbox[1]">
+                    <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[1]">
                          <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
                     </a>
                 </li>

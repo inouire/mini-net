@@ -24,7 +24,7 @@
     {% endif %}
             
         </div>
-        <div class="span8">
+        <div class="span9">
             <form method="post" action="#" id="{{ post.id }}">
     {% if post.published == true %}
                 <a href="#" class="btn btn-danger pull-left" id="delete-button"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a>
@@ -54,13 +54,13 @@
     
     {% if post.hasImages %}
     <div class="row">
-        <div class="span8 offset2">
+        <div class="span9 offset2">
             <ul class="thumbnails">
                 {% for image in post.images %}
-                <li class="span2" id="image-{{image.id}}">
+                <li class="span3" id="image-{{image.id}}">
                     <button class="close delete-image-button" id="{{image.id}}">&times;</button>
-                    <a href="{{ image.webpath  | imagine_filter('maxi_size') }}" class="thumbnail" rel="lightbox[{{post.id}}]">
-                         <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
+                    <a href="{{ image.webpath  }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
                     </a>
                 </li>
                 {% endfor %}
