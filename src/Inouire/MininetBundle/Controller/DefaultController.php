@@ -24,15 +24,15 @@ class DefaultController extends Controller
         $post_list = $post_repo->findBy(
             array('published' => true),
             array('date' => 'desc'),
-            6,
+            8,
             0
         );
         
         $post_secondary_list = $post_repo->findBy(
             array('published' => true),
             array('date' => 'desc'),
-            6,
-            6
+            3,
+            8
         );
 
         return $this->render('InouireMininetBundle:Default:home.html.twig',array(
@@ -57,17 +57,19 @@ class DefaultController extends Controller
     
     public function albumAction(){
         
-        //get entity manager and image repository
+        //get entity manager and Post repository
         $em = $this->getDoctrine()->getEntityManager();
-        $image_repo = $em->getRepository('InouireMininetBundle:Image');
+        $post_repo = $em->getRepository('InouireMininetBundle:Post');
         
-        $image_list = $image_repo->findBy(
+        //get all the posts
+        $post_list = $post_repo->findBy(
             array(),
-            array('id' => 'desc')
+            array('date'=>'asc')
         );
-        
+          
+        //render the automatic album
         return $this->render('InouireMininetBundle:Default:album.html.twig',array(
-            'image_list' => $image_list
+            'post_list' => $post_list,
         ));
     }
     
