@@ -158,7 +158,11 @@ class PostController extends Controller
                 //if first publication, set date to now
                 if( $is_published && !$post->getPublished() ){
                     $post->touchDate();
-                }
+                }else{
+					if( $post_content != $post->getContent() ){
+						$post->touchEditDate();
+					}
+				}
                //update content and status
                 $post->setContent($post_content);
                 $post->setPublished($is_published);

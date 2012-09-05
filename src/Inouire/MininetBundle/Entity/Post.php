@@ -15,6 +15,7 @@ class Post{
 
     public function __construct(){
         $this->date = new \Datetime();
+        $this->edit_date = new \Datetime();
         $this->published = false;
         $this->content = "";
     }
@@ -40,6 +41,13 @@ class Post{
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+    /**
+     * @var datetime $edit_date
+     *
+     * @ORM\Column(name="edit_date", type="datetime")
+     */
+    private $edit_date;
 
     /**
      * @var text $content
@@ -136,12 +144,38 @@ class Post{
     public function getDate(){
         return $this->date;
     }
+    
+	/**
+     * Set edit date
+     *
+     * @param datetime $date
+     */
+    public function setEditDate($edit_date){
+        $this->edit_date = $edit_date;
+    }
+
+    /**
+     * Get edit date
+     *
+     * @return datetime 
+     */
+    public function getEditDate(){
+        return $this->edit_date;
+    }
 
     /*
      * Set post date and time to now
      */
     public function touchDate(){
         $this->date = new \Datetime();
+        $this->edit_date = new \Datetime();
+    }
+    
+	/*
+     * Set post edit date and time to now
+     */
+    public function touchEditDate(){
+        $this->edit_date = new \Datetime();
     }
     
     /**
