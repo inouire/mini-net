@@ -145,7 +145,7 @@ class Post{
         return $this->date;
     }
     
-	/**
+    /**
      * Set edit date
      *
      * @param datetime $date
@@ -171,7 +171,7 @@ class Post{
         $this->edit_date = new \Datetime();
     }
     
-	/*
+    /*
      * Set post edit date and time to now
      */
     public function touchEditDate(){

@@ -42,6 +42,12 @@
             <div class="span2">
                 <h4>{{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}</h4>
                 {# TODO: animate this label <span class="label label-warning">nouveau</span> #}
+                
+                {% set publish_date = post.date | date('Ymd') %}
+                {% set edit_date = post.editDate | date('Ymd') %}
+                {% if edit_date - publish_date >= 1 %}
+                    <p class="muted">édité le {{ post.editDate | date('d/m/Y') }}</p>
+                {% endif %}
             </div>
             
             <div class="{{ contentWidth }}">
