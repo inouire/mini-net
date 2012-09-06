@@ -5,7 +5,7 @@
     {% set currentMonth = '0' %}
             
     {% for post in post_list %}
-        {% if post.published and post.hasImages %}
+        {% if post.hasImages %}
             {% set postMonth = post.date | date("Ym") %}
             {% if currentMonth < postMonth %}
                 {% if currentMonth != 0 %}

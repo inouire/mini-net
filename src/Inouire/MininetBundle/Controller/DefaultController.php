@@ -63,7 +63,7 @@ class DefaultController extends Controller
         
         //get all the posts
         $post_list = $post_repo->findBy(
-            array(),
+            array('published' => true),
             array('date'=>'asc')
         );
           
