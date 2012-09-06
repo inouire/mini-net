@@ -31,7 +31,7 @@
             {% endif %}
             {% for image in post.images %}
                 <li class="span2">
-                    <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{currentMonth}}]">
+                    <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{year}}]">
                          <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
                     </a>
                 </li>
