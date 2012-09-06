@@ -2,6 +2,14 @@
 
 {% block body %}
 
+    <div class="row">
+        <a href="{{ path('album',{'year':year-1 }) }}" class="pull-left"><<{{ year - 1}}</a>
+        <a href="{{ path('album',{'year':year+1 }) }}" class="pull-right">{{ year + 1}}>></a>
+        <center><h1>{{ year }}</h1></center>
+    </div>
+    
+    <hr>
+    
     {% set currentMonth = '0' %}
             
     {% for post in post_list %}
@@ -16,7 +24,7 @@
                 {% set currentMonth =  postMonth %}
                 <div class="row">
                     <div class="span2">
-                        <h4>{{post.date | localeDate('medium','none',null,'MMMM y') }}</h4> 
+                        <h4>{{post.date | localeDate('medium','none',null,'MMMM') }}</h4> 
                     </div>
                     <div class="span10">
                         <ul class="thumbnails">           

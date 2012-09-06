@@ -148,8 +148,8 @@ class PostController extends Controller
                 
                 //delete all images related to this post
                 foreach( $post->getImages() as $image ){
-					$em->remove($image);
-				}
+                    $em->remove($image);
+                }
                 
                 //delete post
                 $em->remove($post);
@@ -159,10 +159,10 @@ class PostController extends Controller
                 if( $is_published && !$post->getPublished() ){
                     $post->touchDate();
                 }else{
-					if( $post_content != $post->getContent() ){
-						$post->touchEditDate();
-					}
-				}
+                    if( $post_content != $post->getContent() ){
+                        $post->touchEditDate();
+                    }
+                }
                //update content and status
                 $post->setContent($post_content);
                 $post->setPublished($is_published);

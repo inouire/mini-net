@@ -14,10 +14,17 @@ posts:
         month: \d+
     defaults: { _controller: InouireMininetBundle:Default:posts }
     
-album:
-    pattern:  /album
-    defaults: { _controller: InouireMininetBundle:Default:album }
 
+#routes for actions on autmatic albums
+albums:
+    pattern:  /albums
+    defaults: { _controller: InouireMininetBundle:Album:viewCurrent }
+    
+album:
+    pattern:  /album/{year}
+    requirements:
+        year:  \d+
+    defaults: { _controller: InouireMininetBundle:Album:view }
 
 #routes for actions on posts
 view_post:
