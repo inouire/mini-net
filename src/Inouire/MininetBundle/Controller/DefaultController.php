@@ -31,7 +31,7 @@ class DefaultController extends Controller
         $post_secondary_list = $post_repo->findBy(
             array('published' => true),
             array('date' => 'desc'),
-            3,
+            6,
             8
         );
 

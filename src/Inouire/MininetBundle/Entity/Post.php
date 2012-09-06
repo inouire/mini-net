@@ -206,6 +206,7 @@ class Post{
             return false;
         }
     }
+
     /**
      * Get content of the post, with html enhancements
      */
@@ -238,6 +239,32 @@ class Post{
         $content = str_replace("\n","<br />",$content);
         
         return $content;
+    }
+    
+    /**
+     * Get a resume of the content of the post
+     */   
+    public function getResume() {
+        
+        //retrieve plain content
+        $content = $this->content;
+        $short_content = $content;
+        
+        $limit = 200;
+        $break=".";
+        $pad=" [...]";
+        
+        // return with no change if content is shorter than $limit
+        if(strlen($content) > $limit){
+            // is $break present between $limit and the end of the string?
+            if(false !== ($breakpoint = strpos($content, $break, $limit))) { 
+                if($breakpoint < strlen($content) - 1) { 
+                    $short_content = substr($content, 0, $breakpoint) . $pad; 
+                } 
+            } 
+        }
+        
+        return $short_content;
     }
     
     /**

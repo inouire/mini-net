@@ -77,7 +77,7 @@
                         {% if post.author.id == app.user.id %}
                             <button type="submit" class="btn comment-button my-post" id="{{ post.id }}">Commenter</button>
                         {% else %}
-							<button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                            <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
                         {% endif %}
                     </form>  
                 {% endif %}
@@ -98,7 +98,7 @@
             {% else %}
                 <div id="comments-{{ post.id }}">
                     {% for comment in post.comments %}
-							{% if comment.author.id == post.author.id %}
+                            {% if comment.author.id == post.author.id %}
                                  <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
                             {% else %}
                                  <div class="alert alert-info very-close" id="comment-{{comment.id}}">
@@ -115,11 +115,11 @@
                         <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
                     </div>
                     <img id="comment-wheel-{{ post.id }}" src="/lightbox/images/loading_small.gif" style="display: none"/>
-					{% if post.author.id == app.user.id %}
-						<button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-					{% else %}
-						<button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-					{% endif %}
+                    {% if post.author.id == app.user.id %}
+                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                    {% else %}
+                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                    {% endif %}
                 </form>  
             {% endif %}
             </div>
@@ -129,26 +129,33 @@
 
     {% endfor %}
         
+    {% set counter = 0 %}
+    
     <div class="row">
     {% for post in post_secondary_list %}
-    
-        <div class="span4">
-            <h4>
-                <a href="{{ path('view_post',{'post_id':post.id }) }}" >
-        {{ post.author }} - 
-        {{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}
-                </a>
-                {% if post.comments != null %}
-                <span class="badge badge-info pull-right">{{ post.comments | length }}</span>
-                {% endif %}
-            </h4>
-            
-            <p>{{ post.htmlcontent | raw }}</p>
-            <p>
-                <a class="btn" href="#">View details »</a>
-            </p>
+        {% if counter % 3 == 0 and counter != 0 %}
         </div>
-      
+        <hr>
+        <div class="row">
+        {% endif %}
+            <div class="span4">
+                <h4>
+                    {{ post.author }} - 
+                    {{ post.date | localeDate('medium','none',null,'d MMMM') }}
+                    <span class="pull-right">
+                    {% if post.images | length > 0 %}
+                        <span class="badge badge-success">{{ post.images | length }} <i class="icon-camera icon-white" ></i></span>
+                    {% endif %}
+                    {% if post.comments | length > 0 %}
+                        <span class="badge badge-info">{{ post.comments | length }} <i class="icon-comment icon-white" ></i></span>
+                    {% endif %}
+                    </span>
+                </h4>
+                
+                <p>{{ post.resume }}</p>
+                <p><a href="{{ path('view_post',{'post_id':post.id }) }}" class="pull-right">Lire la suite »</a></p>
+            </div>
+        {% set counter = counter + 1 %}
     {% endfor %}
     </div>
     
@@ -185,7 +192,7 @@
             }
             
             function commentListener(e){
-				
+                
                 e.preventDefault();
 
                 var post_id = e.target.id;
@@ -203,34 +210,34 @@
 
                     $('#comment-block-'+post_id).fadeOut(100);
                     if(comment_content.length == 0){
-						e.target.innerHTML="Commenter";
-					}else{
-						$('#comment-wheel-'+post_id).fadeIn(100);
-						e.target.innerHTML='<img src="/public/lightbox/images/loading_small.gif"/>';
-						var current_form = document.getElementById('comment-form-'+post_id);
-						console.log("Making POST request");
-						$.post(
-						   '/comment',
-						   { post_id: post_id, comment: comment_content },
-						   function(data, statut){
-								if(statut=="success"){
-									console.log("Axaj call has been a success");
-									console.log(statut);
-									console.log(data); 
-									var comments = document.getElementById('comments-'+post_id);
-									//insérer cet élément proprement... histoire de ne pas tout casser
-									comments.innerHTML += '<div class=\"alert very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
-									var comment = document.getElementById('comment-'+data.comment.id);
-									e.target.innerHTML="Commenter";
-									$('#comment-'+data.comment.id).fadeIn(100);
-									$('#comment-wheel-'+post_id).fadeOut(100);
-									comment.addEventListener('click', deleteCommentListener, false);
-								}
-								
-						   },'json'
-						);
-						current_form.reset();
-					}
+                        e.target.innerHTML="Commenter";
+                    }else{
+                        $('#comment-wheel-'+post_id).fadeIn(100);
+                        e.target.innerHTML='<img src="/public/lightbox/images/loading_small.gif"/>';
+                        var current_form = document.getElementById('comment-form-'+post_id);
+                        console.log("Making POST request");
+                        $.post(
+                           '/comment',
+                           { post_id: post_id, comment: comment_content },
+                           function(data, statut){
+                                if(statut=="success"){
+                                    console.log("Axaj call has been a success");
+                                    console.log(statut);
+                                    console.log(data); 
+                                    var comments = document.getElementById('comments-'+post_id);
+                                    //insérer cet élément proprement... histoire de ne pas tout casser
+                                    comments.innerHTML += '<div class=\"alert very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                    var comment = document.getElementById('comment-'+data.comment.id);
+                                    e.target.innerHTML="Commenter";
+                                    $('#comment-'+data.comment.id).fadeIn(100);
+                                    $('#comment-wheel-'+post_id).fadeOut(100);
+                                    comment.addEventListener('click', deleteCommentListener, false);
+                                }
+                                
+                           },'json'
+                        );
+                        current_form.reset();
+                    }
                     
                 }
                 
