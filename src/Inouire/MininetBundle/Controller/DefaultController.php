@@ -50,10 +50,32 @@ class DefaultController extends Controller
         //retrieve posts of the requested month
         $monthly_posts = $post_repo->getMonthlyPosts($year,$month);
         
-        return $this->render('InouireMininetBundle:Default:home.html.twig',array(
+        $current_month = new \Datetime($year.'-'.$month.'-01');
+        
+        $month_prev = $month - 1;
+        $year_prev = $year;
+        if($month_prev<1){
+            $month_prev = 12;
+            $year_prev = $year - 1; 
+        }
+        $prev_month = new \Datetime($year_prev.'-'.$month_prev.'-01');
+        
+        $month_next = $month + 1;
+        $year_next = $year;
+        if($month_next>12){
+            $month_next = 1;
+            $year_next = $year + 1; 
+        }
+        $next_month = new \Datetime($year_next.'-'.$month_next.'-01');
+
+        return $this->render('InouireMininetBundle:Default:posts.html.twig',array(
+            'current_month' => $current_month,
+            'prev_month' => $prev_month,
+            'next_month' => $next_month,
             'post_list'=> $monthly_posts
         ));
     }
+    
     
     public function albumAction(){
         

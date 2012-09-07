@@ -22,7 +22,7 @@ class PostRepository extends EntityRepository
         
         $qb->where('post.date BETWEEN :monthBeginning AND :monthEnd')
            ->setParameter('monthBeginning',  new \Datetime($year.'-'.$month.'-01'))
-           ->setParameter('monthEnd', new \Datetime($year.'-'.$month.'-31'))
+           ->setParameter('monthEnd', new \Datetime($year.'-'.$month.'-31 23:59:59'))
            ->orderBy('post.date', 'ASC');
         
         return $qb->getQuery()

@@ -24,11 +24,12 @@ class PostController extends Controller
             //TODO return a more accurate redirection
             return $this->redirect($this->generateUrl('home'));     
         }else{
-            return $this->render('InouireMininetBundle:Post:viewPost.html.twig',
-                array(
-                    'post'=> $post
-                )
-            );
+            $year = $post->getDate()->format('Y');
+            $month = $post->getDate()->format('m');
+            return $this->redirect($this->generateUrl('posts',array(
+                'year' => $year,
+                'month' => $month,
+            )).'#'.$post->getId()); 
         }
 
     }

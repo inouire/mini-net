@@ -1,0 +1,249 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+    
+
+    <div class="row">
+        <a href="{{ path('posts',{'year':prev_month|date('Y') , 'month': prev_month|date('m')}) }}" class="pull-left">{{ prev_month | localeDate('medium','none',null,'MMMM YYYY') }}</a>
+        <a href="{{ path('posts',{'year':next_month|date('Y') , 'month': next_month|date('m')}) }}" class="pull-right">{{ next_month | localeDate('medium','none',null,'MMMM YYYY') }}</a>
+        <center><h2>{{ current_month | localeDate('medium','none',null,'MMMM YYYY') }}</h2></center>
+    </div>
+    
+    <hr>
+    {% for post in post_list %}
+        
+        {% if post.hasImages %}
+            {% if post.images|length == 1 %}
+                {% set contentWidth = 'span6' %}
+                {% set imagesWidth = 'span4' %}
+                {% set thumbWidth = 'span4' %}
+                {% set thumbSize = 'big_thumb' %}
+            {% elseif post.images|length == 2 %}
+                {% set contentWidth = 'span4' %}
+                {% set imagesWidth = 'span6' %}
+                {% set thumbWidth = 'span3' %}
+                {% set thumbSize = 'big_thumb' %}
+            {% elseif  post.images|length == 3 %}
+                {% set contentWidth = 'span4' %}
+                {% set imagesWidth = 'span6' %}
+                {% set thumbWidth = 'span2' %}
+                {% set thumbSize = 'small_thumb' %}
+            {% elseif  post.images|length == 4 %}
+                {% set contentWidth = 'span6' %}
+                {% set imagesWidth = 'span4' %}
+                {% set thumbWidth = 'span2' %}
+                {% set thumbSize = 'small_thumb' %}
+            {% else %}
+                {% set contentWidth = 'span4' %}
+                {% set imagesWidth = 'span6' %}
+                {% set thumbWidth = 'span2' %}
+                {% set thumbSize = 'small_thumb' %}
+            {% endif %} 
+        {% else %}
+            {% set contentWidth = 'span6' %}
+            {% set imagesWidth = 'span4' %}
+        {% endif %}    
+        
+        
+        <div class="row">       
+            <a id="{{ post.id }}" class="anchoroffset"></a>
+            <div class="span2">
+                <h4>{{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}</h4>
+                {# TODO: animate this label <span class="label label-warning">nouveau</span> #}
+                
+                {% set publish_date = post.date | date('Ymd') %}
+                {% set edit_date = post.editDate | date('Ymd') %}
+                {% if edit_date - publish_date >= 1 %}
+                    <p class="muted">édité le {{ post.editDate | date('d/m/Y') }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="{{ contentWidth }}">
+            
+                <h4>
+                    <a href="{{ path('view_post',{'post_id': post.id }) }}" >{{ post.author }}</a>
+                {% if post.author == app.user.username %}
+                    <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
+                {% endif %}                
+                </h4>
+
+                <p>{{ post.htmlcontent | raw }}</p>
+                
+                {% if post.hasImages %}
+                    <div id="comments-{{ post.id }}">
+                        {% for comment in post.comments %}
+                            {% if comment.author.id == post.author.id %}
+                                 <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
+                            {% else %}
+                                 <div class="alert alert-info very-close" id="comment-{{comment.id}}">
+                            {% endif %}
+                                  <strong>{{ comment.author }}: </strong>{{ comment.content }}
+                            {% if comment.author.id == app.user.id %}
+                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                            {% endif %}
+                                </div>
+                        {% endfor %}
+                    </div>
+                    <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
+                        <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
+                            <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
+                        </div>
+                        <img id="comment-wheel-{{ post.id }}" src="/lightbox/images/loading_small.gif" style="display: none"/>
+                        {% if post.author.id == app.user.id %}
+                            <button type="submit" class="btn comment-button my-post" id="{{ post.id }}">Commenter</button>
+                        {% else %}
+                            <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                        {% endif %}
+                    </form>  
+                {% endif %}
+                
+            </div>
+            
+            <div class="{{ imagesWidth }}">
+            {% if post.hasImages %}
+                <ul class="thumbnails">
+                    {% for image in post.images %}
+                    <li class="{{ thumbWidth}}">
+                        <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                             <img src="{{ image.webpath | imagine_filter(thumbSize) }}" />
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div id="comments-{{ post.id }}">
+                    {% for comment in post.comments %}
+                            {% if comment.author.id == post.author.id %}
+                                 <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
+                            {% else %}
+                                 <div class="alert alert-info very-close" id="comment-{{comment.id}}">
+                            {% endif %}
+                                  <strong>{{ comment.author }}: </strong>{{ comment.content }}
+                            {% if comment.author.id == app.user.id %}
+                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                            {% endif %} 
+                            </div>
+                    {% endfor %}
+                    </div>
+                <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
+                    <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
+                        <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
+                    </div>
+                    <img id="comment-wheel-{{ post.id }}" src="/lightbox/images/loading_small.gif" style="display: none"/>
+                    {% if post.author.id == app.user.id %}
+                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                    {% else %}
+                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                    {% endif %}
+                </form>  
+            {% endif %}
+            </div>
+            </section>
+        </div>
+        
+    
+        <hr>
+
+    {% endfor %}
+        
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+       
+        jQuery(document).ready(function(){
+            
+            console.log("JQuery loaded");
+            
+            function deleteCommentListener(e){
+                e.preventDefault();
+                var comment_id = e.target.id;
+                console.log("Id du bouton de delete source de l'event:"+e.target.id);
+                var comment_to_delete = document.getElementById('comment-'+comment_id);
+                if(confirm("Êtes vous sur de vouloir supprimer ce commentaire ?")){
+                    $('#comment-'+comment_id).fadeOut(250);
+                    //comment_to_delete.parentNode.removeChild(comment_to_delete);
+                    console.log("Making DELETE request for comment "+comment_id);
+                    $.ajax({
+                       url : '/comment/'+comment_id,
+                       type : 'DELETE',
+                       //dataType: 'json',
+                       success : function(code_html, statut){
+                           console.log("Axaj call has been a success");
+                           console.log("data:"+code_html);
+                        }
+                    });
+                }
+            }
+            
+            function commentListener(e){
+                
+                e.preventDefault();
+
+                var post_id = e.target.id;
+                var comment_input = document.getElementById('comment-input-'+post_id);
+                var comment_block = document.getElementById('comment-block-'+post_id);
+                var comment_content = comment_input.value;
+                console.log("Id du bouton source de l'event:"+e.target.id);
+                console.log("Contenu de l'input:"+comment_content);
+                
+                if(e.target.innerHTML=="Commenter"){
+                    $('#comment-block-'+post_id).fadeIn(100);
+                    e.target.innerHTML="Envoyer »";
+                    comment_input.focus();
+                }else{
+
+                    $('#comment-block-'+post_id).fadeOut(100);
+                    if(comment_content.length == 0){
+                        e.target.innerHTML="Commenter";
+                    }else{
+                        $('#comment-wheel-'+post_id).fadeIn(100);
+                        e.target.innerHTML='<img src="/public/lightbox/images/loading_small.gif"/>';
+                        var current_form = document.getElementById('comment-form-'+post_id);
+                        console.log("Making POST request");
+                        $.post(
+                           '/comment',
+                           { post_id: post_id, comment: comment_content },
+                           function(data, statut){
+                                if(statut=="success"){
+                                    console.log("Axaj call has been a success");
+                                    console.log(statut);
+                                    console.log(data); 
+                                    var comments = document.getElementById('comments-'+post_id);
+                                    //insérer cet élément proprement... histoire de ne pas tout casser
+                                    comments.innerHTML += '<div class=\"alert very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                    var comment = document.getElementById('comment-'+data.comment.id);
+                                    e.target.innerHTML="Commenter";
+                                    $('#comment-'+data.comment.id).fadeIn(100);
+                                    $('#comment-wheel-'+post_id).fadeOut(100);
+                                    comment.addEventListener('click', deleteCommentListener, false);
+                                }
+                                
+                           },'json'
+                        );
+                        current_form.reset();
+                    }
+                    
+                }
+                
+            }
+            
+            //adding listener on all comment buttons
+            var comment_buttons = document.querySelectorAll(".comment-button");
+            console.log("Total nb comments button:"+comment_buttons.length);
+            for(var k=0;k<comment_buttons.length;k++){
+                comment_buttons[k].addEventListener('click', commentListener, false);
+            }
+            
+            //adding listener on all delete comment buttons
+            var delete_comment_buttons = document.querySelectorAll(".delete-comment");
+            console.log("Total nb delete comments button:"+delete_comment_buttons.length);
+            for(var k=0;k<delete_comment_buttons.length;k++){
+                delete_comment_buttons[k].addEventListener('click', deleteCommentListener, false);
+            }
+
+        });
+    </script>
+{% endblock %}
