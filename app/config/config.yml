@@ -31,10 +31,6 @@ services:
 # Image manipulation configuration
 liip_imagine:
     filter_sets:
-        maxi_size:
-            quality: 95
-            filters:
-                relative_resize: { heighten: 600 }
         small_thumb:
             quality: 95
             filters:
