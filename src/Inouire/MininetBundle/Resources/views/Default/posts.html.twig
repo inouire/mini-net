@@ -1,16 +1,27 @@
 {% extends '::base.html.twig' %}
 
-
 {% block body %}
     
+	<div>
+		<center><h3>{{ current_year }}</h3></center>
+		<div class="pagination pagination-centered">
+			<ul>
+				<li><b><a href="{{ path('posts',{'year':current_year-1 , 'month': 12 }) }}"> &larr; 2011 </a></b></li>
+			{% for month in  months_of_year %}
+				{% set month_nb = month | date('m') %}
+				{% if  month_nb == current_month  %}
+					<li class="active"><span>{{ month | localeDate('medium','none',null,'MMMM') }}</span></li>
+				{% else %}
+					<li><a href="{{ path('posts',{'year':current_year , 'month': month_nb }) }}">{{ month | localeDate('medium','none',null,'MMMM') }}</a></li>
+				{% endif %}
+			{% endfor %}
+			<li><b><a href="{{ path('posts',{'year':current_year+1 , 'month': 1 }) }}"> 2013 &rarr;</a></b></li>
+			</ul>
+		</div>
+	</div>
 
-    <div class="row">
-        <a href="{{ path('posts',{'year':prev_month|date('Y') , 'month': prev_month|date('m')}) }}" class="pull-left">{{ prev_month | localeDate('medium','none',null,'MMMM YYYY') }}</a>
-        <a href="{{ path('posts',{'year':next_month|date('Y') , 'month': next_month|date('m')}) }}" class="pull-right">{{ next_month | localeDate('medium','none',null,'MMMM YYYY') }}</a>
-        <center><h2>{{ current_month | localeDate('medium','none',null,'MMMM YYYY') }}</h2></center>
-    </div>
+    <br><br>
     
-    <hr>
     {% for post in post_list %}
         
         {% if post.hasImages %}
@@ -27,7 +38,7 @@
             {% elseif  post.images|length == 3 %}
                 {% set contentWidth = 'span4' %}
                 {% set imagesWidth = 'span6' %}
-                {% set thumbWidth = 'span2' %}
+                {% set thumbWith = 'span2' %}
                 {% set thumbSize = 'small_thumb' %}
             {% elseif  post.images|length == 4 %}
                 {% set contentWidth = 'span6' %}
@@ -139,12 +150,10 @@
                 </form>  
             {% endif %}
             </div>
-            </section>
         </div>
         
-    
         <hr>
-
+		
     {% endfor %}
         
 {% endblock %}

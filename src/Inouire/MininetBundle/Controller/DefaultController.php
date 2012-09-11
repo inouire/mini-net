@@ -49,30 +49,22 @@ class DefaultController extends Controller
         
         //retrieve posts of the requested month
         $monthly_posts = $post_repo->getMonthlyPosts($year,$month);
-        
-        $current_month = new \Datetime($year.'-'.$month.'-01');
-        
-        $month_prev = $month - 1;
-        $year_prev = $year;
-        if($month_prev<1){
-            $month_prev = 12;
-            $year_prev = $year - 1; 
-        }
-        $prev_month = new \Datetime($year_prev.'-'.$month_prev.'-01');
-        
-        $month_next = $month + 1;
-        $year_next = $year;
-        if($month_next>12){
-            $month_next = 1;
-            $year_next = $year + 1; 
-        }
-        $next_month = new \Datetime($year_next.'-'.$month_next.'-01');
-
+       
+		//build date of current month
+		$current_date = new \Datetime($year.'-'.$month.'-01');
+		
+		//build months of year
+		$months_of_year = array();
+		for( $m = 1 ; $m <=12 ; $m++){
+			$months_of_year[] = new \Datetime('2000-'.$m.'-01');
+		}
+		
         return $this->render('InouireMininetBundle:Default:posts.html.twig',array(
-            'current_month' => $current_month,
-            'prev_month' => $prev_month,
-            'next_month' => $next_month,
-            'post_list'=> $monthly_posts
+            'post_list'=> $monthly_posts,
+            'current_date' => $current_date,
+            'current_year' => $year,
+            'current_month' => $month,
+            'months_of_year' => $months_of_year
         ));
     }
     
