@@ -3,7 +3,7 @@
 {% block body %}
     
     <div>
-        <center><h3>{{ current_year }}</h3></center>
+        <center><span style="font-size: 2em;"> {{ current_year }} </span></center>
         <div class="pagination pagination-centered">
             <ul>
                 <li><b><a href="{{ path('posts',{'year':current_year-1 , 'month': 12 }) }}"> &larr; {{ current_year - 1}} </a></b></li>
