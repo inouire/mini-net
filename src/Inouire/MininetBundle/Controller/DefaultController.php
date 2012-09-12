@@ -41,6 +41,22 @@ class DefaultController extends Controller
         ));
     }
     
+    public function archivesAction(){
+		
+		$month = date('m');
+		$year = date('Y');
+		
+		$prev_month = $month -1;
+		if($prev_month <1){
+			$prev_month = 12;
+			$year = $year -1;
+		}
+		return $this->redirect($this->generateUrl('posts',array(
+			'year' => $year,
+			'month' => $prev_month,
+		)));
+	}
+	
     public function postsAction($year,$month){
 
         //get entity manager and post repository
