@@ -52,22 +52,19 @@
                         {% set classHome = ' active' %}
                     {% elseif currentPath == 'album' %}
                         {% set classAlbum = ' active' %}
-					{% elseif currentPath == 'posts' %}
+                    {% elseif currentPath == 'posts' %}
                         {% set classArchives = ' active' %}
                     {% endif %}    
 
                     <!-- nav menu -->
                     <ul class="nav">
-                        <li class="{{ classHome }}"><a href="{{ path('home') }}">Accueil</a></li>
-                        <li class="{{ classAlbum }}"><a href="{{ path('albums') }}">Albums</a></li>
-                        <li class="{{ classArchives }}"><a href="{{ path('archives') }}">Archives</a></li>
+                        <li class="{{ classHome }}"><a href="{{ path('home') }}"><i class="icon-home"></i> Accueil</a></li>
+                        <li class="{{ classAlbum }}"><a href="{{ path('albums') }}"><i class="icon-th-large"></i> Albums</a></li>
+                        <li class="{{ classArchives }}"><a href="{{ path('archives') }}"><i class="icon-calendar"></i> Archives</a></li>
                     </ul>
                      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-					<ul class="nav pull-right">
+                    <ul class="nav pull-right">
                         <a class="btn btn-success" href="{{ path('new_post') }}">
-							{% if app.user.hasDraftPost %}
-								XXX
-							{% endif %}
                             Ajouter des nouvelles
                         </a>
                         <li class="divider-vertical"></li>
