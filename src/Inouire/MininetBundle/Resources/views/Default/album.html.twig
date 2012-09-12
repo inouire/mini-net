@@ -3,9 +3,11 @@
 {% block body %}
 
     <div class="row">
-        <a href="{{ path('album',{'year':year-1 }) }}" class="pull-left"><<{{ year - 1}}</a>
-        <a href="{{ path('album',{'year':year+1 }) }}" class="pull-right">{{ year + 1}}>></a>
-        <center><h1>{{ year }}</h1></center>
+        <ul class="pager">
+            <li><a href="{{ path('album',{'year':year-1 }) }}">&larr; {{ year - 1}}</a></li>
+            <span style="font-size: 2em;"> {{ year }} </span>
+            <li><a href="{{ path('album',{'year':year+1 }) }}">{{ year + 1}} &rarr;</a></li>
+        </ul>
     </div>
     
     <hr>
