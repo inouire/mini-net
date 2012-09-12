@@ -13,7 +13,7 @@
 
 {% block body %}
     
-    <div class="row">
+    <div class="row post-editor" id={{post.id}}>
         <div class="span2">
     {% if post.published == true %}
             <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
@@ -30,7 +30,7 @@
                 <a href="#" class="btn btn-danger pull-left" id="delete-button"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a>
                 <button type="submit" class="btn btn-success pull-right" id="publish-button"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
     {% else %}
-                <button type="submit" class="btn" id="save-button"><i class="icon-download" id="save-icon"></i> Sauvegarder</button>
+                <button type="submit" class="btn" id="save-button"><i class="icon-download" id="save-icon"></i> Garder comme brouillon</button>
                 <button type="submit" class="btn btn-success pull-right" id="publish-button"><i class="icon-ok icon-white" id="publish-icon"></i> Publier</button>
     {% endif %}
                 <br /><br />
@@ -47,7 +47,7 @@
             {{ form_errors(form) }}
             {{ form_row(form.file) }}
             {{ form_rest(form) }}
-            <input type="submit" />
+            <input type="submit" id="image-upload-submit"/>
         </form>
         <br /><br />
     </center>
@@ -92,11 +92,16 @@
                 document.getElementById("edit-area").disabled = toggle;
             }
             
-            function updatePostAjax(post_id,post_published){
+            function updatePostAjax(post_published){
                 var post_content = document.getElementById("edit-area").value;
+                var post_id = {{post.id}};
+                
+                disableAllControls(true);
+                
                 console.log("Post id: "+post_id);
                 console.log("Post content: "+post_content);
                 console.log("Making ajax POST request...");
+                
                 $.post(
                    '/post/'+post_id,
                    { content: post_content , published : post_published },
@@ -114,25 +119,21 @@
             }
             
             function savePostListener(e){
-                disableAllControls(true);
                 console.log("Save button clicked");
                 e.preventDefault();
-                var post_id = e.target.parentNode.id;
-                updatePostAjax(post_id,0);
+                updatePostAjax(0);
             }
             
             function publishPostListener(e){
-                disableAllControls(true);
                 console.log("Publish button clicked");
                 e.preventDefault();
-                var post_id = e.target.parentNode.id;
-                updatePostAjax(post_id,1);
+                updatePostAjax(1);
             }
             
             function deletePostListener(e){
                 console.log("Delete button clicked");
                 e.preventDefault();
-                var post_id = e.target.parentNode.id;
+                var post_id = {{post.id}};
                 if(confirm("Êtes vous sur de vouloir supprimer définitivement cet article ?\n(les commentaires ainsi que les photos attachées seront perdus)")){
                     $.ajax({
                         url : '/post/'+post_id,
@@ -153,6 +154,11 @@
             function addImageListener(e){
                 console.log("Add image clicked");
                 $('#image-upload-form').fadeIn(400);
+            }
+            
+            function submitImageListener(e){
+                console.log("Submit image clicked");
+                updatePostAjax({{post.published}});
             }
             
             function deleteImageListener(e){
@@ -182,6 +188,9 @@
     {% endif %}
                 
             document.getElementById("publish-button").addEventListener('click', publishPostListener, false);
+            
+            //adding listener on POST image button
+            document.getElementById("image-upload-submit").addEventListener('click', submitImageListener, false);
             
             //adding listener on upload image button
             document.getElementById("add-image-button").addEventListener('click', addImageListener, false);
