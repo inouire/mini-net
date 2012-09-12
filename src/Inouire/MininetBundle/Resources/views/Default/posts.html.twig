@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}archives pour {{current_date | localeDate('medium','none',null,'MMMM')}} {{ current_year }}{% endblock %}
+
 {% block body %}
     
     <div>
@@ -38,7 +40,7 @@
             {% elseif  post.images|length == 3 %}
                 {% set contentWidth = 'span4' %}
                 {% set imagesWidth = 'span6' %}
-                {% set thumbWith = 'span2' %}
+                {% set thumbWidth = 'span2' %}
                 {% set thumbSize = 'small_thumb' %}
             {% elseif  post.images|length == 4 %}
                 {% set contentWidth = 'span6' %}

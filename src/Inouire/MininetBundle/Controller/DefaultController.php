@@ -42,21 +42,21 @@ class DefaultController extends Controller
     }
     
     public function archivesAction(){
-		
-		$month = date('m');
-		$year = date('Y');
-		
-		$prev_month = $month -1;
-		if($prev_month <1){
-			$prev_month = 12;
-			$year = $year -1;
-		}
-		return $this->redirect($this->generateUrl('posts',array(
-			'year' => $year,
-			'month' => $prev_month,
-		)));
-	}
-	
+        
+        $month = date('m');
+        $year = date('Y');
+        
+        $prev_month = $month -1;
+        if($prev_month <1){
+            $prev_month = 12;
+            $year = $year -1;
+        }
+        return $this->redirect($this->generateUrl('posts',array(
+            'year' => $year,
+            'month' => $prev_month,
+        )));
+    }
+    
     public function postsAction($year,$month){
 
         //get entity manager and post repository
@@ -66,15 +66,15 @@ class DefaultController extends Controller
         //retrieve posts of the requested month
         $monthly_posts = $post_repo->getMonthlyPosts($year,$month);
        
-		//build date of current month
-		$current_date = new \Datetime($year.'-'.$month.'-01');
-		
-		//build months of year
-		$months_of_year = array();
-		for( $m = 1 ; $m <=12 ; $m++){
-			$months_of_year[] = new \Datetime('2000-'.$m.'-01');
-		}
-		
+        //build date of current month
+        $current_date = new \Datetime($year.'-'.$month.'-01');
+        
+        //build months of year
+        $months_of_year = array();
+        for( $m = 1 ; $m <=12 ; $m++){
+            $months_of_year[] = new \Datetime('2000-'.$m.'-01');
+        }
+        
         return $this->render('InouireMininetBundle:Default:posts.html.twig',array(
             'post_list'=> $monthly_posts,
             'current_date' => $current_date,
