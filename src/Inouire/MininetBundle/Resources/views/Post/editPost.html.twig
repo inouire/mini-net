@@ -5,7 +5,7 @@
     <style type="text/css">
         {# Specific padding for this page as there is very few content#}
         body {
-            padding-top: 140px;
+            padding-top: 120px;
             padding-bottom: 40px;
         }
     </style>
@@ -13,8 +13,12 @@
 
 {% block body %}
     
+    <center>
+        
+    </center>
+
     <div class="row post-editor" id={{post.id}}>
-        <div class="span2">
+        <div class="span2" style="text-align: center;">
     {% if post.published == true %}
             <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
             <span class="label label-success">publié</span>
@@ -22,12 +26,14 @@
             <h4>Aujourd'hui</h4>
             <span class="label label-warning">non publié</span>
     {% endif %}
-            
+            <br /><br />
+            <img id="loading-wheel" src="/lightbox/images/loading_small.gif" style="display: none"/>
         </div>
         <div class="span9">
             <form method="post" action="#" id="{{ post.id }}">
     {% if post.published == true %}
-                <a href="#" class="btn btn-danger pull-left" id="delete-button"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a>
+                <button class="btn btn-danger pull-left" id="delete-button"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a>
+                
                 <button type="submit" class="btn btn-success pull-right" id="publish-button"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
     {% else %}
                 <button type="submit" class="btn" id="save-button"><i class="icon-download" id="save-icon"></i> Garder comme brouillon</button>
@@ -83,13 +89,18 @@
         jQuery(document).ready(function(){
             
             function disableAllControls(toggle){
-    {% if post.published == true %}
+    {% if post.published %}
                 document.getElementById("delete-button").disabled = toggle;
     {% else %}
                 document.getElementById("save-button").disabled = toggle;
     {% endif %}
                 document.getElementById("publish-button").disabled = toggle;
                 document.getElementById("edit-area").disabled = toggle;
+                if(toggle){
+                    $('#loading-wheel').fadeIn(100);
+                }else{
+                    $('#loading-wheel').fadeOut(100);
+                }
             }
             
             function updatePostAjax(post_published){
