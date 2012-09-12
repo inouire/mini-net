@@ -6,7 +6,7 @@
 		<center><h3>{{ current_year }}</h3></center>
 		<div class="pagination pagination-centered">
 			<ul>
-				<li><b><a href="{{ path('posts',{'year':current_year-1 , 'month': 12 }) }}"> &larr; 2011 </a></b></li>
+				<li><b><a href="{{ path('posts',{'year':current_year-1 , 'month': 12 }) }}"> &larr; {{ current_year - 1}} </a></b></li>
 			{% for month in  months_of_year %}
 				{% set month_nb = month | date('m') %}
 				{% if  month_nb == current_month  %}
@@ -15,7 +15,7 @@
 					<li><a href="{{ path('posts',{'year':current_year , 'month': month_nb }) }}">{{ month | localeDate('medium','none',null,'MMMM') }}</a></li>
 				{% endif %}
 			{% endfor %}
-			<li><b><a href="{{ path('posts',{'year':current_year+1 , 'month': 1 }) }}"> 2013 &rarr;</a></b></li>
+				<li><b><a href="{{ path('posts',{'year':current_year+1 , 'month': 1 }) }}"> {{ current_year + 1}} &rarr;</a></b></li>
 			</ul>
 		</div>
 	</div>
