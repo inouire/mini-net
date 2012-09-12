@@ -21,6 +21,7 @@ class PostRepository extends EntityRepository
         $qb = $this->createQueryBuilder('post');
         
         $qb->where('post.date BETWEEN :monthBeginning AND :monthEnd')
+           ->andWhere('post.published = true')
            ->setParameter('monthBeginning',  new \Datetime($year.'-'.$month.'-01'))
            ->setParameter('monthEnd', new \Datetime($year.'-'.$month.'-31 23:59:59'))
            ->orderBy('post.date', 'ASC');
@@ -37,6 +38,7 @@ class PostRepository extends EntityRepository
         $qb = $this->createQueryBuilder('post');
         
         $qb->where('post.date BETWEEN :yearBeginning AND :yearEnd')
+           ->andWhere('post.published = true')
            ->setParameter('yearBeginning',  new \Datetime($year.'-01-01'))
            ->setParameter('yearEnd', new \Datetime($year.'-12-31 23:59:59'))
            ->orderBy('post.date', 'ASC');
