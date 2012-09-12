@@ -28,4 +28,20 @@ class PostRepository extends EntityRepository
         return $qb->getQuery()
                   ->getResult();
     }
+    
+    /*
+     * Get all the post of a given year
+     */
+    public function getYearlyPosts($year){
+        
+        $qb = $this->createQueryBuilder('post');
+        
+        $qb->where('post.date BETWEEN :yearBeginning AND :yearEnd')
+           ->setParameter('yearBeginning',  new \Datetime($year.'-01-01'))
+           ->setParameter('yearEnd', new \Datetime($year.'-12-31 23:59:59'))
+           ->orderBy('post.date', 'ASC');
+        
+        return $qb->getQuery()
+                  ->getResult();
+    }
 }

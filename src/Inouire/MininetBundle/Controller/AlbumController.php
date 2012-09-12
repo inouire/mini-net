@@ -26,12 +26,9 @@ class AlbumController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
         
-        //get all the posts
-        $post_list = $post_repo->findBy(
-            array('published' => true),
-            array('date'=>'asc')
-        );
-          
+        //get all the posts of the given year
+        $post_list = $post_repo->getYearlyPosts($year);
+        
         //render the automatic album
         return $this->render('InouireMininetBundle:Default:album.html.twig',array(
             'year' => $year,
