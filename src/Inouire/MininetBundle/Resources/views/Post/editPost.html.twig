@@ -72,9 +72,9 @@
                     
                     <div class="thumbnail">
                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
-                        <i class="icon-repeat" ></i>
+                        <i class="icon-trash delete-image-button" id="{{image.id}}"></i>
                         <div class="pull-right" >
-                            <i class="icon-trash delete-image-button" id="{{image.id}}"></i>
+                            <!--<i class="icon-repeat" ></i>-->
                         </div>
                     </div>
                 </li>
