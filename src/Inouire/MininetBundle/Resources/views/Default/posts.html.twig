@@ -22,10 +22,9 @@
         </div>
     </div>
 
-    <br><br>
+    <br>
     
     {% for post in post_list %}
-        
         {% if post.hasImages %}
             {% if post.images|length == 1 %}
                 {% set contentWidth = 'span6' %}
@@ -59,7 +58,7 @@
         {% endif %}    
         
         
-        <div class="row">       
+        <div class="row" id="{{ post.id }}-row">
             <a id="{{ post.id }}" class="anchoroffset"></a>
             <div class="span2">
                 <h4>{{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}</h4>
@@ -254,6 +253,15 @@
             for(var k=0;k<delete_comment_buttons.length;k++){
                 delete_comment_buttons[k].addEventListener('click', deleteCommentListener, false);
             }
+            
+            //animate background color of the anchored post if any
+            var hash=location.hash;
+            $(hash+'-row').animate({
+                backgroundColor : '#ddd'
+            }, 50);
+            $(hash+'-row').animate({
+                backgroundColor : 'white'
+            }, 3500);
 
         });
     </script>
