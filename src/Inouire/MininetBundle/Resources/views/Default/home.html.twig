@@ -4,6 +4,13 @@
     
     {% for post in post_list %}
         
+        {% if current_datestamp is defined %}
+            {% if post.date | date('Ymd') != current_datestamp %}
+                <hr>            
+            {% endif %}
+        {% endif %}
+        {% set current_datestamp = post.date | date('Ymd') %}
+        
         {% if post.hasImages %}
             {% if post.images|length == 1 %}
                 {% set contentWidth = 'span6' %}
@@ -35,6 +42,7 @@
             {% set contentWidth = 'span6' %}
             {% set imagesWidth = 'span4' %}
         {% endif %}    
+        
         
         <div class="row">
         
@@ -130,7 +138,7 @@
             </div>
         </div>
     
-        <hr>
+
 
     {% endfor %}
         
