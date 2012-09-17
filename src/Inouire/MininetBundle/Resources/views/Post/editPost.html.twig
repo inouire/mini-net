@@ -15,9 +15,9 @@
 {% endblock %}
 
 {% block body %}
-    
+
     <center>
-        
+
     </center>
 
     <div class="row post-editor" id={{post.id}}>
@@ -36,7 +36,7 @@
             <form method="post" action="#" id="{{ post.id }}">
     {% if post.published == true %}
                 <button class="btn btn-danger pull-left" id="delete-button"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a>
-                
+
                 <button type="submit" class="btn btn-success pull-right" id="publish-button"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
     {% else %}
                 <button type="submit" class="btn" id="save-button"><i class="icon-download" id="save-icon"></i> Garder comme brouillon</button>
@@ -66,10 +66,10 @@
         <div class="span9 offset2">
             <ul class="thumbnails">
                 {% for image in post.images %}
-                
+
                 <li class="span3" id="image-{{image.id}}">
                     <!--<button class="close delete-image-button" id="{{image.id}}">&times;</button>-->
-                    
+
                     <div class="thumbnail">
                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
                         <i class="icon-trash delete-image-button" id="{{image.id}}"></i>
@@ -83,14 +83,14 @@
         </div>
     </div>
     {% endif %}
-    
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script>
         jQuery(document).ready(function(){
-            
+
             function disableAllControls(toggle){
     {% if post.published %}
                 document.getElementById("delete-button").disabled = toggle;
@@ -105,21 +105,24 @@
                     $('#loading-wheel').fadeOut(100);
                 }
             }
-            
+
             function updatePostAjax(post_published){
                 var post_content = document.getElementById("edit-area").value;
                 var post_id = {{post.id}};
-                
+
                 disableAllControls(true);
-                
+
                 console.log("Post id: "+post_id);
                 console.log("Post content: "+post_content);
                 console.log("Making ajax POST request...");
-                
-                $.post(
-                   '/post/'+post_id,
-                   { content: post_content , published : post_published },
-                   function(data, statut){
+
+                $.ajax({
+                    url : '/post/'+post_id,
+                    type : 'POST',
+                    data: { content: post_content , published : post_published },
+                    dataType : 'json',
+                    async: false,
+                    success : function(data, statut){
                         console.log(data);
                         if(statut=="success"){
                             console.log("Axaj call has been a success");
@@ -128,22 +131,26 @@
                                 window.location.href = "{{ path('home') }}";
                             }
                         }
-                   },'json'
-                );
+                    },
+                    error : function(data, statut, error){
+                        console.log("Error during ajax call");
+                    },
+                });
+
             }
-            
+
             function savePostListener(e){
                 console.log("Save button clicked");
                 e.preventDefault();
                 updatePostAjax(0);
             }
-            
+
             function publishPostListener(e){
                 console.log("Publish button clicked");
                 e.preventDefault();
                 updatePostAjax(1);
             }
-            
+
             function deletePostListener(e){
                 console.log("Delete button clicked");
                 e.preventDefault();
@@ -164,17 +171,17 @@
                     });
                 }
             }
-            
+
             function addImageListener(e){
                 console.log("Add image clicked");
                 $('#image-upload-form').fadeIn(400);
             }
-            
+
             function submitImageListener(e){
                 console.log("Submit image clicked");
                 updatePostAjax({{post.published}});
             }
-            
+
             function deleteImageListener(e){
                 console.log("Delete image clicked");
                 var image_id = e.target.id;
@@ -194,21 +201,21 @@
                     });
                 }
             }
-            
+
     {% if post.published == true %}
             document.getElementById("delete-button").addEventListener('click', deletePostListener, false);
     {% else %}
             document.getElementById("save-button").addEventListener('click', savePostListener, false);
     {% endif %}
-                
+
             document.getElementById("publish-button").addEventListener('click', publishPostListener, false);
-            
+
             //adding listener on POST image button
             document.getElementById("image-upload-submit").addEventListener('click', submitImageListener, false);
-            
+
             //adding listener on upload image button
             document.getElementById("add-image-button").addEventListener('click', addImageListener, false);
-            
+
             //adding listener on all delete image buttons
             var delete_images_buttons = document.querySelectorAll(".delete-image-button");
             for(var k=0;k<delete_images_buttons.length;k++){
