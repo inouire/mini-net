@@ -200,11 +200,7 @@ class Post{
      * Check if the post has one or more images associated
      */
     public function getHasImages(){
-        if(count($this->images) > 0){
-            return true;
-        }else{
-            return false;
-        }
+         return count($this->images) > 0;
     }
 
     /**
@@ -265,6 +261,16 @@ class Post{
         }
         
         return $short_content;
+    }
+    
+    public function getWeight(){
+        //retrieve plain content
+        $content = $this->content;
+        
+        //get length of content + "height" of comments
+        $weight = strlen($content) + count($this->comments)*200;
+        
+        return $weight;
     }
     
     /**
