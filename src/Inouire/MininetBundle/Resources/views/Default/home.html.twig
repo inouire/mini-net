@@ -69,6 +69,12 @@
                 {% if edit_date - publish_date >= 1 %}
                     <p class="muted">édité le {{ post.editDate | date('d/m/Y') }}</p>
                 {% endif %}
+                
+                {% if date(post.date) >= date('-1days') %}
+                    <center>
+                        <p class="muted">{{ post.date | date('H:i') }}</p>
+                    </center>
+                {% endif %}
             </div>
             
             <div class="{{ contentWidth }}">
