@@ -23,6 +23,11 @@ security:
                 remember_me: true
             logout:       true
             anonymous:    false
+            remember_me:
+                key:      "%secret%"
+                lifetime: 2592000 #1 month in seconds 
+                path:     /
+                domain:   ~ #Defaults to the current domain from $_SERVER
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
