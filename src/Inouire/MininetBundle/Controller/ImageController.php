@@ -14,6 +14,9 @@ use Imagine\Image\Box;
 class ImageController extends Controller
 {
     
+    /*
+     * Handles image upload
+     */
     public function addImageAction(){
         
         $image = new Image();
@@ -69,6 +72,9 @@ class ImageController extends Controller
         }
     }
     
+    /*
+     * Util function: resize an image just after receiving it
+     */
     private function resizeImage($image){
         
         //open image
@@ -116,7 +122,7 @@ class ImageController extends Controller
     }
     
     /*
-     * Controller for delete action on an image
+     * Handles delete action on an image
      */ 
     public function deleteImageAction($image_id){
         

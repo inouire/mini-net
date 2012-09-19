@@ -4,14 +4,12 @@ namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Inouire\MininetBundle\Entity\Post;
-use Inouire\MininetBundle\Entity\Image;
-use Inouire\MininetBundle\Entity\Comment;
 
 class AlbumController extends Controller
 {
     
     /*
-     * Redirect to album of the current year
+     * Redirects to the album of the current year
      */
     public function viewCurrentAction(){
         return $this->redirect($this->generateUrl('album',array(
@@ -19,7 +17,9 @@ class AlbumController extends Controller
         )));
     }
     
-    
+    /*
+     * Handles the album of a given year
+     */
     public function viewAction($year){
         
         //get entity manager and Post repository
