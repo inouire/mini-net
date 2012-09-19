@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+
     <head>
+    
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
@@ -9,39 +11,24 @@
         <title>
             Mini-net : 
             {% block title %}le réseau social familial{% endblock %}
+            
         </title>
         
-        {% block stylesheets %}
-            <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
-            <style type="text/css">
-                {# TODO relocate this in a dedicated css file #}
-                body {
-                    padding-top: 60px;
-                    padding-bottom: 40px;
-                }
-                .very-close{
-                    margin-top:3px;
-                    margin-bottom:3px;
-                    padding: 4px;
-                    padding-left: 8px;
-                    max-width: 75%;
-                }
-                .author-comment{
-                    max-width: 75%;
-                    margin-left: 25%;
-                }
-                .anchoroffset{
-                   position:relative;
-                   top:-30px;
-                }
-            </style>
-            <link href="{{ asset('lightbox/css/lightbox.css') }}" rel="stylesheet" />
-        {% endblock %}
-        
+    {% block stylesheets %}
+    
+        <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+        <link href="{{ asset('lightbox/css/lightbox.css') }}" rel="stylesheet" />
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+            
+    {% endblock %}
+    
     </head>
+    
     <body>
+    
         {% block header %}
+        
         <div class="navbar navbar-fixed-top navbar-inverse">
             <div class="navbar-inner">
                 <div class="container">
@@ -65,7 +52,9 @@
                         <li class="{{ classAlbum }}"><a href="{{ path('albums') }}"><i class="icon-th-large"></i> Albums</a></li>
                         <li class="{{ classArchives }}"><a href="{{ path('archives') }}"><i class="icon-calendar"></i> Archives</a></li>
                     </ul>
-                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    
                     <ul class="nav pull-right">
                         <a class="btn btn-success" href="{{ path('new_post') }}">
                             Ajouter des nouvelles
@@ -75,13 +64,14 @@
                             <i class="icon-user" id="user-logout-icon"></i> 
                             {{ app.user.username }}
                         </a>
-
                     </ul>
+                    
                     {% endif %}
                     
                 </div>
             </div>
         </div>
+        
         {% endblock %}
         
         <div class="container">
@@ -90,32 +80,36 @@
         {% endblock %}
         
         {% block footer %}
+        
             <hr>
             <center>
                 <p><span class="label label-info">mini-net</span> , le réseau social familial le plus simple au monde</p>
             </center>
+            
         {% endblock %}
         
         </div><!-- container-->
         
-        {% block javascripts %}
-            <script src="{{ asset('jquery/jquery-1.7.2.min.js') }}"></script>
-            <script src="{{ asset('jquery/jquery.color.js') }}"></script>
-            <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
-            <script src="{{ asset('lightbox/js/lightbox.js') }}"></script>
-            <script>
-                function mouseOverLogoutListener(e){
-                    document.getElementById("user-logout-button").className='btn btn-danger';
-                    document.getElementById("user-logout-icon").className='icon-arrow-right icon-white';
-                }
-                function mouseOutLogoutListener(e){
-                    document.getElementById("user-logout-button").className='btn';
-                    document.getElementById("user-logout-icon").className='icon-user';
-                }
-                document.getElementById("user-logout-button").addEventListener('mouseover', mouseOverLogoutListener, false);
-                document.getElementById("user-logout-button").addEventListener('mouseout', mouseOutLogoutListener, false);
-            </script>
-        {% endblock %}
+    {% block javascripts %}
+    
+        <script src="{{ asset('jquery/jquery-1.7.2.min.js') }}"></script>
+        <script src="{{ asset('jquery/jquery.color.js') }}"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('lightbox/js/lightbox.js') }}"></script>
+        <script>
+            function mouseOverLogoutListener(e){
+                document.getElementById("user-logout-button").className='btn btn-danger';
+                document.getElementById("user-logout-icon").className='icon-arrow-right icon-white';
+            }
+            function mouseOutLogoutListener(e){
+                document.getElementById("user-logout-button").className='btn';
+                document.getElementById("user-logout-icon").className='icon-user';
+            }
+            document.getElementById("user-logout-button").addEventListener('mouseover', mouseOverLogoutListener, false);
+            document.getElementById("user-logout-button").addEventListener('mouseout', mouseOutLogoutListener, false);
+        </script>
+        
+    {% endblock %}
         
     </body>
 </html>

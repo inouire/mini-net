@@ -1,9 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
 
 {% block body %}
 
 <center>
-		<br /><br /><br />
+        <br /><br /><br />
         {% for key, message in app.session.getFlashes() %}
         <div class="{{ key }}">
             {{ message|trans({}, 'FOSUserBundle') }}
