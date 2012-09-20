@@ -1,0 +1,12 @@
+{% extends 'InouireMininetBundle:Default:headerPosts.html.twig' %}
+
+{% block posts %}
+   
+    <center>
+    
+        <h3>Aucun post pour {{current_date | localeDate('medium','none',null,'MMMM')}} {{ current_year }}.</h3>
+        <h4>Désolé.</h4>
+    </center>
+        
+{% endblock %}
+

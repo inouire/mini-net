@@ -84,13 +84,24 @@ class DefaultController extends Controller
             $months_of_year[] = new \Datetime('2000-'.$m.'-01');
         }
         
-        return $this->render('InouireMininetBundle:Default:posts.html.twig',array(
-            'post_list'=> $monthly_posts,
-            'current_date' => $current_date,
-            'current_year' => $year,
-            'current_month' => $month,
-            'months_of_year' => $months_of_year
-        ));
+        //check that there are some posts for this month
+        if( count($monthly_posts) > 0 ){
+            return $this->render('InouireMininetBundle:Default:posts.html.twig',array(
+                'post_list'=> $monthly_posts,
+                'current_date' => $current_date,
+                'current_year' => $year,
+                'current_month' => $month,
+                'months_of_year' => $months_of_year
+            ));
+        }else{ //if no post available, display the specific page
+            return $this->render('InouireMininetBundle:Default:noPosts.html.twig',array(
+                'current_date' => $current_date,
+                'current_year' => $year,
+                'current_month' => $month,
+                'months_of_year' => $months_of_year
+            ));
+        }
+        
     }
     
     
