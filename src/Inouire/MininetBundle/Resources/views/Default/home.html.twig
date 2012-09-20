@@ -75,11 +75,13 @@
             <div class="span2">
                 <h4>{{ niceDate }}</h4>
                 <p class="muted debug-{{age}}">
-                    {% if age <=7 %}
+                    {% if age <= 2 %}
                         {{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}
                         {% if date(post.date) >= date('-1days') %}
                             (vers {{ post.date | date('H') }}h)
                         {% endif %}
+                    {% elseif age <=7 %}
+                        {{ post.date | localeDate('medium','none',null,'d MMMM') }}
                     {% endif %}
                 </p>
                 {# TODO: animate this label <span class="label label-warning">nouveau</span> #}
