@@ -56,12 +56,32 @@
             {% set contentWidth = 'span6' %}
             {% set imagesWidth = 'span4' %}
         {% endif %}    
-        
+                
+        {% set age = post.ageInDays %}
+        {% if age == 0 %}
+            {% set niceDate = 'Aujourd\'hui' %}
+        {% elseif age == 1%}
+            {% set niceDate = 'Hier' %}
+        {% elseif age == 2 %}
+            {% set niceDate = 'Avant-hier' %}
+        {% elseif age <=7 %}
+            {% set niceDate = (post.date | localeDate('medium','none',null,'EEEE'))~' dernier' %}
+        {% else %}
+            {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
+        {% endif %}
         
         <div class="row">
         
             <div class="span2">
-                <h4>{{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}</h4>
+                <h4>{{ niceDate }}</h4>
+                <p class="muted debug-{{age}}">
+                    {% if age <=7 %}
+                        {{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}
+                        {% if date(post.date) >= date('-1days') %}
+                            (vers {{ post.date | date('H') }}h)
+                        {% endif %}
+                    {% endif %}
+                </p>
                 {# TODO: animate this label <span class="label label-warning">nouveau</span> #}
                 
                 {% set publish_date = post.date | date('Ymd') %}
@@ -70,11 +90,7 @@
                     <p class="muted">édité le {{ post.editDate | date('d/m/Y') }}</p>
                 {% endif %}
                 
-                {% if date(post.date) >= date('-1days') %}
-                    <center>
-                        <p class="muted">{{ post.date | date('H:i') }}</p>
-                    </center>
-                {% endif %}
+                
             </div>
             
             <div class="{{ contentWidth }}">

@@ -263,12 +263,24 @@ class Post{
         return $short_content;
     }
     
+    /**
+     * Get the age of the post, in number of days
+     */
+    public function getAgeInDays(){
+        
+        $today = new \Datetime();
+        $today->setTime(23,59);
+        $post_age = $this->date->diff($today);
+        return $post_age->format('%a');
+    }
+
+    
     public function getWeight(){
         //retrieve plain content
         $content = $this->content;
         
         //get length of content + "height" of comments
-        $weight = strlen($content) + count($this->comments)*200;
+        $weight = strlen($content) + count($this->comments)*150;
         
         return $weight;
     }
