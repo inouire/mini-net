@@ -35,8 +35,30 @@ class ImageController extends Controller
                 //save file to disk
                 $newFilename = rand(1000000, 999999999).rand(1000000, 999999999);
                 $image->file->move($image->getUploadDir(), $newFilename);
-  
-                //catch exceptions ?              
+
+                $logger = $this->get('logger');
+                
+                $orientation = 1;
+                
+                try{
+                    //get exif data
+                    $exif = exif_read_data($image->getUploadDir().'/'.$newFilename, 0, true);
+                    //get IFDO.Orientation
+                    foreach ($exif as $key => $section) {
+                        foreach ($section as $name => $val) {
+                            if($key == 'IFD0' && $name == 'Orientation'){
+                                $orientation = $val;
+                            }
+                            $logger->info($key.$name.': '.$val);
+                        }
+                    }
+                    $logger->info('Orientation of image is '.$orientation);                    
+                }catch(\Exception $e){
+
+                    $logger->info('The uploaded picture has no exif data');
+                }
+                
+                //catch exceptions ?
 
                 //try to guess the extension
                 $file=new File($image->getUploadDir().'/'.$newFilename,true);
@@ -58,8 +80,9 @@ class ImageController extends Controller
                 $em->persist($image);
                 $em->flush();
 
-                //automatic image resize (for low disk footprint)
+                //automatic image rotation and resize (for low disk footprint)
                 //TODO handle errors
+                $this->rotateImage($image,$orientation);
                 $this->resizeImage($image);
                 
                 return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
@@ -73,7 +96,38 @@ class ImageController extends Controller
     }
     
     /*
-     * Util function: resize an image just after receiving it
+     * Util function: rotate an image depending on its orientation
+     */
+    private function rotateImage($image,$orientation){
+        
+        //compute angle
+        if( $orientation == 1){
+            return;
+        }else{        
+            if( $orientation == 3 ){
+                $angle = 180;
+            }else if( $orientation == 6 ){
+                $angle = -90;
+            }else if( $orientation == 8 ){
+                $angle = 90;
+            }else{
+                $angle = 0;
+            }
+        }
+        
+        //open image
+        $imagine = new Imagine();
+        $image_to_rotate = $imagine->open($image->getAbsolutePath());
+           
+        //rotate it and save it
+        $save_options = array('quality' => 100);
+        $image_to_rotate->rotate($angle)
+                        ->save($image->getAbsolutePath(),$save_options);
+                            
+    }
+    
+    /*
+     * Util function: resize an image
      */
     private function resizeImage($image){
         
