@@ -49,7 +49,7 @@
     </div>
     
     <center>
-        <button class="btn btn-primary" id="add-image-button">
+        <button class="btn btn-primary" id="add-image-button" onClick="document.getElementById('theSubmitButton').click();">
             <i class="icon-picture icon-white"></i> Ajouter une photo
         </button>
         <form action="{{ path('add_image') }}" id="image-upload-form" method="post" {{ form_enctype(form) }} style="display: none">
@@ -68,14 +68,9 @@
                 {% for image in post.images %}
 
                 <li class="span3" id="image-{{image.id}}">
-                    <!--<button class="close delete-image-button" id="{{image.id}}">&times;</button>-->
-
                     <div class="thumbnail">
                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
                         <i class="icon-trash delete-image-button" id="{{image.id}}"></i>
-                        <div class="pull-right" >
-                            <!--<i class="icon-repeat" ></i>-->
-                        </div>
                     </div>
                 </li>
                 {% endfor %}
@@ -121,7 +116,6 @@
                     type : 'POST',
                     data: { content: post_content , published : post_published },
                     dataType : 'json',
-                    async: false,
                     success : function(data, statut){
                         console.log(data);
                         if(statut=="success"){
@@ -175,6 +169,8 @@
             function addImageListener(e){
                 console.log("Add image clicked");
                 $('#image-upload-form').fadeIn(400);
+                updatePostAjax(0);
+                $('input[type=file]').click();
             }
 
             function submitImageListener(e){
