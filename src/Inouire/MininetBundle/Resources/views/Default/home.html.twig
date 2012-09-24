@@ -30,7 +30,7 @@
                     {% set thumbSize = 'big_thumb' %}
                 {% endif %}
             {% elseif  post.images|length == 3 %}
-                {% if post.weight > 2600 %}
+                {% if post.weight > 2500 %}
                     {% set contentWidth = 'span6' %}
                     {% set imagesWidth = 'span4' %}
                     {% set thumbWidth = 'span4' %}
@@ -58,6 +58,7 @@
         {% endif %}    
                 
         {% set age = post.ageInDays %}
+        {% set moreDate = post.date | localeDate('medium','none',null,'EEEE d') %}
         {% if age == 0 %}
             {% set niceDate = 'Aujourd\'hui' %}
         {% elseif age == 1%}
@@ -66,22 +67,20 @@
             {% set niceDate = 'Avant-hier' %}
         {% elseif age <=7 %}
             {% set niceDate = (post.date | localeDate('medium','none',null,'EEEE'))~' dernier' %}
+            {% set moreDate = post.date | localeDate('medium','none',null,'d MMMM') %}
         {% else %}
             {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
+            {% set moreDate = '' %}
         {% endif %}
         
         <div class="row">
         
             <div class="span2">
                 <h4>{{ niceDate }}</h4>
-                <p class="muted debug-{{age}}">
-                    {% if age <= 2 %}
-                        {{ post.date | localeDate('medium','none',null,'EEEE d MMMM') }}
-                        {% if date(post.date) >= date('-1days') %}
-                            (vers {{ post.date | date('H') }}h)
-                        {% endif %}
-                    {% elseif age <=7 %}
-                        {{ post.date | localeDate('medium','none',null,'d MMMM') }}
+                <p class="muted">
+                    {{ moreDate }}
+                    {% if date(post.date) >= date('-1days') %}
+                        (vers {{ post.date | date('H') }}h)
                     {% endif %}
                 </p>
                 {# TODO: animate this label <span class="label label-warning">nouveau</span> #}
@@ -91,7 +90,6 @@
                 {% if edit_date - publish_date >= 1 %}
                     <p class="muted">édité le {{ post.editDate | date('d/m/Y') }}</p>
                 {% endif %}
-                
                 
             </div>
             
