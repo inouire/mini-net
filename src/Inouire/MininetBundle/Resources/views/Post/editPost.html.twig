@@ -54,9 +54,12 @@
         </button>
         <form action="{{ path('add_image') }}" id="image-upload-form" method="post" {{ form_enctype(form) }} style="display: none">
             {{ form_errors(form) }}
-            {{ form_row(form.file) }}
+            <div>
+                {{ form_errors(form.file) }}
+                {{ form_widget(form.file) }}
+            </div>
             {{ form_rest(form) }}
-            <input type="submit" id="image-upload-submit"/>
+            <input type="submit" id="image-upload-submit" class="btn"/>
         </form>
         <br /><br />
     </center>
@@ -170,7 +173,7 @@
                 console.log("Add image clicked");
                 $('#image-upload-form').fadeIn(400);
                 updatePostAjax(0);
-                $('input[type=file]').click();
+                //$('input[type=file]').click();
             }
 
             function submitImageListener(e){
