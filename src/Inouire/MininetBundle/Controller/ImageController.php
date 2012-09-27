@@ -19,6 +19,8 @@ class ImageController extends Controller
      */
     public function addImageAction(){
         
+        $logger = $this->get('logger');
+        
         $image = new Image();
         
         $form = $this->createFormBuilder($image)
@@ -35,37 +37,22 @@ class ImageController extends Controller
                 //save file to disk
                 $newFilename = rand(1000000, 999999999).rand(1000000, 999999999);
                 $image->file->move($image->getUploadDir(), $newFilename);
-
-                $logger = $this->get('logger');
+                $filePath = $image->getUploadDir().'/'.$newFilename; 
                 
-                $orientation = 1;
-                
-                try{
-                    //get exif data
-                    $exif = exif_read_data($image->getUploadDir().'/'.$newFilename, 0, true);
-                    //get IFDO.Orientation
-                    foreach ($exif as $key => $section) {
-                        foreach ($section as $name => $val) {
-                            if($key == 'IFD0' && $name == 'Orientation'){
-                                $orientation = $val;
-                            }
-                            $logger->info($key.$name.': '.$val);
-                        }
-                    }
-                    $logger->info('Orientation of image is '.$orientation);                    
-                }catch(\Exception $e){
-
-                    $logger->info('The uploaded picture has no exif data');
+                //check that it is an image
+                $is_an_image = $this->checkTypeImage($filePath);
+                if(!$is_an_image){
+                    //TODO redirect to an error page
+                    return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
                 }
                 
-                //catch exceptions ?
-
-                //try to guess the extension
-                $file=new File($image->getUploadDir().'/'.$newFilename,true);
+                //get orientation
+                $orientation = $this->getImageOrientation($filePath);
                 
+                //try to guess the extension
+                $file=new File($filePath,true);
                 $extension = $file->guessExtension();
-                if (!$extension) {
-                    // extension cannot be guessed
+                if (!$extension) {// extension cannot be guessed
                     $extension = 'bin';
                 }
                 $file->move($image->getUploadDir(), $newFilename.'.'.$extension);
@@ -87,11 +74,53 @@ class ImageController extends Controller
                 
                 return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
                 
+            }else{
+                //TODO redirect to an error page
+                $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
             }   
         }else{
             return $this->render('InouireMininetBundle:Default:imageForm.html.twig', array(
                 'form' => $form->createView(),
             ));
+        }
+    }
+    
+    /*
+     * Util function: check that the file is an image
+     */
+    private function checkTypeImage($filePath){
+        try{
+            $imagine = new Imagine();
+            $image = $imagine->open($filePath);
+            return true;
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+    
+    /*
+     * Util function: get image orientation
+     */
+    private function getImageOrientation($filePath){
+
+        //$logger = $this->get('logger');
+        //default: normal orientation
+        $orientation = 1;
+                
+        try{
+            //get exif data
+            $exif = exif_read_data($filePath, 0, true);
+            //get IFDO.Orientation
+            foreach ($exif as $key => $section) {
+                foreach ($section as $name => $val) {
+                    //$logger->info($key.'.'.$name.': '.$val);
+                    if($key == 'IFD0' && $name == 'Orientation'){
+                        $orientation = $val;
+                    }
+                }
+            }
+        }catch(\Exception $e){
+            $orientation = 1;
         }
     }
     
