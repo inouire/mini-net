@@ -80,7 +80,7 @@
                 <p class="muted">
                     {{ moreDate }}
                     {% if date(post.date) >= date('-1days') %}
-                        (vers {{ post.date | date('H') }}h)
+                        (vers {{ post.approxHour }}h)
                     {% endif %}
                 </p>
                 {# TODO: animate this label <span class="label label-warning">nouveau</span> #}

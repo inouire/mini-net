@@ -274,13 +274,18 @@ class Post{
         return $post_age->format('%a');
     }
 
+    public function getApproxHour(){
+        $half_an_hour = new \DateInterval('PT1800S');
+        $rectified_date = $this->date->add($half_an_hour);
+        return $rectified_date->format('H');
+    }
     
     public function getWeight(){
         //retrieve plain content
         $content = $this->content;
         
         //get length of content + "height" of comments
-        $weight = strlen($content) + count($this->comments)*150;
+        $weight = strlen($content) + count($this->comments)*170;
         
         return $weight;
     }

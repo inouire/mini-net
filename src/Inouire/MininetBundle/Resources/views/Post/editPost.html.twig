@@ -49,7 +49,7 @@
     </div>
     
     <center>
-        <button class="btn btn-primary" id="add-image-button" onClick="document.getElementById('theSubmitButton').click();">
+        <button class="btn btn-primary" id="add-image-button" >
             <i class="icon-picture icon-white"></i> Ajouter une photo
         </button>
         <form action="{{ path('add_image') }}" id="image-upload-form" method="post" {{ form_enctype(form) }} style="display: none">
