@@ -29,21 +29,20 @@ class AlbumController extends Controller
         //get all the images of the posts of the requested year
         $image_list = $image_repo->getImagesOfYear($year);
         
-        if(count($image_list)==0){
-			//render the 'no album' page
-			return $this->render('InouireMininetBundle:Default:noAlbum.html.twig',array(
-				'year' => $year,
-			));
-		}else{
+        //check that some pictures are avalaible for this year
+        if(count($image_list)>0){
 			//render the automatic album
 			return $this->render('InouireMininetBundle:Default:album.html.twig',array(
 				'year' => $year,
 				'image_list' => $image_list,
 			));
+		}else{
+			//render the 'no album' page
+			return $this->render('InouireMininetBundle:Default:noAlbum.html.twig',array(
+				'year' => $year,
+			));
 		}
 
-        
-        
     }
     
     
