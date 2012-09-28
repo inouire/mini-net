@@ -76,7 +76,7 @@ class DefaultController extends Controller
         $monthly_posts = $post_repo->getMonthlyPosts($year,$month);
        
         //build date of current month
-        $current_date = new \Datetime($year.'-'.$month.'-01');
+        $requested_date = new \Datetime($year.'-'.$month.'-01');
         
         //build months of year
         $months_of_year = array();
@@ -88,16 +88,16 @@ class DefaultController extends Controller
         if( count($monthly_posts) > 0 ){
             return $this->render('InouireMininetBundle:Default:posts.html.twig',array(
                 'post_list'=> $monthly_posts,
-                'current_date' => $current_date,
-                'current_year' => $year,
-                'current_month' => $month,
+                'requested_date' => $requested_date,
+                'requested_year' => $year,
+                'requested_month' => $month,
                 'months_of_year' => $months_of_year
             ));
         }else{ //if no post available, display the specific page
             return $this->render('InouireMininetBundle:Default:noPosts.html.twig',array(
-                'current_date' => $current_date,
-                'current_year' => $year,
-                'current_month' => $month,
+                'requested_date' => $requested_date,
+                'requested_year' => $year,
+                'requested_month' => $month,
                 'months_of_year' => $months_of_year
             ));
         }
