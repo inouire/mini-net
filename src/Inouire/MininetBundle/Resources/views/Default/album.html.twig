@@ -1,24 +1,13 @@
-{% extends 'InouireMininetBundle:Default:base.html.twig' %}
+{% extends 'InouireMininetBundle:Default:headerAlbum.html.twig' %}
 
-{% block title %}albums pour l'année {{ year }}{% endblock %}
+{% block album %}
 
-{% block body %}
-
-            <div>
-                <ul class="pager">
-                    <li><a href="{{ path('album',{'year':year-1 }) }}">&larr; {{ year - 1}}</a></li>
-                    <span style="font-size: 2em;"> {{ year }} </span>
-                    <li><a href="{{ path('album',{'year':year+1 }) }}">{{ year + 1}} &rarr;</a></li>
-                </ul>
-            </div>
-    
-            <hr>
     
     {% set currentMonth = '0' %}
             
-    {% for post in post_list %}
-        {% if post.hasImages %}
-            {% set postMonth = post.date | date("Ym") %}
+    {% for image in image_list %}
+
+            {% set postMonth = image.post.date | date("Ym") %}
             {% if currentMonth < postMonth %}
                 {% if currentMonth != 0 %}
                 
@@ -31,22 +20,21 @@
                 <div class="row">
                     <a id="{{ currentMonth }}" class="anchoroffset"></a>
                     <div class="span2">
-                        <h4>{{post.date | localeDate('medium','none',null,'MMMM') }}</h4> 
+                        <h4>{{image.post.date | localeDate('medium','none',null,'MMMM') }}</h4> 
                     </div>
                     <div class="span10">
                         <ul class="thumbnails">           
             {% endif %}
-            {% for image in post.images %}
                 <li class="span2">
                     <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{year}}]">
                          <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
                     </a>
                 </li>
-            {% endfor %}
-        {% endif %}
+
     {% endfor %}
     
             </ul>
         </div>
    </div>
+   
 {% endblock %}
