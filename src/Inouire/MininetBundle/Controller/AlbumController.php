@@ -22,18 +22,27 @@ class AlbumController extends Controller
      */
     public function viewAction($year){
         
-        //get entity manager and Post repository
+        //get entity manager and Image repository
         $em = $this->getDoctrine()->getEntityManager();
-        $post_repo = $em->getRepository('InouireMininetBundle:Post');
+        $image_repo = $em->getRepository('InouireMininetBundle:Image');
         
-        //get all the posts of the given year
-        $post_list = $post_repo->getYearlyPosts($year);
+        //get all the images of the posts of the requested year
+        $image_list = $image_repo->getImagesOfYear($year);
         
-        //render the automatic album
-        return $this->render('InouireMininetBundle:Default:album.html.twig',array(
-            'year' => $year,
-            'post_list' => $post_list,
-        ));
+        //check that some pictures are avalaible for this year
+        if(count($image_list)>0){
+			//render the automatic album
+			return $this->render('InouireMininetBundle:Default:album.html.twig',array(
+				'year' => $year,
+				'image_list' => $image_list,
+			));
+		}else{
+			//render the 'no album' page
+			return $this->render('InouireMininetBundle:Default:noAlbum.html.twig',array(
+				'year' => $year,
+			));
+		}
+
     }
     
     
