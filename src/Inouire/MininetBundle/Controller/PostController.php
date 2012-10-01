@@ -86,7 +86,15 @@ class PostController extends Controller
         
         //check that this post exists, and that it belongs to this user
         if($post==null){
-            return $this->redirect($this->generateUrl('home'));
+            //render error page
+            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                'error_level'=> 'bang',
+                'error_title'=> 'Post introuvable',
+                'error_message' => 'Le post demandé n\'existe pas (ou plus)',
+                'follow_link' => $this->generateUrl('home'),
+                'follow_link_text' => 'Retourner à la page d\'acceuil',
+            ));
+        
         }else if( $post->getAuthor() != $user ){//the user is not the author-> view only
             return $this->redirect($this->generateUrl('view_post',array(
                 'post_id' => $post->getId()

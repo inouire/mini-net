@@ -42,8 +42,15 @@ class ImageController extends Controller
                 //check that it is an image
                 $is_an_image = $this->checkTypeImage($filePath);
                 if(!$is_an_image){
-                    //TODO redirect to an error page
-                    return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
+                    
+                    //render an error page 
+                    return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                        'error_level'=> 'bang',
+                        'error_title'=> 'Impossible d\'envoyer ce fichier',
+                        'error_message' => 'Le fichier envoyé n\'est pas une image',
+                        'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->post_id )),
+                        'follow_link_text' => 'Revenir à l\'édition du post',
+                    ));
                 }
                 
                 //get orientation
@@ -75,8 +82,14 @@ class ImageController extends Controller
                 return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
                 
             }else{
-                //TODO redirect to an error page
-                $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
+                //render an error page
+                return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                    'error_level'=> 'bang',
+                    'error_title'=> 'Impossible d\'envoyer ce fichier',
+                    'error_message' => 'Les données reçues n\'étaient pas valides',
+                    'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->post_id )),
+                    'follow_link_text' => 'Revenir à l\'édition du post',
+                ));
             }   
         }else{
             return $this->render('InouireMininetBundle:Default:imageForm.html.twig', array(

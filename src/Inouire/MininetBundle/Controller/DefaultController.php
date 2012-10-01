@@ -14,6 +14,18 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('home'));
     }
     
+
+    public function errorAction(){
+        
+        return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+            'error_level'=> 'bang',
+            'error_title'=> 'What the fuck is this shit',
+            'error_message' => 'Le fichier envoyé n\'est pas une image',
+            'follow_link' => '#',
+            'follow_link_text' => 'Zyva',
+        ));
+    }
+    
     /**
      * Handles the home page 
      */
@@ -68,6 +80,17 @@ class DefaultController extends Controller
      */
     public function postsAction($year,$month){
 
+        //check validity of year and month given
+        if( $year > 8000 || $year < 1 || $month < 1 || $month > 12){
+            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                'error_level'=> 'info',
+                'error_title'=> 'Date invalide',
+                'error_message' => 'Impossible de récupérer les posts du mois '.$month.' / année '.$year,
+                'follow_link' => $this->generateUrl('archives'),
+                'follow_link_text' => 'Aller aux archives du mois dernier',
+            ));
+        }
+        
         //get entity manager and post repository
         $em = $this->getDoctrine()->getEntityManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
