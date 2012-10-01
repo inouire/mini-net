@@ -42,7 +42,6 @@ class ImageController extends Controller
                 //check that it is an image
                 $is_an_image = $this->checkTypeImage($filePath);
                 if(!$is_an_image){
-                    
                     //render an error page 
                     return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
                         'error_level'=> 'bang',
@@ -135,6 +134,8 @@ class ImageController extends Controller
         }catch(\Exception $e){
             $orientation = 1;
         }
+        
+        return $orientation;
     }
     
     /*
