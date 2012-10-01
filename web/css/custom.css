@@ -3,6 +3,9 @@ body {
     padding-top: 60px;
     padding-bottom: 40px;
 }
+.block-far{
+    padding-top: 160px;
+}
 .very-close{
     margin-top:3px;
     margin-bottom:3px;

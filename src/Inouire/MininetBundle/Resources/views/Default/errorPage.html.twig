@@ -1,0 +1,43 @@
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        {# Specific padding for this page as there is very few content#}
+        body {
+            padding-top: 120px;
+            padding-bottom: 40px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <center>
+            {% if error_level == 'bang' %}
+                <img src="{{asset('css/icons/bang.png')}}"/>
+            {% else %}
+                <img src="{{asset('css/icons/about.png')}}"/>
+            {% endif %}
+            
+            <div>
+              <h1>
+                {{ error_title }}<br>
+                <small>{{ error_message }}</small>
+              </h1>
+            </div>
+            <br>
+            <a href="{{ follow_link }}" class="btn btn-inverse">{{ follow_link_text }}</a>
+        </center>
+    </div>
+
+{% endblock %}
+
+
+{% block footer %}
+    
+    <div class="block-far"></div>
+    {{ parent() }}
+    
+{% endblock %}
