@@ -4,28 +4,33 @@
    
     <center>
     
-		{% set current_year = ("now" |date("Y")) %}
-		{% set current_month = ("now" |date("m")) %}
-		
-		{% if current_year == requested_year %}
-			{% if current_month == requested_month %}
-				<h3>Aucun post n'a été publié ce mois-çi.</h3>
-				<h4>Ah ouais qu'est ce qu'on attend !.</h4>
-			{% elseif current_month > requested_month %}
-				<h3>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM') }}.</h3>
-				<h4>Désolé.</h4>
-			{% elseif current_month < requested_month %}
-				<h3>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM') }}.</h3>
-				<h4>En même temps on n'y est pas encore.</h4>
-			{% endif %}
-		{% elseif current_year > requested_year %}
-			<h3>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM YYYY') }}.</h3>
-			<h4>Désolé.</h4>
-		{% elseif current_year < requested_year %}
-			<h3>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM YYYY') }}.</h3>
-			<h4>En même temps on n'est pas encore en {{requested_year}}.</h4>
-        {% endif %}		
-		
+        {% set current_year = ("now" |date("Y")) %}
+        {% set current_month = ("now" |date("m")) %}
+        
+        {% if current_year == requested_year %}
+            {% if current_month == requested_month %}
+                <h4>Aucun post n'a été publié ce mois-ci.</h4>
+                <h5>Allez qu'est ce qu'on attend !</h5>
+                <a class="btn btn-success" href="{{ path('new_post') }}">
+                    Ajouter des nouvelles
+                </a>
+            {% elseif current_month > requested_month %}
+                <h4>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM') }}.</h4>
+            {% elseif current_month < requested_month %}
+                <h4>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM') }}.</h4>
+                <h5>En même temps, on n'y est pas encore.</h5>
+            {% endif %}
+        {% elseif current_year > requested_year %}
+            <h4>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM YYYY') }}.</h4>
+        {% elseif current_year < requested_year %}
+            <h4>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM YYYY') }}.</h4>
+            <h5>En même temps, on n'est pas encore en {{requested_year}}.</h5>
+        {% endif %}     
+        
+        {% if current_year!= requested_year or current_month != requested_month %}
+            <img src="{{asset('css/icons/package.png')}}"/>
+        {% endif %}
+        
     </center>
         
 {% endblock %}

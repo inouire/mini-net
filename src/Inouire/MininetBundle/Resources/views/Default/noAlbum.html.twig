@@ -4,18 +4,16 @@
    
     <center>
     
-    
-		{% if ("now" |date("Y")) == year %}
-			<h3>Aucune photo n'a été publiée cette année.</h3>
-			<h4>Publiez simplement un post avec photo pour démarrer l'album automatique.</h4>
-		{% else %}
-			<h3>Aucune photo n'a été publiée durant l'année {{ year }}.</h3>
-			{% if ("now" |date("Y")) < year %}
-				<h4>D'un autre coté on est seulement en  {{"now" |date("Y")}}...</h4>
-			{% else %}
-				<h4>Désolé.</h4>
-			{% endif %}
+        {% if ("now" |date("Y")) == year %}
+            <h4>Aucune photo n'a été publiée cette année.</h4>
+            <h5>Publiez simplement un post avec photo pour démarrer l'album automatique.</h5>
+        {% else %}
+            <h4>Aucune photo n'a été publiée durant l'année {{ year }}.</h4>
+            {% if ("now" |date("Y")) < year %}
+                <h5>D'un autre coté on est encore qu'en {{"now" |date("Y")}}...</h5>
+            {% endif %}
         {% endif %}
+        <img src="{{asset('css/icons/folder-pictures.png')}}"/>
         
     </center>
         
