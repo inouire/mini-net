@@ -158,15 +158,18 @@ class PostController extends Controller
             }else{
                 //if first publication, set date to now
                 if( $is_published && !$post->getPublished() ){
-                    $post->touchDate();
+                    if( strlen($post_content) > 0 || $post->getHasImages() ){
+                        $post->touchDate();
+                        $post->setPublished($is_published);
+                    }
                 }else{
                     if( $post_content != $post->getContent() ){
                         $post->touchEditDate();
                     }
                 }
-               //update content and status
+               //update content
                 $post->setContent($post_content);
-                $post->setPublished($is_published);
+                
                 $response_message = 'post '.$post_id.' has been updated';
             }
             
