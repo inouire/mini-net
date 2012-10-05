@@ -7,31 +7,59 @@
         {% set current_year = ("now" |date("Y")) %}
         {% set current_month = ("now" |date("m")) %}
         
+        {% set title='Aucun post n\'a été publié en '~(requested_date | localeDate('medium','none',null,'MMMM YYYY'))  %}
+        {% set message='' %}
+        {% set link=path('archives') %}
+        {% set link_message='Aller aux archives du mois en cours'%}
+        
         {% if current_year == requested_year %}
             {% if current_month == requested_month %}
-                <h4>Aucun post n'a été publié ce mois-ci.</h4>
-                <h5>Allez qu'est ce qu'on attend !</h5>
-                <a class="btn btn-success" href="{{ path('new_post') }}">
-                    Ajouter des nouvelles
-                </a>
+                {% set title = 'Aucun post n\'a été publié ce mois-ci.' %}
+                {% set message='Allez hop, au boulot !' %}
+                {% set link_message='Ajouter des nouvelles' %}
+                {% set link= path('new_post') %}
             {% elseif current_month > requested_month %}
-                <h4>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM') }}.</h4>
+                {% set title = 'Aucun post n\'a été publié en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
+                {% set message='Peut être que le mini-net n\'était pas encore installé à ce moment là ?' %}
             {% elseif current_month < requested_month %}
-                <h4>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM') }}.</h4>
-                <h5>En même temps, on n'y est pas encore.</h5>
+                {% set title = 'Aucun post n\'a été publié en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
+                {% set message='Mais bon, d\'un autre coté c\'est dans le futur.' %}
             {% endif %}
         {% elseif current_year > requested_year %}
-            <h4>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM YYYY') }}.</h4>
+            {% set title = 'Aucun post n\'a été publié en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
+            {% set message='Peut être que le mini-net n\'était pas encore installé à ce moment là ?' %}
         {% elseif current_year < requested_year %}
-            <h4>Aucun post n'a été publié en {{ requested_date | localeDate('medium','none',null,'MMMM YYYY') }}.</h4>
-            <h5>En même temps, on n'est pas encore en {{requested_year}}.</h5>
+            {% set title = 'Aucun post n\'a été publié en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
+            {% set message='Mais bon, d\'un autre coté on est encore qu\'en '~current_year~'.' %}
         {% endif %}     
         
-        {% if current_year!= requested_year or current_month != requested_month %}
+    
+    <div class="row" style="padding-top:50px">
+        <center>
             <img src="{{asset('css/icons/package.png')}}"/>
-        {% endif %}
+            
+            <div>
+              <h2>
+                {{ title }}<br>
+                <small>{{ message }}</small>
+              </h2>
+            </div>
+            {% if link %}
+                <a class="btn btn-inverse" href="{{link}}">
+                    {{link_message}} »
+                </a>
+            {% endif %}
+            
+        </center>
+    </div>
         
     </center>
         
 {% endblock %}
 
+{% block footer %}
+    
+    <div class="block-far"></div>
+    {{ parent() }}
+    
+{% endblock %}
