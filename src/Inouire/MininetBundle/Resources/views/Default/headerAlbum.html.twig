@@ -4,11 +4,10 @@
 
 {% block body %}
     
-    <img src="{{asset('css/icons/camera.png')}}" class="pull-right"/>
     <div>
         <ul class="pager">
             <li><a href="{{ path('album',{'year':year-1 }) }}">&larr; {{ year - 1}}</a></li>
-            <span style="font-size: 2em;"> {{ year }} </span>
+            <span style="font-size: 2.3em;"> {{ year }} </span>
             <li><a href="{{ path('album',{'year':year+1 }) }}">{{ year + 1}} &rarr;</a></li>
     </div>
 

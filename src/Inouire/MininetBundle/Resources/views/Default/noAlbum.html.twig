@@ -2,20 +2,55 @@
 
 {% block album %}
    
-    <center>
+    {% set title=''  %}
+    {% set message='Désolé.' %}
+    {% set link='' %}
+    {% set link_message=''%}
+        
+       <center>
     
         {% if ("now" |date("Y")) == year %}
-            <h4>Aucune photo n'a été publiée cette année.</h4>
-            <h5>Publiez simplement un post avec photo pour démarrer l'album automatique.</h5>
+            {% set title='Aucune photo n\'a été publiée cette année.'  %}
+            {% set message='Publiez simplement un post avec photo pour démarrer l\'album automatique.' %}
+            {% set link=path('new_post') %}
+            {% set link_message='Rédiger un post' %}
         {% else %}
-            <h4>Aucune photo n'a été publiée durant l'année {{ year }}.</h4>
+            {% set title='Aucune photo n\'a été publiée durant l\'année '~year~'.'  %}
+            {% set link=path('albums') %}
+            {% set link_message='Aller à l\'album de l\'année en cours'%}
             {% if ("now" |date("Y")) < year %}
-                <h5>D'un autre coté on est encore qu'en {{"now" |date("Y")}}...</h5>
+                {% set message='Patience, nous ne sommes qu\'en '~("now" |date("Y"))~'.' %}
             {% endif %}
         {% endif %}
-        <img src="{{asset('css/icons/folder-pictures.png')}}"/>
         
+        
+        <div class="row" style="padding-top:50px">
+        <center>
+            <img src="{{asset('css/icons/camera.png')}}"/>
+            
+            <div>
+              <h2>
+                {{ title }}<br>
+                <small>{{ message }}</small>
+              </h2>
+            </div>
+            {% if link %}
+                <br>
+                <a class="btn btn-inverse" href="{{link}}">
+                    {{link_message}} »
+                </a>
+            {% endif %}
+            
+        </center>
+    </div>
+    
     </center>
         
 {% endblock %}
 
+{% block footer %}
+    
+    <div class="block-far"></div>
+    {{ parent() }}
+    
+{% endblock %}
