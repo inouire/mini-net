@@ -231,6 +231,11 @@ class Post{
         $hyperlink = '<a href="$1">$1</a>';
         $content = preg_replace($hyperlink_pattern, $hyperlink, $content);
 
+        //replace iframe link
+        //$video_pattern = '/video:\/\/([^\s]+)/i';
+        //$video_embed = '<iframe width="560" height="315" src="http://$1" frameborder="0"></iframe>';
+        //$content = preg_replace($video_pattern, $video_embed, $content);
+        
         //replace carriage return
         $content = str_replace("\n","<br />",$content);
         
@@ -259,6 +264,23 @@ class Post{
                 } 
             } 
         }
+        
+        //remove opening braces (security)
+        $short_content = str_replace('<','',$short_content);
+        
+        //add arrows
+        $short_content = str_replace(array('->','=>'),'<i class="icon-arrow-right"></i>',$short_content);
+        
+        //add warning sign
+        $short_content = str_replace('/!\\','<i class="icon-warning-sign"></i>',$short_content);
+       
+        //add star
+        $short_content = str_replace('*','<i class="icon-asterisk"></i>',$short_content);
+        
+        //replace hyperlinks (but doesn't check link validity at all)
+        $hyperlink_pattern = '/((http|https):\/\/[^\s]+)/i';
+        $hyperlink = '<a href="$1">$1</a>';
+        $short_content = preg_replace($hyperlink_pattern, $hyperlink, $short_content);
         
         return $short_content;
     }

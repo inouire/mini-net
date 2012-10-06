@@ -199,7 +199,7 @@
                     </span>
                 </h4>
                 
-                <p>{{ post.resume }}</p>
+                <p>{{ post.resume | raw }}</p>
                 <p><a href="{{ path('view_post',{'post_id':post.id }) }}" class="pull-right">Lire la suite »</a></p>
             </div>
         {% set counter = counter + 1 %}
