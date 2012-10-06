@@ -2,11 +2,16 @@
 
 {% block body %}
     
+    {% set new_day='yes' %}
+    
     {% for post in post_list %}
         
         {% if current_datestamp is defined %}
             {% if post.date | date('Ymd') != current_datestamp %}
-                <hr>            
+                <hr>
+                {% set new_day='yes' %}
+            {% else %}
+                {% set new_day='no' %}
             {% endif %}
         {% endif %}
         {% set current_datestamp = post.date | date('Ymd') %}
@@ -76,9 +81,15 @@
         <div class="row">
         
             <div class="span2">
-                <h4>{{ niceDate }}</h4>
+                {% if new_day=='yes' %}
+                    <h4>{{ niceDate }}</h4>
+                {% else %}
+                    <h4></h4>
+                {% endif %}
+
                 <p class="muted">
                     {{ moreDate }}
+                    
                     {% if date(post.date) >= date('-1days') %}
                         (vers {{ post.approxHour }}h)
                     {% endif %}
