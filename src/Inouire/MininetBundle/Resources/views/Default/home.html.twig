@@ -280,12 +280,14 @@
                            function(data, statut){
                                 if(statut=="success"){
                                     console.log("Axaj call has been a success");
-                                    console.log(statut);
                                     console.log(data); 
                                     var comments = document.getElementById('comments-'+post_id);
-                                    //insérer cet élément proprement... histoire de ne pas tout casser
-                                    comments.innerHTML += '<div class=\"alert very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
-                                    var comment = document.getElementById('comment-'+data.comment.id);
+                                    if(data.is_author_of_post == 1){
+                                        comments.innerHTML += '<div class=\"alert alert-success very-close author-comment\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                    }else{
+                                        comments.innerHTML += '<div class=\"alert alert-info very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                    }
+                                   var comment = document.getElementById('comment-'+data.comment.id);
                                     e.target.innerHTML="Commenter";
                                     $('#comment-'+data.comment.id).fadeIn(100);
                                     $('#comment-wheel-'+post_id).fadeOut(100);

@@ -17,7 +17,7 @@ class CommentController extends Controller
         $post_id = $request->request->get('post_id');
         $comment_content = $request->request->get('comment');
         
-        //get current user
+        //get current user (the commenter)
         $user = $this->container->get('security.context')->getToken()->getUser();
         
         //get corresponding post
@@ -32,13 +32,20 @@ class CommentController extends Controller
             ));
         }
         
+        //check if the commenter is the author of the post
+        if( $post->getAuthor() == $user ){
+            $is_author_of_post = 1;
+        }else{
+            $is_author_of_post = 0;
+        }
+        
         //create comment
         $comment = new Comment();
         $comment->setContent($comment_content);
         $comment->setAuthor($user);
         $comment->setPost($post);
         
-        //persist the new comment
+        //persist the new comment to database
         $em->persist($comment);
         $em->flush();
         
@@ -47,7 +54,8 @@ class CommentController extends Controller
             'status'=> 'ok',
             'message' => 'comment added to post '.$post_id,
             'comment_id' => $comment->getId(),
-            'comment_content' => $comment_content
+            'comment_content' => $comment_content,
+            'is_author_of_post' => $is_author_of_post
         ));
             
     }
