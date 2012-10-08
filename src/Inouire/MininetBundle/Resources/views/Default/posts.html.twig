@@ -117,7 +117,7 @@
                 <ul class="thumbnails">
                     {% for image in post.images %}
                     <li class="{{ thumbWidth}}">
-                        <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{post.id}}]">
+                        <a href="{{ image.webpath }}" class="fancybox thumbnail" rel="fancybox[{{post.id}}]">
                              <img src="{{ image.webpath | imagine_filter(thumbSize) }}" />
                         </a>
                     </li>

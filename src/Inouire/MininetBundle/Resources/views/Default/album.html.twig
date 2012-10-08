@@ -26,7 +26,7 @@
                         <ul class="thumbnails">           
             {% endif %}
                 <li class="span2">
-                    <a href="{{ image.webpath }}" class="thumbnail" rel="lightbox[{{year}}]">
+                    <a href="{{ image.webpath }}" class="fancybox thumbnail" rel="fancybox[{{year}}]">
                          <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
                     </a>
                 </li>
