@@ -174,7 +174,7 @@
                     <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
                         <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
                     </div>
-                    <img id="comment-wheel-{{ post.id }}" src="/lightbox/images/loading_small.gif" style="display: none"/>
+                    <img id="comment-wheel-{{ post.id }}" src="/css/icons/loading_small.gif" style="display: none"/>
                     {% if post.author.id == app.user.id %}
                         <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
                     {% else %}
