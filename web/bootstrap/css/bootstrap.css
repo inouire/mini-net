@@ -3353,7 +3353,7 @@ input[type="submit"].btn.btn-mini {
 }
 .navbar .btn-navbar {
   display: none;
-  float: right;
+  float: left;
   padding: 7px 10px;
   margin-left: 5px;
   margin-right: 5px;
@@ -4764,6 +4764,12 @@ button.close {
 .visible-desktop {
   display: inherit !important;
 }
+
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
 @media (min-width: 768px) and (max-width: 979px) {
   .hidden-desktop {
     display: inherit !important;

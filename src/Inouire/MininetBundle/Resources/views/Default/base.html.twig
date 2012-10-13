@@ -18,11 +18,13 @@
     
         <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+        <!--<link href="{{ asset('b2/css/bootstrap-responsive.css') }}" rel="stylesheet">-->
+        
         <link href="{{ asset('fancybox/jquery.fancybox.css?v=2.1.1')}}" rel="stylesheet" type="text/css" media="screen" />
         <link href="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7') }}" rel="stylesheet" type="text/css"  />
         
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-            
+        
     {% endblock %}
     
     </head>
@@ -31,48 +33,53 @@
     
         {% block header %}
         
-        <div class="navbar navbar-fixed-top navbar-inverse">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="brand" href="{{ path('root') }}">Mini-net</a>
-
-                    {% set currentPath = app.request.attributes.get('_route') %}
-                    {% set classHome = '' %}
-                    {% set classAlbum = '' %}
-                    {% set classArchives = '' %}
-                    {% if currentPath == 'home' %}
-                        {% set classHome = ' active' %}
-                    {% elseif currentPath == 'album' %}
-                        {% set classAlbum = ' active' %}
-                    {% elseif currentPath == 'posts' %}
-                        {% set classArchives = ' active' %}
-                    {% endif %}    
-
-                    <!-- nav menu -->
-                    <ul class="nav">
-                        <li class="{{ classHome }}"><a href="{{ path('home') }}"><i class="icon-home"></i> Accueil</a></li>
-                        <li class="{{ classAlbum }}"><a href="{{ path('albums') }}"><i class="icon-th-large"></i> Albums</a></li>
-                        <li class="{{ classArchives }}"><a href="{{ path('archives') }}"><i class="icon-calendar"></i> Archives</a></li>
-                    </ul>
+        {% set currentPath = app.request.attributes.get('_route') %}
+        {% set classHome = '' %}
+        {% set classAlbum = '' %}
+        {% set classArchives = '' %}
+        {% if currentPath == 'home' %}
+            {% set classHome = ' active' %}
+        {% elseif currentPath == 'album' %}
+            {% set classAlbum = ' active' %}
+        {% elseif currentPath == 'posts' %}
+            {% set classArchives = ' active' %}
+        {% endif %}  
                     
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     
-                    <ul class="nav pull-right">
-                        <a class="btn btn-success" href="{{ path('new_post') }}">
-                            Ajouter des nouvelles
-                        </a>
-                        <li class="divider-vertical"></li>
-                        <a class="btn" id="user-logout-button" href="{{ path('fos_user_security_logout') }}">
-                            <i class="icon-user" id="user-logout-icon"></i> 
-                            {{ app.user.username }}
-                        </a>
-                    </ul>
-                    
-                    {% endif %}
-                    
-                </div>
-            </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="{{ path('root') }}">Mini-net</a>
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+              <ul class="nav pull-right">
+                <a class="btn btn-success" href="{{ path('new_post') }}">Ajouter des nouvelles</a>
+                <li class="divider-vertical"></li>
+                <a class="btn" id="user-logout-button" href="{{ path('fos_user_security_logout') }}">
+                    <i class="icon-user" id="user-logout-icon"></i> 
+                    <span class="hidden-phone">{{ app.user.username }}</span>
+                </a>
+            {% endif %}
+        </ul>
+          <div class="nav-collapse collapse">
+            <!-- nav menu -->
+            <ul class="nav">
+                <li class="{{ classHome }}"><a href="{{ path('home') }}"><i class="icon-home"></i> Accueil</a></li>
+                <li class="{{ classAlbum }}"><a href="{{ path('albums') }}"><i class="icon-th-large"></i> Albums</a></li>
+                <li class="{{ classArchives }}"><a href="{{ path('archives') }}"><i class="icon-calendar"></i> Archives</a></li>
+            </ul>
+              
+          </div><!--/.nav-collapse -->
+          
         </div>
+      </div>
+    </div>
+    
+
         
         {% endblock %}
         
@@ -98,6 +105,7 @@
         <script src="{{ asset('bootstrap/js/bootstrap.js') }}" type="text/javascript"></script>
         <script src="{{ asset('fancybox/jquery.fancybox.js?v=2.1.1') }}" type="text/javascript"></script> 
         <script src="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7') }}" type="text/javascript"></script> 
+        <script src="{{ asset('b2/js/bootstrap-collapse.js') }}"></script>
         
         <script type="text/javascript">
             $(document).ready(function() {
