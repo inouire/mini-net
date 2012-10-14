@@ -16,41 +16,34 @@
                 {% set contentWidth = 'span6' %}
                 {% set imagesWidth = 'span4' %}
                 {% set thumbWidth = 'span4' %}
-                {% set thumbSize = 'big_thumb' %}
             {% elseif post.images|length == 2 %}
                 {% if post.weight > 1000 %}
                     {% set contentWidth = 'span6' %}
                     {% set imagesWidth = 'span4' %}
                     {% set thumbWidth = 'span4' %}
-                    {% set thumbSize = 'big_thumb' %}
                 {% else %}
                     {% set contentWidth = 'span4' %}
                     {% set imagesWidth = 'span6' %}
                     {% set thumbWidth = 'span3' %}
-                    {% set thumbSize = 'big_thumb' %}
                 {% endif %}
             {% elseif  post.images|length == 3 %}
                 {% if post.weight > 2600 %}
                     {% set contentWidth = 'span6' %}
                     {% set imagesWidth = 'span4' %}
                     {% set thumbWidth = 'span4' %}
-                    {% set thumbSize = 'big_thumb' %}
                 {% else %}
                     {% set contentWidth = 'span6' %}
                     {% set imagesWidth = 'span4' %}
                     {% set thumbWidth = 'span2' %}
-                    {% set thumbSize = 'small_thumb' %}
                 {% endif %}
             {% elseif  post.images|length == 4 %}
                 {% set contentWidth = 'span6' %}
                 {% set imagesWidth = 'span4' %}
                 {% set thumbWidth = 'span2' %}
-                {% set thumbSize = 'small_thumb' %}
             {% else %}
                 {% set contentWidth = 'span4' %}
                 {% set imagesWidth = 'span6' %}
                 {% set thumbWidth = 'span2' %}
-                {% set thumbSize = 'small_thumb' %}
             {% endif %} 
         {% else %}
             {% set contentWidth = 'span6' %}
@@ -102,12 +95,9 @@
                             <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
                         </div>
                         <img id="comment-wheel-{{ post.id }}" src="/lightbox/images/loading_small.gif" style="display: none"/>
-                        {% if post.author.id == app.user.id %}
-                            <button type="submit" class="btn comment-button my-post" id="{{ post.id }}">Commenter</button>
-                        {% else %}
-                            <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-                        {% endif %}
-                    </form>  
+                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                    </form>
+                    <div style="margin-bottom:45px;"></div>
                 {% endif %}
                 
             </div>
@@ -118,11 +108,11 @@
                     {% for image in post.images %}
                     <li class="{{ thumbWidth}}">
                         <a href="{{ image.webpath }}" class="fancybox thumbnail" rel="fancybox[{{post.id}}]">
-                             <img src="{{ image.webpath | imagine_filter(thumbSize) }}" />
+                             <img src="{{ image.webpath | imagine_filter('big_thumb') }}"/>
                         </a>
-                    </li>
+                   </li>
                     {% endfor %}
-                </ul>
+                 </ul>
             {% else %}
                 <div id="comments-{{ post.id }}">
                     {% for comment in post.comments %}
@@ -143,11 +133,7 @@
                         <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
                     </div>
                     <img id="comment-wheel-{{ post.id }}" src="{{ asset('/css/icons/loading_small.gif')}}" style="display: none"/>
-                    {% if post.author.id == app.user.id %}
-                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-                    {% else %}
-                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-                    {% endif %}
+                    <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
                 </form>  
             {% endif %}
             </div>
@@ -161,7 +147,7 @@
     {{ parent() }}
     <script>
        
-        jQuery(document).ready(function(){
+                jQuery(document).ready(function(){
             
             console.log("JQuery loaded");
             
@@ -217,12 +203,14 @@
                            function(data, statut){
                                 if(statut=="success"){
                                     console.log("Axaj call has been a success");
-                                    console.log(statut);
                                     console.log(data); 
                                     var comments = document.getElementById('comments-'+post_id);
-                                    //insérer cet élément proprement... histoire de ne pas tout casser
-                                    comments.innerHTML += '<div class=\"alert very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
-                                    var comment = document.getElementById('comment-'+data.comment.id);
+                                    if(data.is_author_of_post == 1){
+                                        comments.innerHTML += '<div class=\"alert alert-success very-close author-comment\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                    }else{
+                                        comments.innerHTML += '<div class=\"alert alert-info very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                    }
+                                   var comment = document.getElementById('comment-'+data.comment.id);
                                     e.target.innerHTML="Commenter";
                                     $('#comment-'+data.comment.id).fadeIn(100);
                                     $('#comment-wheel-'+post_id).fadeOut(100);
