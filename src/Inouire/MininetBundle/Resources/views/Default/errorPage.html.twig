@@ -1,18 +1,8 @@
 {% extends 'InouireMininetBundle:Default:base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style type="text/css">
-        {# Specific padding for this page as there is very few content#}
-        body {
-            padding-top: 120px;
-            padding-bottom: 40px;
-        }
-    </style>
-{% endblock %}
 
 {% block body %}
-
+    <div class="block-far"></div>
     <div class="row">
         <center>
             {% if error_level == 'bang' %}

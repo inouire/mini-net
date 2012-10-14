@@ -3,24 +3,10 @@
 {% block title %}édition de post{% endblock %}
 
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style type="text/css">
-        {# Specific padding for this page as there is very few content#}
-        body {
-            padding-top: 120px;
-            padding-bottom: 40px;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
 
-    <center>
 
-    </center>
-
-    <div class="row post-editor" id={{post.id}}>
+    <div class="row post-editor block-far" id={{post.id}}>
         <div class="span2" style="text-align: center;">
             {% if post.published == true %}
                 <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
@@ -210,7 +196,11 @@
             //adding listener on all out links
             $("a").click( function (event) {
                 event.preventDefault();
-                updatePostAjax(0,redirect_to_path(event.target.href));
+                requestedLink=event.target.href;
+                if(requestedLink==null){
+                     requestedLink=event.target.id;
+                }
+                updatePostAjax(0,redirect_to_path(requestedLink));
             });
 
         });
