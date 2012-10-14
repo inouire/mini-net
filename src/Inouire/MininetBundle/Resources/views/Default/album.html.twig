@@ -11,17 +11,22 @@
             {% if currentMonth < postMonth %}
                 {% if currentMonth != 0 %}
                 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
                 <hr>
+                
                 {% endif %}
                 {% set currentMonth =  postMonth %}
                 <div class="row">
-                    <a id="{{ currentMonth }}" class="anchoroffset"></a>
-                    <h3>{{image.post.date | localeDate('medium','none',null,'MMMM') }}</h3>
+                    <div class="span12">
+                        <a id="{{ currentMonth }}" class="anchoroffset"></a>
+                        <h3>{{image.post.date | localeDate('medium','none',null,'MMMM') }}</h3>
+                    </div>
                 </div>
                 <div class="row">
-                    <ul class="thumbnails">           
+                    <div class="span12">
+                        <ul class="thumbnails">           
             {% endif %}
                 <li class="span2">
                     <a href="{{ image.webpath }}" class="fancybox thumbnail" rel="fancybox[{{year}}]">
@@ -30,8 +35,9 @@
                 </li>
 
     {% endfor %}
-    
-        </ul>
+            
+            </ul>
+        </div>
    </div>
    
 {% endblock %}
