@@ -2,9 +2,6 @@
 body {
     padding-bottom: 40px;
 }
-.block-far{
-    padding-top: 100px;
-}
 .very-close{
     margin-top:3px;
     margin-bottom:3px;
@@ -20,3 +17,13 @@ body {
    position:relative;
    top:-30px;
 }
+.big-blank-block{
+    height: 100px;
+}
+.medium-blank-block{
+    height: 60px;
+}
+.small-blank-block{
+    height: 20px;
+}
+

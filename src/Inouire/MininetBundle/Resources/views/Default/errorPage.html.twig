@@ -2,7 +2,9 @@
 
 
 {% block body %}
-    <div class="block-far"></div>
+
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    
     <div class="row">
         <center>
             {% if error_level == 'bang' %}
@@ -27,7 +29,7 @@
 
 {% block footer %}
     
-    <div class="block-far"></div>
+    <div class="big-blank-block visible-desktop"></div>
     {{ parent() }}
     
 {% endblock %}

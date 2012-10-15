@@ -23,8 +23,9 @@
             {% endif %}
         {% endif %}
         
+        {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
         
-        <div class="row" style="padding-top:50px">
+        <div class="row">
         <center>
             <img src="{{asset('css/icons/camera.png')}}"/>
             
@@ -50,7 +51,7 @@
 
 {% block footer %}
     
-    <div class="block-far"></div>
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
     {{ parent() }}
     
 {% endblock %}

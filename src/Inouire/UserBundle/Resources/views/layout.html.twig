@@ -2,8 +2,9 @@
 
 {% block body %}
 
-<center>
-        <br /><br /><br />
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    
+    <center>
         {% for key, message in app.session.getFlashes() %}
         <div class="{{ key }}">
             {{ message|trans({}, 'FOSUserBundle') }}
@@ -14,7 +15,7 @@
             {% block fos_user_content %}
             {% endblock fos_user_content %}
         </div>
-</center>
+    </center>
 {% endblock %}
 
 {% block footer %}
