@@ -5,8 +5,9 @@
 
 {% block body %}
 
-
-    <div class="row post-editor block-far" id={{post.id}}>
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    
+    <div class="row post-editor" id={{post.id}}>
         <div class="span2" style="text-align: center;">
             {% if post.published == true %}
                 <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
@@ -24,7 +25,10 @@
                     <div class="btn btn-danger pull-left" id="delete-button"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a></div>
                     <div class="btn btn-success pull-right" id="publish-button"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</div>
                 {% else %}
-                    <div class="btn" id="save-button"><i class="icon-download" id="save-icon"></i> Garder comme brouillon</div>
+                    <div class="btn" id="save-button"><i class="icon-download" id="save-icon"></i> 
+                        <span class="hidden-phone">Garder comme brouillon</span>
+                        <span class="visible-phone">Sauver</span>
+                    </div>
                     <div class="btn btn-success pull-right" id="publish-button"><i class="icon-ok icon-white" id="publish-icon"></i> Publier</div>
                 {% endif %}
                 <br /><br />
