@@ -18,10 +18,10 @@ This guide is made for Debian6 with an Apache web server and a MySQL database, f
 
 Install all the needed softwares:
 ``` bash
-$ apt-get install apache2
-$ apt-get install mysql-server
-$ apt-get install php5 php5-mysql php5-sqlite php-apc php5-intl php5-gd
-$ apt-get install git
+apt-get install apache2
+apt-get install mysql-server
+apt-get install php5 php5-mysql php5-sqlite php-apc php5-intl php5-gd
+apt-get install git
 ```
 
 Get composer on your system:
@@ -35,25 +35,25 @@ Tip: you might need to modify you php.ini to install composer, juste follow the 
 
 Clone mini-get git repository from github
 ``` bash
-$ git clone https://github.com/inouire/mini-net.git
+git clone https://github.com/inouire/mini-net.git
 ```
 
 Copy `app/config/parameters.yml.default` to `app/config/parameters.yml`
 ``` bash
-$ cp app/config/parameters.yml.default app/config/parameters.yml
+cp app/config/parameters.yml.default app/config/parameters.yml
 ```
 
 Edit `app/config/parameters.yml` with your database and locale settings
 
 Automatically get project dependencies with composer
 ``` bash
-$ composer install
+composer install
 ```
 
 Tip: if you are behing a proxy, set git variables http.proxy and/or https.proxy
 ``` bash
-$ git config --global http.proxy http://login:password@host:port/
-$ git config --global https.proxy https://login:password@host:port/
+git config --global http.proxy http://login:password@host:port/
+git config --global https.proxy https://login:password@host:port/
 ```
 
 ### Configure apache2 virtual host
@@ -76,9 +76,10 @@ Tip: if you intend to run a production environement, modifiy web/.htaccess like 
  
 Give your web server read access, and set write permission for web server on app/cache, app/logs and web directory
 ``` bash
-$ chgrp -R www-data *
-$ chmod g+rwx app/{cache,logs}
-$ chmod g+rwx web/*
+usermod -G www-data -a your_user 
+chgrp -R www-data *
+chmod g+rwx app/{cache,logs}
+chmod g+rwx web/*
 ```
 
 Edit /etc/php5/apache2/php.ini to set configuration recommended by Symfony
@@ -95,17 +96,17 @@ Check your config with Symfony built-in script at http://youradress/config.php
 
 Create database with doctrine (if not already) 
 ``` bash
-$ php app/console doctrine:database:create
+php app/console doctrine:database:create
 ```
 
 Automatically create schema with doctrine
  ``` bash
-$ php app/console doctrine:schema:update --force
+php app/console doctrine:schema:update --force
 ```
 
 Add one or more users with doctrine
  ``` bash
-$ php app/console fos:user:create
+php app/console fos:user:create
 ```
 
 ### Test application
@@ -121,7 +122,7 @@ If you're having some issue and can't figure it with the message displayed in yo
 
 If running prod environnement, don't forget to clean the cache after each modification
 ``` bash
-$ php app/console --no-debug cache:clear --env=prod
+php app/console --no-debug cache:clear --env=prod
 ```
 
 
