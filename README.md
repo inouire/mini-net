@@ -3,14 +3,12 @@ mini-net
 
 Mini-net is a tiny social network, made to for family.
 
-It is based on the PHP framework Symfony2, and is using third party library such as [Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/) and [Lightbox](http://lokeshdhakar.com/projects/lightbox2/).
-
-As mini-net software, this README is still under construction
+It is based on the PHP framework Symfony2, and is using third party library such as [Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/) and [Fancybox](http://fancyapps.com/fancybox/).
 
 ## Requirements
 
-* Web server with PHP5
-* Database engine supported by Doctrine ORM, and PHP module for this database
+* Web server with PHP >= 5.3 
+* Database engine supported by Doctrine ORM, and the PHP driver for this database
 
 ## Installation (for Debian 6 + Apache)
 
@@ -26,6 +24,13 @@ $ apt-get install php5 php5-mysql php5-sqlite php-apc php5-intl php5-gd
 $ apt-get install git
 ```
 
+Get composer on your system:
+``` bash
+$ curl -s https://getcomposer.org/installer | php
+$ mv composer.phar /usr/local/bin/composer
+```
+Tip: you might need to modify you php.ini to install composer, juste follow the instructions of the installer
+
 ### Set up the project
 
 Clone mini-get git repository
@@ -33,15 +38,15 @@ Clone mini-get git repository
 $ git clone https://github.com/inouire/mini-net.git
 ```
 
-Copy app/config/parameters.ini.default to app/config/parameters.ini
+Copy app/config/parameters.yml.default to app/config/parameters.yml
 ``` bash
-$ cp app/config/parameters.ini.default app/config/parameters.ini
+$ cp app/config/parameters.yml.default app/config/parameters.yml
 ```
 Edit it with your database and locale settings
 
-Automatically get project dependencies with vendors script
+Automatically get project dependencies with composer
 ``` bash
-$ php bin/vendors install
+$ composer install
 ```
 
 Tip: if you are behing a proxy, set git variables http.proxy and/or https.proxy
@@ -115,7 +120,7 @@ If you're having some issue and can't figure it with the message displayed in yo
 
 If running prod environnement, don't forget to clean the cache after each modification
 ``` bash
-$ rm -rf app/cache/prod
+$ php app/console --no-debug cache:clear --env=prod
 ```
 
 
