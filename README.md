@@ -1,9 +1,9 @@
 mini-net
 ========
 
-Mini-net is a tiny social network, made to for family.
+Mini-net is a tiny social network, made for family.
 
-It is based on the PHP framework Symfony2, and is using third party library such as [Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/) and [Fancybox](http://fancyapps.com/fancybox/).
+It is based on the PHP framework Symfony2, and is using third party libraries such as [Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/) and [Fancybox](http://fancyapps.com/fancybox/).
 
 ## Requirements
 
@@ -33,16 +33,17 @@ Tip: you might need to modify you php.ini to install composer, juste follow the 
 
 ### Set up the project
 
-Clone mini-get git repository
+Clone mini-get git repository from github
 ``` bash
 $ git clone https://github.com/inouire/mini-net.git
 ```
 
-Copy app/config/parameters.yml.default to app/config/parameters.yml
+Copy `app/config/parameters.yml.default` to `app/config/parameters.yml`
 ``` bash
 $ cp app/config/parameters.yml.default app/config/parameters.yml
 ```
-Edit it with your database and locale settings
+
+Edit `app/config/parameters.yml` with your database and locale settings
 
 Automatically get project dependencies with composer
 ``` bash
@@ -59,7 +60,7 @@ $ git config --global https.proxy https://login:password@host:port/
 
 Configure a new apache2 virtual host on "web" directory of git repository
 
-For clean urls, activate mod_rewrite and AllowOverride of .htaccess
+For clean urls, activate mod_rewrite and AllowOverride of .htaccess in your apache virtual host
 ``` bash
 $ a2enmod rewrite
 ```
