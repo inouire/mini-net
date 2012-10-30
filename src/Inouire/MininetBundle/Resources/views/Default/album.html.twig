@@ -41,3 +41,28 @@
    </div>
    
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            
+            //init fancybox on all pictures, with thumb
+            $(".fancybox").fancybox({
+                loop: false,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+                helpers:  {
+                    thumbs : {
+                        width: 50,
+                        height: 50
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

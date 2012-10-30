@@ -145,11 +145,19 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
+    <script type="text/javascript">
        
-                jQuery(document).ready(function(){
+        $(document).ready(function(){
             
-            console.log("JQuery loaded");
+            //init fancybox on all pictures
+            $(".fancybox").fancybox({
+                loop: false,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+            });
             
             function deleteCommentListener(e){
                 e.preventDefault();
