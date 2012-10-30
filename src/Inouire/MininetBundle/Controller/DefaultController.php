@@ -14,17 +14,6 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('home'));
     }
     
-
-    public function errorAction(){
-        
-        return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
-            'error_level'=> 'bang',
-            'error_title'=> 'What the fuck is this shit',
-            'error_message' => 'Le fichier envoyé n\'est pas une image',
-            'follow_link' => '#',
-            'follow_link_text' => 'Zyva',
-        ));
-    }
     
     /**
      * Handles the home page 
@@ -57,22 +46,15 @@ class DefaultController extends Controller
     }
     
     /*
-     * Redirect archives root URL to the correct year-month archives
+     * Redirect archives root URL to the current year-month archives
      */
     public function archivesAction(){
         
-        $month = date('m');
-        $year = date('Y');
-        
-        $prev_month = $month -1;
-        if($prev_month <1){
-            $prev_month = 12;
-            $year = $year -1;
-        }
         return $this->redirect($this->generateUrl('posts',array(
-            'year' => $year,
-            'month' => $prev_month,
+            'year' => date('Y'),
+            'month' => date('m')
         )));
+        
     }
     
     /*
