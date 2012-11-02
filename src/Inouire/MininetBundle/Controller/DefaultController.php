@@ -39,10 +39,14 @@ class DefaultController extends Controller
             8
         );
 
-        return $this->render('InouireMininetBundle:Default:home.html.twig',array(
-            'post_list'=> $post_list,
-            'post_secondary_list' => $post_secondary_list
-        ));
+        if(count($post_list)==0){
+            return $this->render('InouireMininetBundle:Default:emptyHome.html.twig');
+	}else{
+            return $this->render('InouireMininetBundle:Default:home.html.twig',array(
+            	'post_list'=> $post_list,
+            	'post_secondary_list' => $post_secondary_list
+            ));
+	}
     }
     
     /*
