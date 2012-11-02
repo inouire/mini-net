@@ -191,6 +191,11 @@
                 $('input[type=file]').click();
             });
 
+            //adding listener on "submit file" button
+            $("#image-upload-submit").click( function (event) {
+		disableAllControls(true);		
+            });
+
             //adding listeners on "delete image" icons
             $(".delete-image-button").click( function (event) {
                 var image_id = event.target.id;
