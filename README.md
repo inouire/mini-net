@@ -26,10 +26,11 @@ apt-get install git
 
 Get composer on your system:
 ``` bash
-$ curl -s https://getcomposer.org/installer | php
-$ mv composer.phar /usr/local/bin/composer
+curl -s https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
 ```
-Tip: you might need to modify you php.ini to install composer, juste follow the instructions of the installer
+Tip: you might need to modify you php.ini to install composer, juste follow the instructions of the installer.
+For more information about composer see [getcomposer.org](http://getcomposer.org)
 
 ### Set up the project
 
@@ -62,7 +63,7 @@ Configure a new apache2 virtual host on "web" directory of git repository
 
 For clean urls, activate mod_rewrite and AllowOverride of .htaccess in your apache virtual host
 ``` bash
-$ a2enmod rewrite
+a2enmod rewrite
 ```
 
 Tip: if you intend to run a production environement, modifiy web/.htaccess like this:
