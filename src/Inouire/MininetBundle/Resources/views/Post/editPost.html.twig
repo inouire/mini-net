@@ -103,16 +103,12 @@
             function updatePostAjax(post_published,post_update_function){
  
                 var post_content = $("#edit-area").val();
-                var post_id = {{post.id}};
-
                 disableAllControls(true);
-
-                console.log("Post id: "+post_id);
                 console.log("Post content: "+post_content);
                 console.log("Making ajax POST request...");
 
                 $.ajax({
-                    url : '/post/'+post_id,
+                    url : '{{ path('update_post_content', {'post_id': post.id } ) }}',
                     type : 'POST',
                     data: { content: post_content , published : post_published },
                     dataType : 'json',
@@ -129,10 +125,9 @@
             }
 
             function deletePostAjax(){
-                var post_id = {{post.id}};
                 disableAllControls(true);
                 $.ajax({
-                    url : '/post/'+post_id,
+                    url : '{{ path('update_post_content', {'post_id': post.id } ) }}',
                     type : 'DELETE',
                     dataType : 'json',
                     success : function(data, statut){
@@ -193,7 +188,7 @@
 
             //adding listener on "submit file" button
             $("#image-upload-submit").click( function (event) {
-		disableAllControls(true);		
+                disableAllControls(true);
             });
 
             //adding listeners on "delete image" icons
