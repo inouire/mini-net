@@ -55,18 +55,20 @@
         <div class="container">
           <a class="brand hidden-phone" href="{{ path('root') }}">Mini-net</a>
           
-          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-              <div class="pull-right">
-                <a class="btn btn-success" href="{{ path('new_post') }}">
-                    <span class="hidden-phone">Ajouter des nouvelles</span>
-                    <span class="visible-phone">Ecrire</span>
-                </a>
-                <a class="btn btn-inverse" id="user-logout-button" href="{{ path('fos_user_security_logout') }}">
-                    <i class="icon-remove icon-white visible-phone"></i>
-                    <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i>  
-                    <span class="hidden-phone">{{ app.user.username }}</span>
-                </a>
-              </div>  
+          {% if app.user != null %}
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                  <div class="pull-right">
+                    <a class="btn btn-success" href="{{ path('new_post') }}">
+                        <span class="hidden-phone">Ajouter des nouvelles</span>
+                        <span class="visible-phone">Ecrire</span>
+                    </a>
+                    <a class="btn btn-inverse" id="user-logout-button" href="{{ path('fos_user_security_logout') }}">
+                        <i class="icon-remove icon-white visible-phone"></i>
+                        <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i>  
+                        <span class="hidden-phone">{{ app.user.username }}</span>
+                    </a>
+                  </div>  
+              {% endif %}
           {% endif %}
        
             <!-- nav menu -->
