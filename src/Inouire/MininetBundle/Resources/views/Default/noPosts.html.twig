@@ -2,31 +2,30 @@
 
 {% block posts %}
 
-    
     {% set current_year = ("now" |date("Y")) %}
     {% set current_month = ("now" |date("m")) %}
     
-    {% set title='Aucun post n\'a été publié en '~(requested_date | localeDate('medium','none',null,'MMMM YYYY'))  %}
+    {% set title='Aucun post publié en '~(requested_date | localeDate('medium','none',null,'MMMM YYYY'))  %}
     {% set message='Désolé.' %}
     {% set link=path('archives') %}
     {% set link_message='Aller aux archives du mois en cours'%}
     
     {% if current_year == requested_year %}
         {% if current_month == requested_month %}
-            {% set title = 'Aucun post n\'a été publié ce mois-ci.' %}
+            {% set title = 'Aucun post publié ce mois-ci.' %}
             {% set message='Allez hop, au boulot !' %}
             {% set link_message='Ajouter des nouvelles' %}
             {% set link= path('new_post') %}
         {% elseif current_month > requested_month %}
-            {% set title = 'Aucun post n\'a été publié en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
+            {% set title = 'Aucun post publié en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
         {% elseif current_month < requested_month %}
-            {% set title = 'Aucun post n\'a été publié en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
-            {% set message='Mais bon, d\'un autre coté c\'est dans le futur.' %}
+            {% set title = 'Aucun post publié en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
+            {% set message='Patience, nous n\'y sommes pas encore.' %}
         {% endif %}
     {% elseif current_year > requested_year %}
-        {% set title = 'Aucun post n\'a été publié en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
+        {% set title = 'Aucun post publié en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
     {% elseif current_year < requested_year %}
-        {% set title = 'Aucun post n\'a été publié en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
+        {% set title = 'Aucun post publié en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
         {% set message='Patience, nous ne sommes qu\'en '~current_year~'.' %}
     {% endif %}     
         
@@ -37,10 +36,10 @@
             <img src="{{asset('css/icons/package.png')}}"/>
             
             <div>
-              <h2>
+              <h1>
                 {{ title }}<br>
                 <small>{{ message }}</small>
-              </h2>
+              </h1>
             </div>
             {% if link %}
                 <br>
@@ -51,6 +50,7 @@
             
         </center>
     </div>
+    
         
         
 {% endblock %}
