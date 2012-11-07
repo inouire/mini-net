@@ -33,9 +33,10 @@ class Image
      */
     private $post;
 
-
-    public $file;
-    public $post_id;
+    //non mapped fileds:
+    private $file;
+    private $post_id;
+    
     
     /**
      * Get id
@@ -70,6 +71,21 @@ class Image
      */
     public function getPost(){
         return $this->post;
+    }
+    
+
+    public function getFile(){
+        return $this->file;
+    }
+    public function setFile($file){
+        $this->file = $file;
+    }
+    
+    public function getPostId(){
+        return $this->post_id;
+    }
+    public function setPostId($id){
+        $this->post_id = $id;
     }
 
     /**

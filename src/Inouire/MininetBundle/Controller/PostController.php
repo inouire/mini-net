@@ -103,7 +103,7 @@ class PostController extends Controller
             
             //create form for image (event if it is hided)
             $image = new Image();
-            $image->post_id = $post_id;
+            $image->setPostId($post_id);
             
             $form = $this->createFormBuilder($image)
                 ->add('file','file')

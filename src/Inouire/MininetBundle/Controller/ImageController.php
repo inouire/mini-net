@@ -36,7 +36,7 @@ class ImageController extends Controller
                 
                 //save file to disk
                 $newFilename = rand(1000000, 999999999).rand(1000000, 999999999);
-                $image->file->move($image->getUploadDir(), $newFilename);
+                $image->getFile()->move($image->getUploadDir(), $newFilename);
                 $filePath = $image->getUploadDir().'/'.$newFilename; 
                 
                 //check that it is an image
@@ -64,12 +64,12 @@ class ImageController extends Controller
                 $file->move($image->getUploadDir(), $newFilename.'.'.$extension);
                 
                 //cleaning file property (not needed any more at this step)
-                $image->file = null;
+                $image->setFile(null);
                 
                 //starting doctrine operations
                 $em = $this->getDoctrine()->getEntityManager();
                 $image->setPath($newFilename.'.'.$extension);
-                $image->setPost($em->getRepository('InouireMininetBundle:Post')->find($image->post_id));
+                $image->setPost($em->getRepository('InouireMininetBundle:Post')->find($image->getPostId()));
                 $em->persist($image);
                 $em->flush();
 
@@ -78,7 +78,7 @@ class ImageController extends Controller
                 $this->rotateImage($image,$orientation);
                 $this->resizeImage($image);
                 
-                return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->post_id )));
+                return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->getPostId() )));
                 
             }else{
                 //render an error page
@@ -86,7 +86,7 @@ class ImageController extends Controller
                     'error_level'=> 'bang',
                     'error_title'=> 'Impossible d\'envoyer ce fichier',
                     'error_message' => 'Les données reçues n\'étaient pas valides',
-                    'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->post_id )),
+                    'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->getPostId() )),
                     'follow_link_text' => 'Revenir à l\'édition du post',
                 ));
             }   
