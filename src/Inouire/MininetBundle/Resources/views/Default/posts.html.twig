@@ -202,7 +202,6 @@
                         e.target.innerHTML="Commenter";
                     }else{
                         $('#comment-wheel-'+post_id).fadeIn(100);
-                        e.target.innerHTML='<img src="{{ asset('/css/icons/loading_small.gif')}}"/>';
                         var current_form = document.getElementById('comment-form-'+post_id);
                         console.log("Making POST request");
                         $.post(
