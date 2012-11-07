@@ -11,20 +11,20 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class ImageRepository extends EntityRepository{
-	
-	/*
-     * Get all the images of the posts of a given year
+    
+    /*
+     * Get all the images of the posts of a given year and month
      */
-    public function getImagesOfYear($year){
+    public function getImagesOfMonth($year,$month){
         
         $qb = $this->createQueryBuilder('image');
-		  
-		$qb->leftJoin('image.post','post')
-		   ->addSelect('post')
-		   ->where('post.date BETWEEN :yearBeginning AND :yearEnd')
+          
+        $qb->leftJoin('image.post','post')
+           ->addSelect('post')
+           ->where('post.date BETWEEN :yearBeginning AND :yearEnd')
            ->andWhere('post.published = true')
-           ->setParameter('yearBeginning',  new \Datetime($year.'-01-01'))
-           ->setParameter('yearEnd', new \Datetime($year.'-12-31 23:59:59'))
+           ->setParameter('yearBeginning',  new \Datetime($year.'-'.$month.'-01'))
+           ->setParameter('yearEnd', new \Datetime($year.'-'.$month.'-31 23:59:59'))
            ->orderBy('post.date', 'ASC');
            
         return $qb->getQuery()

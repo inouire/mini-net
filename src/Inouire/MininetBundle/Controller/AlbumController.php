@@ -13,23 +13,24 @@ class AlbumController extends Controller
      */
     public function viewCurrentAction(){
         return $this->redirect($this->generateUrl('album',array(
-            'year' => date('Y')
+            'year' => date('Y'),
+            'month' => date('m')
         )));
     }
     
     /*
      * Handles the album of a given year
      */
-    public function viewAction($year){
+    public function viewAction($year,$month){
         
-        //check validity of year given
-        if( $year > 8000 || $year < 1){
+        //check validity of year and month given
+        if( $year > 8000 || $year < 1 || $month < 1 || $month > 12){
             return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
                 'error_level'=> 'info',
-                'error_title'=> 'Numéro d\'année invalide',
-                'error_message' => 'Impossible de générer l\'album de l\'année '.$year,
+                'error_title'=> 'Date invalide',
+                'error_message' => 'Impossible de générer l\'album du mois '.$month.' / année '.$year,
                 'follow_link' => $this->generateUrl('albums'),
-                'follow_link_text' => 'Aller à l\'album de l\'année en cours',
+                'follow_link_text' => 'Aller à l\'album du mois en cours',
             ));
         }
         
@@ -38,21 +39,38 @@ class AlbumController extends Controller
         $image_repo = $em->getRepository('InouireMininetBundle:Image');
         
         //get all the images of the posts of the requested year
-        $image_list = $image_repo->getImagesOfYear($year);
+        $image_list = $image_repo->getImagesOfMonth($year,$month);
+        
+        //build date of current month
+        $requested_date = new \Datetime($year.'-'.$month.'-01');
+        
+        //build months of year
+        $months_of_year = array();
+        for( $m = 1 ; $m <=12 ; $m++){
+            $months_of_year[] = new \Datetime('2000-'.$m.'-01');
+        }
         
         //check that some pictures are avalaible for this year
         if(count($image_list)>0){
             //render the automatic album
             return $this->render('InouireMininetBundle:Default:album.html.twig',array(
-                'year' => $year,
                 'image_list' => $image_list,
+                'requested_date' => $requested_date,
+                'requested_year' => $year,
+                'requested_month' => $month,
+                'months_of_year' => $months_of_year
             ));
         }else{
             //render the 'no album' page
             return $this->render('InouireMininetBundle:Default:noAlbum.html.twig',array(
-                'year' => $year,
+                'requested_date' => $requested_date,
+                'requested_year' => $year,
+                'requested_month' => $month,
+                'months_of_year' => $months_of_year
             ));
         }
+
+
 
     }
     

@@ -41,12 +41,12 @@ class DefaultController extends Controller
 
         if(count($post_list)==0){
             return $this->render('InouireMininetBundle:Default:emptyHome.html.twig');
-	}else{
+    }else{
             return $this->render('InouireMininetBundle:Default:home.html.twig',array(
-            	'post_list'=> $post_list,
-            	'post_secondary_list' => $post_secondary_list
+                'post_list'=> $post_list,
+                'post_secondary_list' => $post_secondary_list
             ));
-	}
+    }
     }
     
     /*
@@ -73,7 +73,7 @@ class DefaultController extends Controller
                 'error_title'=> 'Date invalide',
                 'error_message' => 'Impossible de récupérer les posts du mois '.$month.' / année '.$year,
                 'follow_link' => $this->generateUrl('archives'),
-                'follow_link_text' => 'Aller aux archives du mois dernier',
+                'follow_link_text' => 'Aller aux archives du mois en cours',
             ));
         }
         

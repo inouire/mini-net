@@ -1,16 +1,29 @@
 {% extends 'InouireMininetBundle:Default:base.html.twig' %}
 
-{% block title %}albums pour l'année {{ year }}{% endblock %}
+{% block title %}albums pour l'année {{ requested_year }}{% endblock %}
 
 {% block body %}
-    
+
     <div>
-        <ul class="pager">
-            <li><a href="{{ path('album',{'year':year-1 }) }}">&larr; {{ year - 1}}</a></li>
-            <span style="font-size: 2.3em;"> {{ year }} </span>
-            <li><a href="{{ path('album',{'year':year+1 }) }}">{{ year + 1}} &rarr;</a></li>
+        <center><span style="font-size: 2.3em;"> {{ requested_year }} </span></center>
+        <div class="pagination pagination-centered">
+            <ul>
+                <li><b><a href="{{ path('album',{'year':requested_year-1 , 'month': requested_month }) }}"> &larr; {{ requested_year - 1}} </a></b></li>
+            {% for month in  months_of_year %}
+                {% set month_nb = month | date('m') %}
+                {% if  month_nb == requested_month  %}
+                    <li class="active"><span>{{ month | localeDate('medium','none',null,'MMMM') }}</span></li>
+                {% else %}
+                    <li><a href="{{ path('album',{'year':requested_year , 'month': month_nb }) }}">{{ month | localeDate('medium','none',null,'MMMM') }}</a></li>
+                {% endif %}
+            {% endfor %}
+                <li><b><a href="{{ path('album',{'year':requested_year+1 , 'month': requested_month }) }}"> {{ requested_year + 1}} &rarr;</a></b></li>
+            </ul>
+        </div>
     </div>
 
+    <br>
+    
     <hr>
    
     {% block album %}

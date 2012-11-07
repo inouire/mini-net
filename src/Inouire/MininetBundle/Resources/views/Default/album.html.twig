@@ -2,39 +2,19 @@
 
 {% block album %}
 
+    <div class="row">
+        <div class="span12">
+            <ul class="thumbnails">   
     
-    {% set currentMonth = '0' %}
-            
-    {% for image in image_list %}
+                {% for image in image_list %}
 
-            {% set postMonth = image.post.date | date("Ym") %}
-            {% if currentMonth < postMonth %}
-                {% if currentMonth != 0 %}
-                
-                        </ul>
-                    </div>
-                </div>
-                <hr>
-                
-                {% endif %}
-                {% set currentMonth =  postMonth %}
-                <div class="row">
-                    <div class="span12">
-                        <a id="{{ currentMonth }}" class="anchoroffset"></a>
-                        <h3>{{image.post.date | localeDate('medium','none',null,'MMMM') }}</h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="span12">
-                        <ul class="thumbnails">           
-            {% endif %}
-                <li class="span2">
-                    <a href="{{ image.webpath }}" class="fancybox thumbnail" rel="fancybox[{{year}}]">
-                         <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
-                    </a>
-                </li>
+                    <li class="span2">
+                        <a href="{{ image.webpath }}" class="fancybox thumbnail" rel="fancybox[{{requested_year}}]">
+                             <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
+                        </a>
+                    </li>
 
-    {% endfor %}
+                {% endfor %}
             
             </ul>
         </div>

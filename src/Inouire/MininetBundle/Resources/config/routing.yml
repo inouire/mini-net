@@ -25,9 +25,10 @@ albums:
     defaults: { _controller: InouireMininetBundle:Album:viewCurrent }
     
 album:
-    pattern:  /album/{year}
+    pattern:  /album/{year}/{month}
     requirements:
         year:  \d+
+        month: \d+
     defaults: { _controller: InouireMininetBundle:Album:view }
 
 #routes for actions on posts

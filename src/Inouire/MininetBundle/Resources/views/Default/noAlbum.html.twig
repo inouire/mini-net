@@ -2,38 +2,44 @@
 
 {% block album %}
    
-    {% set title=''  %}
-    {% set message='Désolé.' %}
-    {% set link='' %}
-    {% set link_message=''%}
-        
-       <center>
+    {% set current_year = ("now" |date("Y")) %}
+    {% set current_month = ("now" |date("m")) %}
     
-        {% if ("now" |date("Y")) == year %}
-            {% set title='Aucune photo n\'a été publiée cette année.'  %}
+    {% set title='Aucune photo publiée en '~(requested_date | localeDate('medium','none',null,'MMMM YYYY'))  %}
+    {% set message='Désolé.' %}
+    {% set link=path('albums') %}
+    {% set link_message='Aller à l\'album du mois en cours'%}
+    
+    {% if current_year == requested_year %}
+        {% if current_month == requested_month %}
+            {% set title = 'Aucune photo publiée ce mois-ci.' %}
             {% set message='Publiez simplement un post avec photo pour démarrer l\'album automatique.' %}
-            {% set link=path('new_post') %}
-            {% set link_message='Rédiger un post' %}
-        {% else %}
-            {% set title='Aucune photo n\'a été publiée durant l\'année '~year~'.'  %}
-            {% set link=path('albums') %}
-            {% set link_message='Aller à l\'album de l\'année en cours'%}
-            {% if ("now" |date("Y")) < year %}
-                {% set message='Patience, nous ne sommes qu\'en '~("now" |date("Y"))~'.' %}
-            {% endif %}
+            {% set link_message='Ajouter des nouvelles' %}
+            {% set link= path('new_post') %}
+        {% elseif current_month > requested_month %}
+            {% set title = 'Aucune photo publiée en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
+        {% elseif current_month < requested_month %}
+            {% set title = 'Aucune photo publiée en '~ (requested_date | localeDate('medium','none',null,'MMMM')) ~ '.' %}
+            {% set message='Patience, nous n\'y sommes pas encore.' %}
         {% endif %}
+    {% elseif current_year > requested_year %}
+        {% set title = 'Aucune photo publiée en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
+    {% elseif current_year < requested_year %}
+        {% set title = 'Aucune photo publiée en '~ (requested_date | localeDate('medium','none',null,'MMMM YYYY')) ~ '.' %}
+        {% set message='Patience, nous ne sommes qu\'en '~current_year~'.' %}
+    {% endif %}     
         
-        {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
-        
-        <div class="row">
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    
+    <div class="row">
         <center>
             <img src="{{asset('css/icons/camera.png')}}"/>
             
             <div>
-              <h2>
+              <h1>
                 {{ title }}<br>
                 <small>{{ message }}</small>
-              </h2>
+              </h1>
             </div>
             {% if link %}
                 <br>
@@ -45,7 +51,6 @@
         </center>
     </div>
     
-    </center>
         
 {% endblock %}
 
