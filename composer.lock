@@ -180,12 +180,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/DoctrineBundle.git",
-                "reference": "a3b99ec049b7c488c70b8776a67c594e6ddf54cd"
+                "reference": "1cfd5691283f4b32cfea87e8c8e28d502902c825"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineBundle/zipball/a3b99ec049b7c488c70b8776a67c594e6ddf54cd",
-                "reference": "a3b99ec049b7c488c70b8776a67c594e6ddf54cd",
+                "url": "https://github.com/doctrine/DoctrineBundle/archive/1cfd5691283f4b32cfea87e8c8e28d502902c825.zip",
+                "reference": "1cfd5691283f4b32cfea87e8c8e28d502902c825",
                 "shasum": ""
             },
             "require": {
@@ -202,7 +202,7 @@
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle."
             },
-            "time": "1350120716",
+            "time": "1352365569",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -247,12 +247,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/doctrine2.git",
-                "reference": "6bad0109599348c5216df35f62b80a20ba16c507"
+                "reference": "737e47e155658497b48d43aeb8d1a7b9c52b5038"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/doctrine2/zipball/6bad0109599348c5216df35f62b80a20ba16c507",
-                "reference": "6bad0109599348c5216df35f62b80a20ba16c507",
+                "url": "https://github.com/doctrine/doctrine2/archive/737e47e155658497b48d43aeb8d1a7b9c52b5038.zip",
+                "reference": "737e47e155658497b48d43aeb8d1a7b9c52b5038",
                 "shasum": ""
             },
             "require": {
@@ -264,7 +264,7 @@
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
-            "time": "1350071385",
+            "time": "1352490335",
             "bin": [
                 "bin/doctrine",
                 "bin/doctrine.php"
@@ -1243,12 +1243,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "224d6b79255bd66b815170384312483cffb8839d"
+                "reference": "7ed728a894e00d326698ad9ea1317a4598ae7ec4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/224d6b79255bd66b815170384312483cffb8839d.zip",
-                "reference": "224d6b79255bd66b815170384312483cffb8839d",
+                "url": "https://github.com/symfony/symfony/archive/7ed728a894e00d326698ad9ea1317a4598ae7ec4.zip",
+                "reference": "7ed728a894e00d326698ad9ea1317a4598ae7ec4",
                 "shasum": ""
             },
             "require": {
@@ -1300,7 +1300,7 @@
             "suggest": {
                 "doctrine/data-fixtures": "1.0.*"
             },
-            "time": "1352270908",
+            "time": "1352469493",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1389,18 +1389,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "5d87c321bf6880b91d19024c53def337ef62a484"
+                "reference": "1a10ea2fbb2291142b4ee03665591c0762315204"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/archive/5d87c321bf6880b91d19024c53def337ef62a484.zip",
-                "reference": "5d87c321bf6880b91d19024c53def337ef62a484",
+                "url": "https://github.com/fabpot/Twig/archive/1a10ea2fbb2291142b4ee03665591c0762315204.zip",
+                "reference": "1a10ea2fbb2291142b4ee03665591c0762315204",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "1352319081",
+            "time": "1352366711",
             "type": "library",
             "extra": {
                 "branch-alias": {
