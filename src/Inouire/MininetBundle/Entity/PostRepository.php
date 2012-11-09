@@ -18,16 +18,21 @@ class PostRepository extends EntityRepository
      */
     public function getMonthlyPosts($year,$month){
         
+        $month_interval = new \DateInterval('P01M');
+        $time_from = new \Datetime($year.'-'.$month.'-01');
+        $time_to = new \Datetime($year.'-'.$month.'-01');
+        $time_to = $time_to->add($month_interval);
+        
         $qb = $this->createQueryBuilder('post');
         
         $qb->where('post.date BETWEEN :monthBeginning AND :monthEnd')
            ->andWhere('post.published = true')
-           ->setParameter('monthBeginning',  new \Datetime($year.'-'.$month.'-01'))
-           ->setParameter('monthEnd', new \Datetime($year.'-'.$month.'-31 23:59:59'))
+           ->setParameter('monthBeginning',  $time_from)
+           ->setParameter('monthEnd', $time_to )
            ->orderBy('post.date', 'ASC');
         
-        return $qb->getQuery()
-                  ->getResult();
+        return $qb->getQuery()->getResult();
     }
+    
     
 }

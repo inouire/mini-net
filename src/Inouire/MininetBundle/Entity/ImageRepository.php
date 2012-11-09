@@ -17,14 +17,19 @@ class ImageRepository extends EntityRepository{
      */
     public function getImagesOfMonth($year,$month){
         
+        $month_interval = new \DateInterval('P01M');
+        $time_from = new \Datetime($year.'-'.$month.'-01');
+        $time_to = new \Datetime($year.'-'.$month.'-01');
+        $time_to = $time_to->add($month_interval);
+        
         $qb = $this->createQueryBuilder('image');
           
         $qb->leftJoin('image.post','post')
            ->addSelect('post')
            ->where('post.date BETWEEN :yearBeginning AND :yearEnd')
            ->andWhere('post.published = true')
-           ->setParameter('yearBeginning',  new \Datetime($year.'-'.$month.'-01'))
-           ->setParameter('yearEnd', new \Datetime($year.'-'.$month.'-31 23:59:59'))
+           ->setParameter('yearBeginning',  $time_from)
+           ->setParameter('yearEnd', $time_to)
            ->orderBy('post.date', 'ASC');
            
         return $qb->getQuery()
