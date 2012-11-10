@@ -9,7 +9,7 @@
                 {% for image in image_list %}
 
                     <li class="span2">
-                        <a href="{{ image.webpath }}" class="fancybox thumbnail" rel="fancybox[{{requested_year}}]">
+                        <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox thumbnail" rel="fancybox[{{requested_year}}]">
                              <img src="{{ image.webpath | imagine_filter('small_thumb') }}" />
                         </a>
                     </li>

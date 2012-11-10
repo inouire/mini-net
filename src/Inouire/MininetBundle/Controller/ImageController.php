@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ImageController extends Controller
 {
@@ -193,9 +194,6 @@ class ImageController extends Controller
     
     public function getImageAction($image_id){
         
-        $response_status = 'ok';
-        $response_message = 'it works';
-        
         //get entity manager
         $em = $this->getDoctrine()->getEntityManager();
         
@@ -204,17 +202,26 @@ class ImageController extends Controller
         
         //check that this image exists
         if($image==null ){
-            $response_status = 'error';
-            $response_message = 'image '.$image_id.' does not exist';
+            $image_file=__DIR__.'/../../../../web/css/icons/exit.png';
+            $status_code=404;
         } else {
-            //TODO stream image
+            $image_file=$image->getAbsolutePath();
+            $status_code=200;
         }
         
-        //render json response
-        return $this->render('InouireMininetBundle:Post:ajaxResponse.json.twig',array(
-            'status'=> $response_status,
-            'message' => $response_message
-        ));
+        //prepare response
+        $response = new Response();
+        $response->headers->set('ContentType','application/octet-stream');
+        $response->headers->set('Accept-Ranges', 'bytes');
+        $response->headers->set('Connection', 'keep-alive');
+        $response->headers->set('Content-Type','image/jpeg');
+        $response->headers->set('Content-Length',filesize($image_file));
+        $response->setStatusCode($status_code);
+        $response->setPrivate();
+        $response->setContent(file_get_contents($image_file));
+        
+        return $response;
+        
         
     }
     
