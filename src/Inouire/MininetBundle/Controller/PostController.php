@@ -95,10 +95,15 @@ class PostController extends Controller
                 'follow_link_text' => 'Retourner à la page d\'acceuil',
             ));
         
-        }else if( $post->getAuthor() != $user ){//the user is not the author-> view only
-            return $this->redirect($this->generateUrl('view_post',array(
-                'post_id' => $post->getId()
-            )));  
+        }else if( $post->getAuthor() != $user ){
+            //the user is not the author-> throw error
+            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                'error_level'=> 'info',
+                'error_title'=> 'Accès non autorisé',
+                'error_message' => 'Vous ne pouvez pas modifier ce post car vous n\'en êtes pas l\'auteur',
+                'follow_link' => $this->generateUrl('new_post'),
+                'follow_link_text' => 'Ecrire un post',
+            )); 
         }else{
             
             //create form for image (event if it is hided)
