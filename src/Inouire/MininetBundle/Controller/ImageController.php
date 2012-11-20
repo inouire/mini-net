@@ -20,6 +20,8 @@ class ImageController extends Controller
      */
     public function addImageAction(){
         
+        //TODO refactor this part
+        
         $logger = $this->get('logger');
         
         $image = new Image();
@@ -215,6 +217,7 @@ class ImageController extends Controller
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
         $response->headers->set('Content-Type','image/jpeg');
+        $response->headers->set('Cache-Control','private, max-age=3600, must-revalidate');
         $response->headers->set('Content-Length',filesize($image_file));
         $response->setStatusCode($status_code);
         $response->setPrivate();
