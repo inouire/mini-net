@@ -41,7 +41,7 @@ class PostController extends Controller
      */
     public function newAction(){
         
-        //get current user and user id
+        //get current user
         $user = $this->getCurrentUser();
         
         //check if this user has a current non-published post
@@ -106,7 +106,14 @@ class PostController extends Controller
             )); 
         }else{
             
-            //create form for image (event if it is hided)
+            //create post form
+            $post_form = $this->createFormBuilder($post)
+                    ->add('content', 'textarea')
+                    ->add('id','hidden')
+                    ->getForm();
+
+        
+            //create form for image (even if it is hided)
             $image = new Image();
             $image->setPostId($post_id);
             
@@ -118,10 +125,38 @@ class PostController extends Controller
             return $this->render('InouireMininetBundle:Post:editPost.html.twig',array(
                 'post'=> $post,
                 'form' => $form->createView(),
+                'post_form' => $post_form->createView(),
             ));
         }
         
     }
+    
+    
+    public function metaAction(){
+        
+        $post = new Post();
+
+        $form = $this->createFormBuilder($post)
+            ->add('content', 'textarea')
+            ->add('id','hidden')
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                // perform some action, such as saving the task to the database
+                //get corresponding post
+                $post = $this->getPostById($form->getId());
+                $post->setContent($form->getContent());
+        
+                return $this->redirect($this->generateUrl('new_post'));
+            }
+        }
+    
+    }
+    
     
     /*
      * Controler for post/delete requests around post
