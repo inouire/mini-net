@@ -38,6 +38,13 @@ view_post:
         post_id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Post:view }
+
+meta_post:
+    pattern: /metapost
+    requirements:
+        _method: POST
+    defaults: { _controller: InouireMininetBundle:Post:meta }
+    
     
 new_post:
     pattern:  /post/new
@@ -100,4 +107,11 @@ delete_image:
     requirements:
         image_id:  \d+
         _method:  DELETE
-    defaults: { _controller: InouireMininetBundle:Image:deleteImage }   
+    defaults: { _controller: InouireMininetBundle:Image:deleteImage }  
+     
+rotate_image:
+    pattern:  /image/{image_id}.jpg/rotate
+    requirements:
+        image_id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Image:rotateImage }
