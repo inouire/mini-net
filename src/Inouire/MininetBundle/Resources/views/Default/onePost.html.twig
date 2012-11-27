@@ -1,0 +1,155 @@
+
+        
+        {% if post.hasImages %}
+            {% if post.images|length == 1 %}
+                {% set contentWidth = 'span6' %}
+                {% set imagesWidth = 'span4' %}
+                {% set thumbWidth = 'span4' %}
+            {% elseif post.images|length == 2 %}
+                {% if post.weight > 1000 %}
+                    {% set contentWidth = 'span6' %}
+                    {% set imagesWidth = 'span4' %}
+                    {% set thumbWidth = 'span4' %}
+                {% else %}
+                    {% set contentWidth = 'span4' %}
+                    {% set imagesWidth = 'span6' %}
+                    {% set thumbWidth = 'span3' %}
+                {% endif %}
+            {% elseif  post.images|length == 3 %}
+                {% if post.weight > 2500 %}
+                    {% set contentWidth = 'span6' %}
+                    {% set imagesWidth = 'span4' %}
+                    {% set thumbWidth = 'span4' %}
+                {% else %}
+                    {% set contentWidth = 'span6' %}
+                    {% set imagesWidth = 'span4' %}
+                    {% set thumbWidth = 'span2' %}
+                {% endif %}
+            {% elseif  post.images|length == 4 %}
+                {% set contentWidth = 'span6' %}
+                {% set imagesWidth = 'span4' %}
+                {% set thumbWidth = 'span2' %}
+            {% else %}
+                {% set contentWidth = 'span4' %}
+                {% set imagesWidth = 'span6' %}
+                {% set thumbWidth = 'span2' %}
+            {% endif %} 
+        {% else %}
+            {% set contentWidth = 'span6' %}
+            {% set imagesWidth = 'span4' %}
+        {% endif %}    
+                
+        {% set age = post.ageInDays %}
+        {% set moreDate = post.date | localeDate('medium','none',null,'EEEE d') %}
+        {% if age == 0 %}
+            {% set niceDate = 'Aujourd\'hui' %}
+        {% elseif age == 1%}
+            {% set niceDate = 'Hier' %}
+        {% elseif age == 2 %}
+            {% set niceDate = 'Avant-hier' %}
+        {% elseif age <=7 %}
+            {% set niceDate = (post.date | localeDate('medium','none',null,'EEEE'))~' dernier' %}
+            {% set moreDate = post.date | localeDate('medium','none',null,'d MMMM') %}
+        {% else %}
+            {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
+            {% set moreDate = '' %}
+        {% endif %}
+        
+        <div class="row">
+        
+            <div class="span2">
+                {% if new_day=='yes' %}
+                    <h4>{{ niceDate }}</h4>
+                {% else %}
+                    <h4></h4>
+                {% endif %}
+
+                <p class="muted">
+                    {{ moreDate }}
+                    
+                    {% if date(post.date) >= date('-1days') %}
+                        (vers {{ post.approxHour }}h)
+                    {% endif %}
+                </p>
+                
+                {% set publish_date = post.date | date('Ymd') %}
+                {% set edit_date = post.editDate | date('Ymd') %}
+                {% if edit_date - publish_date >= 1 %}
+                    <p class="muted">édité le {{ post.editDate | date('d/m/Y') }}</p>
+                {% endif %}
+                
+            </div>
+            
+            <div class="{{ contentWidth }}">
+                <h4>
+                    <a href="{{ path('view_post',{'post_id': post.id }) }}" >{{ post.author }}</a>
+                {% if post.author == app.user.username %}
+                    <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
+                {% endif %}                
+                </h4>
+
+                <p>{{ post.htmlcontent | raw }}</p>
+                
+                {% if post.hasImages %}
+                    <div id="comments-{{ post.id }}">
+                        {% for comment in post.comments %}
+                            {% if comment.author.id == post.author.id %}
+                                 <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
+                            {% else %}
+                                 <div class="alert alert-info very-close" id="comment-{{comment.id}}">
+                            {% endif %}
+                                  <strong>{{ comment.author }}: </strong>{{ comment.content }}
+                            {% if comment.author.id == app.user.id %}
+                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                            {% endif %}
+                                </div>
+                        {% endfor %}
+                    </div>
+                    <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
+                        <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
+                            <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
+                        </div>
+                        <img id="comment-wheel-{{ post.id }}" src="{{ asset('/css/icons/loading_small.gif')}}" style="display: none"/>
+                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                    </form>
+                    <div style="margin-bottom:45px;"></div>
+                {% endif %}
+                
+            </div>
+            
+            <div class="{{ imagesWidth }}">
+            {% if post.hasImages %}
+                <ul class="thumbnails">
+                    {% for image in post.images %}
+                    <li class="{{ thumbWidth}}">
+                        <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox thumbnail" rel="fancybox[{{post.id}}]">
+                             <img src="{{ image.webpath | imagine_filter('big_thumb') }}"/>
+                        </a>
+                    </li>
+                    {% endfor %}
+                 </ul>
+            {% else %}
+                <div id="comments-{{ post.id }}">
+                    {% for comment in post.comments %}
+                        {% if comment.author.id == post.author.id %}
+                            <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
+                        {% else %}
+                            <div class="alert alert-info very-close" id="comment-{{comment.id}}">
+                        {% endif %}
+                             <strong>{{ comment.author }}: </strong>{{ comment.content }}
+                        {% if comment.author.id == app.user.id %}
+                            <button class="close delete-comment" id="{{comment.id}}">&times;</button>
+                        {% endif %}
+                            </div>
+                    {% endfor %}
+                </div>
+                <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
+                    <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
+                        <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
+                    </div>
+                    <img id="comment-wheel-{{ post.id }}" src="{{ asset('/css/icons/loading_small.gif')}}" style="display: none"/>
+                    <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
+                </form>  
+            {% endif %}
+            </div>
+        </div>
