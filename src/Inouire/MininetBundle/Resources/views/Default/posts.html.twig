@@ -8,7 +8,7 @@
     
         {% if current_datestamp is defined %}
             {% if post.date | date('Ymd') != current_datestamp %}
-                <hr>
+                <hr> 
                 {% set new_day='yes' %}
             {% else %}
                 {% set new_day='no' %}

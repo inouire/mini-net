@@ -71,8 +71,9 @@
 
                 <li class="span3" id="image-{{image.id}}">
                     <div class="thumbnail">
-                        <a href="{{path('rotate_image',{'image_id':image.id,'direction':'counter-clockwise'})}}"><i class="icon-chevron-left"></i></a>
-                        <a href="{{path('rotate_image',{'image_id':image.id,'direction':'clockwise'})}}" class="pull-right"><i class="icon-chevron-right"></i></a>
+                        <a href="{{path('rotate_image',{'image_id':image.id,'direction':'counter-clockwise'})}}"><img src="{{asset('css/icons/rotate-ccw.png')}}"/></a>
+                        <span class="text-align:center"></span>
+                        <a href="{{path('rotate_image',{'image_id':image.id,'direction':'clockwise'})}}" class="pull-right"><img src="{{asset('css/icons/rotate-cw.png')}}"/></a>
                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" />
                         <i class="icon-trash delete-image-button" id="{{image.id}}"></i>
                     </div>
