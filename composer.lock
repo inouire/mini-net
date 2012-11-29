@@ -116,19 +116,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal",
-                "reference": "292d5edd17e0a9b9a7ee9eb20d6ae1033059153f"
+                "reference": "22a30c9cece379eab619727c83e1859288f32f89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/dbal/archive/292d5edd17e0a9b9a7ee9eb20d6ae1033059153f.zip",
-                "reference": "292d5edd17e0a9b9a7ee9eb20d6ae1033059153f",
+                "url": "https://github.com/doctrine/dbal/archive/22a30c9cece379eab619727c83e1859288f32f89.zip",
+                "reference": "22a30c9cece379eab619727c83e1859288f32f89",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "doctrine/common": "2.3.*"
             },
-            "time": "2012-11-12 10:41:11",
+            "time": "2012-11-25 18:03:29",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -248,12 +248,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/doctrine2.git",
-                "reference": "77d060ab74212919f1eaace72842ea43bf420f43"
+                "reference": "287b29aeaada588923a47e677d6974b023f88fd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/doctrine2/archive/77d060ab74212919f1eaace72842ea43bf420f43.zip",
-                "reference": "77d060ab74212919f1eaace72842ea43bf420f43",
+                "url": "https://github.com/doctrine/doctrine2/archive/287b29aeaada588923a47e677d6974b023f88fd4.zip",
+                "reference": "287b29aeaada588923a47e677d6974b023f88fd4",
                 "shasum": ""
             },
             "require": {
@@ -265,7 +265,7 @@
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
-            "time": "2012-11-12 14:49:41",
+            "time": "2012-11-27 21:26:17",
             "bin": [
                 "bin/doctrine",
                 "bin/doctrine.php"
@@ -319,12 +319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle",
-                "reference": "1dd6822175c17c8e2b1e900422833335a9d88587"
+                "reference": "f6eec68194b2b079f12d0663fefe7e6970f36bb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/1dd6822175c17c8e2b1e900422833335a9d88587.zip",
-                "reference": "1dd6822175c17c8e2b1e900422833335a9d88587",
+                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/f6eec68194b2b079f12d0663fefe7e6970f36bb3.zip",
+                "reference": "f6eec68194b2b079f12d0663fefe7e6970f36bb3",
                 "shasum": ""
             },
             "require": {
@@ -345,7 +345,7 @@
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/mongodb-odm-bundle": "*"
             },
-            "time": "2012-11-23 22:45:00",
+            "time": "2012-11-29 22:05:17",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -527,31 +527,36 @@
         },
         {
             "name": "jms/cg",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git://github.com/schmittjoh/cg-library.git",
-                "reference": "1.0.0"
+                "reference": "8f3441497215434c95512200fa56f168d1972e47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/schmittjoh/cg-library/zipball/1.0.0",
-                "reference": "1.0.0",
+                "url": "https://github.com/schmittjoh/cg-library/archive/8f3441497215434c95512200fa56f168d1972e47.zip",
+                "reference": "8f3441497215434c95512200fa56f168d1972e47",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-01-02 12:40:52",
+            "time": "2012-11-21 10:50:41",
             "type": "library",
-            "installation-source": "dist",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "CG\\": "src/"
                 }
             },
             "license": [
-                "Apache"
+                "Apache2"
             ],
             "authors": [
                 {
@@ -788,12 +793,12 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/kriswallsmith/assetic.git",
-                "reference": "d6203098559cf9fc90e2890c10533d0adad33bd0"
+                "reference": "deed96bb7ba009d8e05aaeeb1b73c1d67a8f3719"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/kriswallsmith/assetic/archive/d6203098559cf9fc90e2890c10533d0adad33bd0.zip",
-                "reference": "d6203098559cf9fc90e2890c10533d0adad33bd0",
+                "url": "https://github.com/kriswallsmith/assetic/archive/deed96bb7ba009d8e05aaeeb1b73c1d67a8f3719.zip",
+                "reference": "deed96bb7ba009d8e05aaeeb1b73c1d67a8f3719",
                 "shasum": ""
             },
             "require": {
@@ -814,7 +819,7 @@
                 "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
                 "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin"
             },
-            "time": "2012-11-07 10:47:32",
+            "time": "2012-11-27 13:27:38",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1376,12 +1381,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "ee90986c9f10f01e02f897df2b2d09c7a120688a"
+                "reference": "50a62da114dcdb63f36db748fb8aa5b04be69d4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/ee90986c9f10f01e02f897df2b2d09c7a120688a.zip",
-                "reference": "ee90986c9f10f01e02f897df2b2d09c7a120688a",
+                "url": "https://github.com/symfony/symfony/archive/50a62da114dcdb63f36db748fb8aa5b04be69d4e.zip",
+                "reference": "50a62da114dcdb63f36db748fb8aa5b04be69d4e",
                 "shasum": ""
             },
             "require": {
@@ -1434,7 +1439,7 @@
             "suggest": {
                 "doctrine/data-fixtures": "1.0.*"
             },
-            "time": "2012-11-24 12:18:53",
+            "time": "2012-11-29 11:32:58",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1523,18 +1528,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "9b75e2c7ae51b66fd4bb2ffbf1d2f28a8604e8f6"
+                "reference": "b58df0e1ae4b664f561bfaeffdb673829daa6b79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/archive/9b75e2c7ae51b66fd4bb2ffbf1d2f28a8604e8f6.zip",
-                "reference": "9b75e2c7ae51b66fd4bb2ffbf1d2f28a8604e8f6",
+                "url": "https://github.com/fabpot/Twig/archive/b58df0e1ae4b664f561bfaeffdb673829daa6b79.zip",
+                "reference": "b58df0e1ae4b664f561bfaeffdb673829daa6b79",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-11-19 07:06:38",
+            "time": "2012-11-26 10:25:49",
             "type": "library",
             "extra": {
                 "branch-alias": {
