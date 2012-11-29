@@ -69,7 +69,6 @@ class DefaultController extends Controller
         //check validity of year and month given
         if( $year > 8000 || $year < 1 || $month < 1 || $month > 12){
             return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
-                'error_level'=> 'info',
                 'error_title'=> 'Date invalide',
                 'error_message' => 'Impossible de récupérer les posts du mois '.$month.' / année '.$year,
                 'follow_link' => $this->generateUrl('archives'),

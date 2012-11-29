@@ -98,7 +98,6 @@ class PostController extends Controller
         }else if( $post->getAuthor() != $user ){
             //the user is not the author-> throw error
             return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
-                'error_level'=> 'info',
                 'error_title'=> 'Accès non autorisé',
                 'error_message' => 'Vous ne pouvez pas modifier ce post car vous n\'en êtes pas l\'auteur',
                 'follow_link' => $this->generateUrl('new_post'),
