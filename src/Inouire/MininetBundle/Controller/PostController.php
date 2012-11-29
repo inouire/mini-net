@@ -17,7 +17,8 @@ class PostController extends Controller
     public function viewAction($post_id){
         
         //get corresponding post
-        $post = $this->getPostById($post_id);
+        $em = $this->getDoctrine()->getEntityManager();
+        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
         
         //check that this post exists
         if($post==null){

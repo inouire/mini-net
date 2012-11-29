@@ -55,8 +55,10 @@
             {% set moreDate = '' %}
         {% endif %}
         
-        <div class="row">
-        
+        <div class="row" id="{{ post.id }}-row">
+             
+             <a id="{{ post.id }}" class="anchoroffset"></a>
+             
             <div class="span2">
                 {% if new_day=='yes' %}
                     <h4>{{ niceDate }}</h4>
