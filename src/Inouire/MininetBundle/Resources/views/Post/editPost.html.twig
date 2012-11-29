@@ -9,9 +9,8 @@
     
     <div class="row post-editor" id={{post.id}}>
         
-        
         <div class="span2" style="text-align: center;">
-            {% if post.published == true %}
+            {% if post.published %}
                 <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
                 <span class="label label-success">publié</span>
             {% else %}
@@ -22,35 +21,35 @@
             <img id="loading-wheel" src="{{ asset('/css/icons/loading.gif')}}" style="display: none"/>
         </div>
         
-        
         <div class="span9">
-            <form method="post" action="#" id="{{ post.id }}" {{ form_enctype(post_form) }}>
+        
+            <form method="post" action="{{ path('update_post') }}" id="{{ post.id }}" {{ form_enctype(post_form) }}>
             
                 {{ form_errors(post_form) }}
                 
-                {% if post.published == true %}
-                    <div class="btn btn-danger pull-left" id="delete-button"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a></div>
-                    <div class="btn btn-success pull-right" id="publish-button"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</div>
-                {% else %}
-                    <div class="btn" id="save-button"><i class="icon-download" id="save-icon"></i> 
-                        <span class="hidden-phone">Garder comme brouillon</span>
-                        <span class="visible-phone">Sauver</span>
-                    </div>
-                    <div class="btn btn-success pull-right" id="publish-button"><i class="icon-ok icon-white" id="publish-icon"></i> Publier</div>
-                {% endif %}
+            {% if post.published == true %}
+                <button class="btn btn-danger pull-left" id="delete-button" name="submitButton" value="delete"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a></button>
+                <button class="btn btn-success pull-right" type="submit" name="submitButton" value="update"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
+            {% else %}
+                <button class="btn" id="save-button" type="submit" name="submitButton" value="save"><i class="icon-download" id="save-icon"></i> 
+                    <span class="hidden-phone">Garder comme brouillon</span>
+                    <span class="visible-phone">Sauver</span>
+                </button>
+                <button class="btn btn-success pull-right" id="publish-button" type="submit" name="submitButton" value="publish"><i class="icon-download icon-white" id="publish-icon"></i> Publier</button>
+            {% endif %}
                 
-                <!--<input class="btn btn-success pull-right" type="submit" />-->
                 <br /><br />
-                {#{{ form_widget(post_form.content ,{'attr':{'style':'width:100%','rows':'10'} }) }}#}
-                <textarea style="width: 100%" id="edit-area" rows="10">{{ post.content }}</textarea>
+                {{ form_widget(
+                    post_form.content, {'attr': {'style':'width:100%','rows':'10'} })
+                }}
+
+                {{ form_rest(post_form) }}
             </form>
         </div>
     </div>
     
     <center>
-        <button class="btn btn-primary" id="add-image-button" >
-            <i class="icon-picture icon-white"></i> Ajouter une photo
-        </button>
+        <button class="btn btn-primary" id="add-image-button" ><i class="icon-picture icon-white"></i> Ajouter une photo</button>
         <form action="{{ path('add_image') }}" id="image-upload-form" method="post" {{ form_enctype(form) }} style="display: none">
             {{ form_errors(form) }}
             <div>
@@ -91,70 +90,15 @@
     {{ parent() }}
     <script>
         jQuery(document).ready(function(){
-
-            function disableAllControls(toggle){
-                $('#edit-area').attr("disabled", toggle);
-                $('#delete-button').attr("disabled", toggle);
-                $('#publish-button').attr("disabled", toggle);
-                $('#save-button').attr("disabled", toggle);
-                $('#add-image-button').attr("disabled", toggle);
-                if(toggle){
-                    $('#loading-wheel').fadeIn(100);
-                }else{
-                    $('#loading-wheel').fadeOut(100);
-                }
-            }
-
-            function redirect_to_home(){
-                window.location.href = "{{ path('home') }}";
-            }
             
-            function redirect_to_path(path){
-                window.location.href = path;
+            function disableAllControls(){
+                $('#delete-button').addClass('disabled');
+                $('#publish-button').addClass('disabled');
+                $('#save-button').addClass('disabled');
+                $('#add-image-button').addClass('disabled');
+                $('#loading-wheel').fadeIn(100);
             }
-             
-            function updatePostAjax(post_published,post_update_function){
- 
-                var post_content = $("#edit-area").val();
-                disableAllControls(true);
-                console.log("Post content: "+post_content);
-                console.log("Making ajax POST request...");
-
-                $.ajax({
-                    url : '{{ path('update_post_content', {'post_id': post.id } ) }}',
-                    type : 'POST',
-                    data: { content: post_content , published : post_published },
-                    dataType : 'json',
-                    success : function(data, statut){
-                        console.log(data);
-                        disableAllControls(false);
-                        post_update_function;
-                    },
-                    error : function(data, statut, error){
-                        console.log("Error during ajax post update");
-                    },
-                });
-
-            }
-
-            function deletePostAjax(){
-                disableAllControls(true);
-                $.ajax({
-                    url : '{{ path('update_post_content', {'post_id': post.id } ) }}',
-                    type : 'DELETE',
-                    dataType : 'json',
-                    success : function(data, statut){
-                        console.log("Axaj call has been a success");
-                        console.log(data);
-                        window.location.href = "{{ path('home') }}";
-                    },
-                    error : function(data, statut, error){
-                        console.log("Error during ajax call");
-                        alert('Erreur durant la suppression du post.');
-                    },
-                });
-            }
-
+  
             function deleteImageAjax(image_id){
                 console.log("ACTION: delete image "+image_id);
                 if(confirm("Êtes vous sur de vouloir supprimer cette photo ?")){
@@ -173,25 +117,20 @@
                     });
                 }
             }
-
-            //adding listener on "delete post" button
-            $("#delete-button").click( function (event) {
-                if(confirm("Êtes vous sur de vouloir supprimer définitivement cet article ?\n(les commentaires ainsi que les photos attachées seront perdus)")){
-                    deletePostAjax();
+            
+            
+            //adding listener on "delete post" button to display a warning
+            var deleteActionLocked = true;
+            $('#delete-button').click( function (event) {
+                if(deleteActionLocked == true){
+                    event.preventDefault();
+                    if(confirm("Êtes vous sur de vouloir supprimer définitivement cet article ?\n(les commentaires ainsi que les photos attachées seront perdus)")){
+                        deleteActionLocked = false;
+                        $('#delete-button').click(); 
+                    }
                 }
             });
-            
-            //adding listener on "save post" button
-            $("#save-button").click( function (event) {
-                updatePostAjax(0);
-            });
-            
-            //adding listener on "publish" button
-            $("#publish-button").click( function (event) {
-                event.preventDefault();
-                updatePostAjax(1,redirect_to_home());
-            });
-            
+
             //adding listener on "add image" button
             $("#add-image-button").click( function (event) {
                 $('#image-upload-form').fadeIn(400);
@@ -211,11 +150,16 @@
             });
             
             //adding listener on all out links
-            $("a").click( function (event) {
+            /*$("a").click( function (event) {
                 event.preventDefault();
                 requestedLink = $(this).attr('href');
                 updatePostAjax(0,redirect_to_path(requestedLink));
+            });*/
+            
+            $(":submit").click( function (event) {
+                disableAllControls();
             });
+            
 
         });
     </script>

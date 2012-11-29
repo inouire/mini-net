@@ -73,6 +73,7 @@ class Post{
      */
     private $published;
     
+    
     /**
      * Get the author of the post 
      * @return \Inouire\UserBundle\Entity\User
@@ -127,6 +128,10 @@ class Post{
         return $this->id;
     }
 
+    public function setId($id){
+        $this->id = $id;
+    }
+    
     /**
      * Set date
      *

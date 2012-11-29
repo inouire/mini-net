@@ -94,9 +94,9 @@ class PostController extends Controller
                 'follow_link' => $this->generateUrl('home'),
                 'follow_link_text' => 'Retourner à la page d\'acceuil',
             ));
-        
         }else if( $post->getAuthor() != $user ){
             //the user is not the author-> throw error
+            //TODO handle this type of errors with exceptions
             return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
                 'error_title'=> 'Accès non autorisé',
                 'error_message' => 'Vous ne pouvez pas modifier ce post car vous n\'en êtes pas l\'auteur',
@@ -107,12 +107,12 @@ class PostController extends Controller
             
             //create post form
             $post_form = $this->createFormBuilder($post)
-                    ->add('content', 'textarea')
-                    ->add('id','hidden')
-                    ->getForm();
+                            ->add('content', 'textarea')
+                            ->add('id','hidden')
+                            ->getForm();
 
         
-            //create form for image (even if it is hided)
+            //create form for image
             $image = new Image();
             $image->setPostId($post_id);
             
@@ -131,28 +131,87 @@ class PostController extends Controller
     }
     
     
-    public function metaAction(){
-        
-        $post = new Post();
+    public function updateContentAction(){
 
-        $form = $this->createFormBuilder($post)
+        
+        $post_from_form = new Post();
+        $form = $this->createFormBuilder($post_from_form)
             ->add('content', 'textarea')
             ->add('id','hidden')
             ->getForm();
 
-        if ($request->isMethod('POST')) {
+        $form->bindRequest($this->getRequest());
+                
+        if ($form->isValid()) {
             
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                // perform some action, such as saving the task to the database
-                //get corresponding post
-                $post = $this->getPostById($form->getId());
-                $post->setContent($form->getContent());
-        
-                return $this->redirect($this->generateUrl('new_post'));
+            //get method type (save/publish/udpate/delete) and post id
+            $method = $this->getRequest()->request->get('submitButton');
+            $post_id = $post_from_form->getId();
+            
+            //get the post from the Post repository
+            $em = $this->getDoctrine()->getEntityManager();
+            $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
+            
+            //check that the post exist
+            //TODO
+            
+            //check that the current user own the post
+            //TODO handle this type of errors with exceptions
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            if( $post->getAuthor() != $user ){
+                return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                    'error_title'=> 'Accès non autorisé',
+                    'error_message' => 'Vous ne pouvez pas modifier ce post car vous n\'en êtes pas l\'auteur',
+                    'follow_link' => $this->generateUrl('new_post'),
+                    'follow_link_text' => 'Ecrire un post',
+                ));
             }
+            
+            
+            //modify post object depending on action
+            $post->setContent($post_from_form->getContent());
+            $redirect_to = $this->generateUrl('home');
+            if( $method == 'save'){
+                //well , nothing to do
+                $redirect_to = $this->generateUrl('edit_post',array('post_id' => $post_id));
+            }else if($method == 'publish'){
+                if( !$post->getPublished() ){
+                    if( strlen($post->getContent()) > 0 || $post->getHasImages() ){
+                        $post->touchDate();
+                        $post->setPublished(true);
+                    }
+                }
+            }else if($method == 'update'){
+                if( $post_from_form->getContent() != $post->getContent() ){
+                    $post->touchEditDate();
+                }
+            }else if($method == 'delete'){
+                //delete all comments and images related to this post
+                foreach( $post->getComments() as $comment ){
+                    $em->remove($comment);
+                }
+                foreach( $post->getImages() as $image ){
+                    $em->remove($image);
+                }
+                //delete post
+                $em->remove($post);
+            }
+                
+            $em->flush();
+            return $this->redirect($redirect_to);  
+
+            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                'error_title'=> 'Form correct',
+                'error_message' => '\o/'.$value.'/'.$value2,
+            ));
+        }else{
+            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                'error_level'=> 'bang',
+                'error_title'=> 'Form invalide',
+                'error_message' => 'Argggg',
+            ));
         }
+
     
     }
     

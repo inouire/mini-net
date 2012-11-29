@@ -55,22 +55,13 @@ edit_post:
     requirements:
         post_id:  \d+
     defaults: { _controller: InouireMininetBundle:Post:edit }   
-
-update_post_content:
-    pattern:  /post/{post_id}
-    requirements:
-        post_id:  \d+
-        _method:  POST
-        _format:  json
-    defaults: { _controller: InouireMininetBundle:Post:update }
     
-delete_post:
-    pattern:  /post/{post_id}
+update_post:
+    pattern: /post/update
     requirements:
-        post_id:  \d+
-        _method:  DELETE
-        _format:  json
-    defaults: { _controller: InouireMininetBundle:Post:update }
+        _method:  POST
+    defaults: { _controller: InouireMininetBundle:Post:updateContent }
+    
     
 #routes for actions on comments
 post_comment:
