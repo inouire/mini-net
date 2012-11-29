@@ -29,7 +29,7 @@
                 
             {% if post.published == true %}
                 <button class="btn btn-danger pull-left" id="delete-button" name="submitButton" value="delete"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a></button>
-                <button class="btn btn-success pull-right" type="submit" name="submitButton" value="update"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
+                <button class="btn btn-success pull-right" id="update-button" type="submit" name="submitButton" value="update"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
             {% else %}
                 <button class="btn" id="save-button" type="submit" name="submitButton" value="save"><i class="icon-download" id="save-icon"></i> 
                     <span class="hidden-phone">Garder comme brouillon</span>
@@ -95,8 +95,17 @@
                 $('#delete-button').addClass('disabled');
                 $('#publish-button').addClass('disabled');
                 $('#save-button').addClass('disabled');
+                $('#update-button').addClass('disabled');
                 $('#add-image-button').addClass('disabled');
                 $('#loading-wheel').fadeIn(100);
+            }
+            
+            function enableAllControls(){
+                $('#delete-button').removeClass('disabled');
+                $('#publish-button').removeClass('disabled');
+                $('#save-button').removeClass('disabled');
+                $('#add-image-button').removeClass('disabled');
+                $('#loading-wheel').fadeOut(100);
             }
   
             function deleteImageAjax(image_id){
@@ -127,6 +136,7 @@
                     if(confirm("Êtes vous sur de vouloir supprimer définitivement cet article ?\n(les commentaires ainsi que les photos attachées seront perdus)")){
                         deleteActionLocked = false;
                         $('#delete-button').click(); 
+                        disableAllControls();
                     }
                 }
             });
@@ -156,7 +166,13 @@
                 updatePostAjax(0,redirect_to_path(requestedLink));
             });*/
             
-            $(":submit").click( function (event) {
+            $("#publish-button").click( function (event) {
+                disableAllControls();
+            });
+            $("#save-button").click( function (event) {
+                disableAllControls();
+            });
+            $("#update-button").click( function (event) {
                 disableAllControls();
             });
             
