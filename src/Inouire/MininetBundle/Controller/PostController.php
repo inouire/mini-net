@@ -43,7 +43,7 @@ class PostController extends Controller
     public function newAction(){
         
         //get current user
-        $user = $this->getCurrentUser();
+        $user = $this->container->get('security.context')->getToken()->getUser();
         
         //check if this user has a current non-published post
         $em = $this->getDoctrine()->getEntityManager();
