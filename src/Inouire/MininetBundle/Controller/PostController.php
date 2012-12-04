@@ -89,7 +89,7 @@ class PostController extends Controller
         //check that this post exists, and that it belongs to this user
         if($post==null){
             //render error page
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_level'=> 'bang',
                 'error_title'=> 'Post introuvable',
                 'error_message' => 'Le post demandé n\'existe pas (ou plus)',
@@ -99,7 +99,7 @@ class PostController extends Controller
         }else if( $post->getAuthor() != $user ){
             //the user is not the author-> throw error
             //TODO handle this type of errors with exceptions
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_title'=> 'Accès non autorisé',
                 'error_message' => 'Vous ne pouvez pas modifier ce post car vous n\'en êtes pas l\'auteur',
                 'follow_link' => $this->generateUrl('new_post'),
@@ -155,7 +155,7 @@ class PostController extends Controller
             
             //check that the post exist
             if($post==null){
-                return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                     'error_level'=> 'bang',
                     'error_title'=> 'Post introuvable',
                     'error_message' => 'Le post demandé n\'existe pas (ou plus)',
@@ -168,7 +168,7 @@ class PostController extends Controller
             //TODO handle this type of errors with exceptions
             $user = $this->container->get('security.context')->getToken()->getUser();
             if( $post->getAuthor() != $user ){
-                return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                     'error_title'=> 'Accès non autorisé',
                     'error_message' => 'Vous ne pouvez pas modifier ce post car vous n\'en êtes pas l\'auteur',
                     'follow_link' => $this->generateUrl('new_post'),
@@ -208,7 +208,7 @@ class PostController extends Controller
             return $this->redirect($redirect_to);  
 
         }else{
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_level'=> 'bang',
                 'error_title'=> 'Form invalide',
                 'error_message' => 'Argggg',

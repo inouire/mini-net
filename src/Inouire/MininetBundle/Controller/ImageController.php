@@ -85,7 +85,7 @@ class ImageController extends Controller
                 
             }else{
                 //render an error page
-                return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                     'error_level'=> 'bang',
                     'error_title'=> 'Impossible d\'envoyer ce fichier',
                     'error_message' => 'Les données reçues n\'étaient pas valides',
@@ -94,9 +94,8 @@ class ImageController extends Controller
                 ));
             }   
         }else{
-            return $this->render('InouireMininetBundle:Default:imageForm.html.twig', array(
-                'form' => $form->createView(),
-            ));
+            //this shouldn't happen thanks to routing configuration...
+            return $this->redirect($this->generateUrl('home'));
         }
     }
     
@@ -182,7 +181,7 @@ class ImageController extends Controller
             $angle='-90';
         }else{
             //illegal operation
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_level'=> 'bang',
                 'error_title'=> 'Opération inconnue',
                 'error_message' => $direction.' n\'est pas une opération de rotation d\'image connue. Utiliser clockwise ou counter-clockwise',
@@ -201,7 +200,7 @@ class ImageController extends Controller
         //check that this image exists and that it belongs to this user
         if($image==null ){
             //post doesn't exist
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_level'=> 'bang',
                 'error_title'=> 'Image inexistante',
                 'error_message' => 'L\'image sur laquelle vous souhaitez appliquer une rotation n\'existe pas.',
@@ -210,7 +209,7 @@ class ImageController extends Controller
             )); 
         }else if( $image->getPost()->getAuthor() != $user ){
             //the user is not the author-> throw error
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_level'=> 'bang',
                 'error_title'=> 'Opération non autorisé',
                 'error_message' => 'Vous ne pouvez pas modifier cette image car vous n\'en êtes pas l\'auteur',

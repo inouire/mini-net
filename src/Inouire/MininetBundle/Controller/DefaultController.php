@@ -40,9 +40,9 @@ class DefaultController extends Controller
         );
 
         if(count($post_list)==0){
-            return $this->render('InouireMininetBundle:Default:emptyHome.html.twig');
+            return $this->render('InouireMininetBundle:Empty:emptyHome.html.twig');
     }else{
-            return $this->render('InouireMininetBundle:Default:home.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:home.html.twig',array(
                 'post_list'=> $post_list,
                 'post_secondary_list' => $post_secondary_list
             ));
@@ -68,7 +68,7 @@ class DefaultController extends Controller
 
         //check validity of year and month given
         if( $year > 8000 || $year < 1 || $month < 1 || $month > 12){
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_title'=> 'Date invalide',
                 'error_message' => 'Impossible de récupérer les posts du mois '.$month.' / année '.$year,
                 'follow_link' => $this->generateUrl('archives'),
@@ -94,7 +94,7 @@ class DefaultController extends Controller
         
         //check that there are some posts for this month
         if( count($monthly_posts) > 0 ){
-            return $this->render('InouireMininetBundle:Default:posts.html.twig',array(
+            return $this->render('InouireMininetBundle:Main:archives.html.twig',array(
                 'post_list'=> $monthly_posts,
                 'requested_date' => $requested_date,
                 'requested_year' => $year,
@@ -102,7 +102,7 @@ class DefaultController extends Controller
                 'months_of_year' => $months_of_year
             ));
         }else{ //if no post available, display the specific page
-            return $this->render('InouireMininetBundle:Default:noPosts.html.twig',array(
+            return $this->render('InouireMininetBundle:Empty:noArchives.html.twig',array(
                 'requested_date' => $requested_date,
                 'requested_year' => $year,
                 'requested_month' => $month,
