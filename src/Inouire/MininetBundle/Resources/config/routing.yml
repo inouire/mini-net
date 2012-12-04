@@ -94,7 +94,7 @@ get_image:
     defaults: { _controller: InouireMininetBundle:Image:getImage }   
 
 delete_image:
-    pattern:  /image/{image_id}
+    pattern:  /image/{image_id}.jpg
     requirements:
         image_id:  \d+
         _method:  DELETE

@@ -15,90 +15,56 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ImageController extends Controller
 {
     
-    /*
-     * Handles image upload
-     */
-    public function addImageAction(){
-        
-        //TODO refactor this part
-        
-        $logger = $this->get('logger');
-        
-        $image = new Image();
-        
-        $form = $this->createFormBuilder($image)
-            ->add('file','file')
-            ->add('post_id','hidden')
-            ->getForm();
-            
-        if ($this->getRequest()->getMethod() === 'POST') {
-            
-            $form->bindRequest($this->getRequest());
-            
-            if ($form->isValid()) {
-                
-                //save file to disk
-                $newFilename = rand(1000000, 999999999).rand(1000000, 999999999);
-                $image->getFile()->move($image->getUploadDir(), $newFilename);
-                $filePath = $image->getUploadDir().'/'.$newFilename; 
-                
-                //check that it is an image
-                $is_an_image = $this->checkTypeImage($filePath);
-                if(!$is_an_image){
-                    //render an error page 
-                    return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
-                        'error_level'=> 'bang',
-                        'error_title'=> 'Impossible d\'envoyer ce fichier',
-                        'error_message' => 'Le fichier envoyé n\'est pas une image',
-                        'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->post_id )),
-                        'follow_link_text' => 'Revenir à l\'édition du post',
-                    ));
-                }
-                
-                //get orientation
-                $orientation = $this->getImageOrientation($filePath);
-                
-                //try to guess the extension
-                $file=new File($filePath,true);
-                $extension = $file->guessExtension();
-                if (!$extension) {// extension cannot be guessed
-                    $extension = 'bin';
-                }
-                $file->move($image->getUploadDir(), $newFilename.'.'.$extension);
-                
-                //cleaning file property (not needed any more at this step)
-                $image->setFile(null);
-                
-                //starting doctrine operations
-                $em = $this->getDoctrine()->getEntityManager();
-                $image->setPath($newFilename.'.'.$extension);
-                $image->setPost($em->getRepository('InouireMininetBundle:Post')->find($image->getPostId()));
-                $em->persist($image);
-                $em->flush();
-
-                //automatic image rotation and resize (for low disk footprint)
-                //TODO handle errors
-                $this->rotateImage($image,$orientation);
-                $this->resizeImage($image);
-                
-                return $this->redirect($this->generateUrl('edit_post',array('post_id' => $image->getPostId() )));
-                
-            }else{
-                //render an error page
-                return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
-                    'error_level'=> 'bang',
-                    'error_title'=> 'Impossible d\'envoyer ce fichier',
-                    'error_message' => 'Les données reçues n\'étaient pas valides',
-                    'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->getPostId() )),
-                    'follow_link_text' => 'Revenir à l\'édition du post',
-                ));
-            }   
-        }else{
-            //this shouldn't happen thanks to routing configuration...
-            return $this->redirect($this->generateUrl('home'));
-        }
-    }
     
+    //TODO this should be done as a service
+    public function handleImageUpload($file,$post,$em){
+        
+        //create new image object
+        $image = new Image();
+        $image->setFile($file);
+        $image->setPost($post);
+        
+        //save file to disk
+        $newFilename = rand(1000000, 999999999).rand(1000000, 999999999);
+        $image->getFile()->move($image->getUploadDir(), $newFilename);
+        $filePath = $image->getUploadDir().'/'.$newFilename;
+        
+        //check that it is an image
+        $is_an_image = $this->checkTypeImage($filePath);
+        if(!$is_an_image){
+            //render an error page 
+            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
+                'error_level'=> 'bang',
+                'error_title'=> 'Impossible d\'envoyer ce fichier',
+                'error_message' => 'Le fichier envoyé n\'est pas une image',
+                'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->post_id )),
+                'follow_link_text' => 'Revenir à l\'édition du post',
+            ));
+        }
+        
+        //get image orientation
+        $orientation = $this->getImageOrientation($filePath);
+        
+        //try to guess the extension
+        $file=new File($filePath,true);
+        $extension = $file->guessExtension();
+        if (!$extension) {// extension cannot be guessed
+            $extension = 'bin';
+        }
+        $file->move($image->getUploadDir(), $newFilename.'.'.$extension);
+        $image->setPath($newFilename.'.'.$extension);
+        $image->setFile(null);        
+        
+        //persisting changes to database
+        $em->persist($image);
+        $em->flush();
+
+        //automatic image rotation and resize (for low disk footprint)
+        //TODO handle errors
+        $this->rotateImage($image,$orientation);
+        $this->resizeImage($image);
+    }
+        
     /*
      * Util function: check that the file is an image
      */

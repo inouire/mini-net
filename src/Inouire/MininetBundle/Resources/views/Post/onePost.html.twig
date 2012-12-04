@@ -99,7 +99,6 @@
                 {% if post.author == app.user.username %}
                     <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
                 {% endif %} 
-                    {{post.weight}}
                 </h4>
 
                 <p>{{ post.htmlcontent | raw }}</p>

@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\Comment;
 use Inouire\MininetBundle\Entity\Image;
+use Inouire\MininetBundle\Entity\PostForm;
+use Inouire\MininetBundle\Controller\ImageController;
 
 class PostController extends Controller
 {
@@ -97,7 +99,7 @@ class PostController extends Controller
                 'follow_link_text' => 'Retourner à la page d\'acceuil',
             ));
         }else if( $post->getAuthor() != $user ){
-            //the user is not the author-> throw error
+            //the user is not the author-> throw an error
             //TODO handle this type of errors with exceptions
             return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_title'=> 'Accès non autorisé',
@@ -107,25 +109,18 @@ class PostController extends Controller
             )); 
         }else{
             
-            //create post form
-            $post_form = $this->createFormBuilder($post)
-                            ->add('content', 'textarea')
+            //create post form from post object
+            $post_for_form = new PostForm();
+            $post_for_form->setContent($post->getContent());
+            $post_for_form->setId($post->getId());
+            $post_form = $this->createFormBuilder($post_for_form)
+                            ->add('content', 'textarea',array('required' => false))
                             ->add('id','hidden')
+                            ->add('file','file',array('required' => false))
                             ->getForm();
-
-        
-            //create form for image
-            $image = new Image();
-            $image->setPostId($post_id);
-            
-            $form = $this->createFormBuilder($image)
-                ->add('file','file')
-                ->add('post_id','hidden')
-                ->getForm();
         
             return $this->render('InouireMininetBundle:Post:editPost.html.twig',array(
                 'post'=> $post,
-                'form' => $form->createView(),
                 'post_form' => $post_form->createView(),
             ));
         }
@@ -133,13 +128,18 @@ class PostController extends Controller
     }
     
     
+    /*
+     * Controler that handles post submission
+     */
     public function updateContentAction(){
 
-        $post_from_form = new Post();
+            
+        $post_from_form = new PostForm();
         $form = $this->createFormBuilder($post_from_form)
-            ->add('content', 'textarea')
-            ->add('id','hidden')
-            ->getForm();
+                        ->add('content', 'textarea',array('required' => false))
+                        ->add('id','hidden')
+                        ->add('file','file',array('required' => false))
+                        ->getForm();
 
         $form->bindRequest($this->getRequest());
                 
@@ -202,8 +202,15 @@ class PostController extends Controller
                 }
                 //delete post
                 $em->remove($post);
+            }else if($method='upload' && $post_from_form->getFile() != null){
+                $ic = new ImageController();
+                $ic->handleImageUpload($post_from_form->getFile(),$post,$this->getDoctrine()->getEntityManager());
+                if( !$post->getPublished() ){
+                    $redirect_to = $this->generateUrl('edit_post',array('post_id' => $post_id));
+                }
             }
-                
+             
+            //persist changes and redirect to next page (home or post editor)   
             $em->flush();
             return $this->redirect($redirect_to);  
 
@@ -211,7 +218,7 @@ class PostController extends Controller
             return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_level'=> 'bang',
                 'error_title'=> 'Form invalide',
-                'error_message' => 'Argggg',
+                'error_message' => 'Arg',
             ));
         }
 

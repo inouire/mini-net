@@ -7,61 +7,62 @@
 
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
     
-    <div class="row post-editor" id={{post.id}}>
-        
-        <div class="span2" style="text-align: center;">
-            {% if post.published %}
-                <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
-                <span class="label label-success">publié</span>
-            {% else %}
-                <h4>Aujourd'hui</h4>
-                <span class="label label-warning">non publié</span>
-            {% endif %}
-            <br /><br />
-            <img id="loading-wheel" src="{{ asset('/css/icons/loading.gif')}}" style="display: none"/>
-        </div>
-        
-        <div class="span9">
-        
+        <div class="row post-editor" id={{post.id}}>
+            
             <form method="post" action="{{ path('update_post') }}" id="{{ post.id }}" {{ form_enctype(post_form) }}>
             
-                {{ form_errors(post_form) }}
-                
-            {% if post.published == true %}
-                <button class="btn btn-danger pull-left" id="delete-button" name="submitButton" value="delete"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a></button>
-                <button class="btn btn-success pull-right" id="update-button" type="submit" name="submitButton" value="update"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
-            {% else %}
-                <button class="btn" id="save-button" type="submit" name="submitButton" value="save"><i class="icon-download" id="save-icon"></i> 
-                    <span class="hidden-phone">Garder comme brouillon</span>
-                    <span class="visible-phone">Sauver</span>
-                </button>
-                <button class="btn btn-success pull-right" id="publish-button" type="submit" name="submitButton" value="publish"><i class="icon-download icon-white" id="publish-icon"></i> Publier</button>
-            {% endif %}
-                
+            
+            <div class="span2" style="text-align: center;">
+                {% if post.published %}
+                    <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
+                    <span class="label label-success">publié</span>
+                {% else %}
+                    <h4>Aujourd'hui</h4>
+                    <span class="label label-warning">non publié</span>
+                {% endif %}
                 <br /><br />
-                {{ form_widget(
-                    post_form.content, {'attr': {'style':'width:100%','rows':'10'} })
-                }}
-
-                {{ form_rest(post_form) }}
-            </form>
-        </div>
-    </div>
-    
-    <center>
-        <button class="btn btn-primary" id="add-image-button" ><i class="icon-picture icon-white"></i> Ajouter une photo</button>
-        <form action="{{ path('add_image') }}" id="image-upload-form" method="post" {{ form_enctype(form) }} style="display: none">
-            {{ form_errors(form) }}
-            <div>
-                {{ form_errors(form.file) }}
-                {{ form_widget(form.file) }}
+                <img id="loading-wheel" src="{{ asset('/css/icons/loading.gif')}}" style="display: none"/>
             </div>
-            {{ form_rest(form) }}
-            <input type="submit" id="image-upload-submit" class="btn"/>
-        </form>
-        <br /><br />
-    </center>
-    
+            
+            <div class="span9">
+            
+                
+                
+                {{ form_errors(post_form) }}
+                    
+                {% if post.published == true %}
+                    <button class="btn btn-danger pull-left" id="delete-button" name="submitButton" value="delete"><i class="icon-trash icon-white" id="delete-icon"></i> Supprimer</a></button>
+                    <button class="btn btn-success pull-right" id="update-button" type="submit" name="submitButton" value="update"><i class="icon-download icon-white" id="publish-icon"></i> Mettre à jour</button>
+                {% else %}
+                    <button class="btn" id="save-button" type="submit" name="submitButton" value="save"><i class="icon-download" id="save-icon"></i> 
+                        <span class="hidden-phone">Garder comme brouillon</span>
+                        <span class="visible-phone">Sauver</span>
+                    </button>
+                    <button class="btn btn-success pull-right" id="publish-button" type="submit" name="submitButton" value="publish"><i class="icon-download icon-white" id="publish-icon"></i> Publier</button>
+                {% endif %}
+                    
+                    <br /><br />
+                    {{ form_widget(
+                        post_form.content, {'attr': {'style':'width:100%','rows':'10'} })
+                    }}
+
+            </div>
+        </div>
+        
+        <center>
+            <div class="btn btn-primary" id="add-image-button" ><i class="icon-picture icon-white"></i> Ajouter une photo</div>
+            <div id="add-image-block" style="display: none">
+                {{ form_errors(post_form.file) }}
+                {{ form_widget(post_form.file) }}
+                <br>
+                <button class="btn btn-success" id="upload-image-button" type="submit" name="submitButton" value="upload"><i class="icon-picture icon-white"></i> Envoyer</button>
+            </div>
+            <br><br>
+        </center>
+        
+        {{ form_rest(post_form) }}
+    </form>
+
     {% if post.hasImages %}
     <div class="row">
         <div class="span9 offset2">
@@ -97,6 +98,7 @@
                 $('#save-button').addClass('disabled');
                 $('#update-button').addClass('disabled');
                 $('#add-image-button').addClass('disabled');
+                $('#upload-image-button').addClass('disabled');
                 $('#loading-wheel').fadeIn(100);
             }
             
@@ -105,6 +107,7 @@
                 $('#publish-button').removeClass('disabled');
                 $('#save-button').removeClass('disabled');
                 $('#add-image-button').removeClass('disabled');
+                $('#upload-image-button').removeClass('disabled');
                 $('#loading-wheel').fadeOut(100);
             }
   
@@ -112,7 +115,7 @@
                 console.log("ACTION: delete image "+image_id);
                 if(confirm("Êtes vous sur de vouloir supprimer cette photo ?")){
                     $.ajax({
-                        url : '/image/'+image_id,
+                        url : '/image/'+image_id+'.jpg',
                         type : 'DELETE',
                         dataType : 'json',
                         success : function(data, statut){
@@ -143,14 +146,9 @@
 
             //adding listener on "add image" button
             $("#add-image-button").click( function (event) {
-                $('#image-upload-form').fadeIn(400);
-                updatePostAjax(0);
+                $('#add-image-block').fadeIn(400);
+                $('#add-image-button').fadeOut(400);
                 $('input[type=file]').click();
-            });
-
-            //adding listener on "submit file" button
-            $("#image-upload-submit").click( function (event) {
-                disableAllControls(true);
             });
 
             //adding listeners on "delete image" icons
@@ -173,6 +171,9 @@
                 disableAllControls();
             });
             $("#update-button").click( function (event) {
+                disableAllControls();
+            });
+            $("#upload-image-button").click( function (event) {
                 disableAllControls();
             });
             
