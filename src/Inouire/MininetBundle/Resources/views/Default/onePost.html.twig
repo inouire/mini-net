@@ -30,9 +30,16 @@
                 {% set imagesWidth = 'span4' %}
                 {% set thumbWidth = 'span2' %}
             {% else %}
-                {% set contentWidth = 'span4' %}
-                {% set imagesWidth = 'span6' %}
-                {% set thumbWidth = 'span2' %}
+                {% if post.weight > 1200 %}
+                    {% set contentWidth = 'span6' %}
+                    {% set imagesWidth = 'span4' %}
+                    {% set thumbWidth = 'span2' %}
+                {% else %}
+                    {% set contentWidth = 'span4' %}
+                    {% set imagesWidth = 'span6' %}
+                    {% set thumbWidth = 'span2' %}
+                {% endif %}
+                
             {% endif %} 
         {% else %}
             {% set contentWidth = 'span6' %}
@@ -87,7 +94,7 @@
                     <a href="{{ path('view_post',{'post_id': post.id }) }}" >{{ post.author }}</a>
                 {% if post.author == app.user.username %}
                     <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
-                {% endif %}                
+                {% endif %}              
                 </h4>
 
                 <p>{{ post.htmlcontent | raw }}</p>
