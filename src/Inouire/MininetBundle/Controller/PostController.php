@@ -177,8 +177,11 @@ class PostController extends Controller
             }
             
             //modify post object depending on action
+
+            $had_modification=($post_from_form->getContent() != $post->getContent());
             $post->setContent($post_from_form->getContent());
             $redirect_to = $this->generateUrl('home');
+            
             if( $method == 'save'){
                 $redirect_to = $this->generateUrl('edit_post',array('post_id' => $post_id));
             }else if($method == 'publish'){
@@ -189,7 +192,7 @@ class PostController extends Controller
                     }
                 }
             }else if($method == 'update'){
-                if( $post_from_form->getContent() != $post->getContent() ){
+                if( $had_modification ){
                     $post->touchEditDate();
                 }
             }else if($method == 'delete'){
@@ -210,7 +213,8 @@ class PostController extends Controller
                 }
             }
              
-            //persist changes and redirect to next page (home or post editor)   
+            //persist changes and redirect to next page (home or post editor)
+            
             $em->flush();
             return $this->redirect($redirect_to);  
 
