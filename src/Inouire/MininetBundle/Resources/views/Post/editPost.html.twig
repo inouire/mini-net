@@ -11,7 +11,6 @@
             
             <form method="post" action="{{ path('update_post') }}" id="{{ post.id }}" {{ form_enctype(post_form) }}>
             
-            
             <div class="span2" style="text-align: center;">
                 {% if post.published %}
                     <h4>{{ post.date | localeDate('medium','none',null,'dd MMMM Y') }}</h4>
@@ -26,8 +25,6 @@
             
             <div class="span9">
             
-                
-                
                 {{ form_errors(post_form) }}
                     
                 {% if post.published == true %}

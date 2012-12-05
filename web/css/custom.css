@@ -1,6 +1,8 @@
 
 body {
     padding-bottom: 40px;
+    background-image: url('bg/debut_light.png');
+    background-repeat: repeat;
 }
 .very-close{
     margin-top:3px;
