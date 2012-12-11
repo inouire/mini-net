@@ -82,7 +82,10 @@
     </div>
     {% endif %}
 
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    
 {% endblock %}
+
 
 {% block javascripts %}
     {{ parent() }}
@@ -173,7 +176,6 @@
             $("#upload-image-button").click( function (event) {
                 disableAllControls();
             });
-            
 
         });
     </script>
