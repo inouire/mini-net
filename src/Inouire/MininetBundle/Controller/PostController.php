@@ -176,8 +176,13 @@ class PostController extends Controller
                 ));
             }
             
+            //get image if any
+            if( $post_from_form->getFile() != null){
+                $ic = new ImageController();
+                $ic->handleImageUpload($post_from_form->getFile(),$post,$this->getDoctrine()->getEntityManager());
+            }
+            
             //modify post object depending on action
-
             $had_modification=($post_from_form->getContent() != $post->getContent());
             $post->setContent($post_from_form->getContent());
             $redirect_to = $this->generateUrl('home');
@@ -205,16 +210,11 @@ class PostController extends Controller
                 }
                 //delete post
                 $em->remove($post);
-            }else if($method='upload' && $post_from_form->getFile() != null){
-                $ic = new ImageController();
-                $ic->handleImageUpload($post_from_form->getFile(),$post,$this->getDoctrine()->getEntityManager());
-                if( !$post->getPublished() ){
-                    $redirect_to = $this->generateUrl('edit_post',array('post_id' => $post_id));
-                }
+            }else if($method='upload'){
+                $redirect_to = $this->generateUrl('edit_post',array('post_id' => $post_id));
             }
              
             //persist changes and redirect to next page (home or post editor)
-            
             $em->flush();
             return $this->redirect($redirect_to);  
 
