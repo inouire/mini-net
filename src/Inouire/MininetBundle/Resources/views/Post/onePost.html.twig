@@ -1,5 +1,5 @@
 
-        
+
         {% if post.hasImages %}
             {% if post.images|length == 1 %}
                 {% set contentWidth = 'span6' %}
@@ -97,72 +97,45 @@
                 <h4>
                     <a href="{{ path('view_post',{'post_id': post.id }) }}" >{{ post.author }}</a>
                 {% if post.author == app.user.username %}
-                    <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right"><i class="icon-pencil"></i></a>
+                    <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right">
+                        <i class="icon-pencil"></i>
+                    </a>
                 {% endif %} 
                 </h4>
 
                 <p>{{ post.htmlcontent | raw }}</p>
                 
                 {% if post.hasImages %}
-                    <div id="comments-{{ post.id }}">
-                        {% for comment in post.comments %}
-                            {% if comment.author.id == post.author.id %}
-                                 <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
-                            {% else %}
-                                 <div class="alert alert-info very-close" id="comment-{{comment.id}}">
-                            {% endif %}
-                                  <strong>{{ comment.author }}: </strong>{{ comment.content }}
-                            {% if comment.author.id == app.user.id %}
-                                <button class="close delete-comment" id="{{comment.id}}">&times;</button>
-                            {% endif %}
-                                </div>
-                        {% endfor %}
-                    </div>
-                    <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
-                        <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
-                            <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
-                        </div>
-                        <img id="comment-wheel-{{ post.id }}" src="{{ asset('/css/icons/loading_small.gif')}}" style="display: none"/>
-                        <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-                    </form>
-                    <div style="margin-bottom:45px;"></div>
+                    
+                    {% include 'InouireMininetBundle:Post:comments.html.twig' %}
+                    
                 {% endif %}
                 
             </div>
             
             <div class="{{ imagesWidth }}">
+            
             {% if post.hasImages %}
+            
                 <ul class="thumbnails">
+                    
                     {% for image in post.images %}
+                    
                     <li class="{{ thumbWidth}}">
-                        <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox thumbnail" rel="fancybox[{{post.id}}]">
+                        <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox thumbnail" rel="album[{{post.id}}]">
                              <img src="{{ image.webpath | imagine_filter('big_thumb') }}"/>
                         </a>
                     </li>
+                    
                     {% endfor %}
+                    
                  </ul>
+                 
             {% else %}
-                <div id="comments-{{ post.id }}">
-                    {% for comment in post.comments %}
-                        {% if comment.author.id == post.author.id %}
-                            <div class="alert alert-success very-close author-comment" id="comment-{{comment.id}}">
-                        {% else %}
-                            <div class="alert alert-info very-close" id="comment-{{comment.id}}">
-                        {% endif %}
-                             <strong>{{ comment.author }}: </strong>{{ comment.content }}
-                        {% if comment.author.id == app.user.id %}
-                            <button class="close delete-comment" id="{{comment.id}}">&times;</button>
-                        {% endif %}
-                            </div>
-                    {% endfor %}
-                </div>
-                <form class="form-inline pull-right" id="comment-form-{{ post.id }}">
-                    <div class="input-prepend" id="comment-block-{{ post.id }}" style="display: none">
-                        <span class="add-on">{{ app.user.username}}:</span><input class="input-medium" id="comment-input-{{ post.id }}" size="16" type="text">
-                    </div>
-                    <img id="comment-wheel-{{ post.id }}" src="{{ asset('/css/icons/loading_small.gif')}}" style="display: none"/>
-                    <button type="submit" class="btn comment-button" id="{{ post.id }}">Commenter</button>
-                </form>  
+            
+                {% include 'InouireMininetBundle:Post:comments.html.twig' %}
+                
             {% endif %}
+            
             </div>
         </div>

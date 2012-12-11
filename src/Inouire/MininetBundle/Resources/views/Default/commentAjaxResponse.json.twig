@@ -4,6 +4,9 @@
     "comment" : {
         "id" : "{{comment_id}}",
         "content" : "{{comment_content}}"
-    },
+    }
+    {% if is_author_of_post is defined %}
+    ,
     "is_author_of_post" : {{is_author_of_post}}
+    {% endif %}
 }

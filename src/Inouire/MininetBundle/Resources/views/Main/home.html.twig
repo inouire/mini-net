@@ -61,7 +61,7 @@
             
             //init fancybox on all pictures
             $(".fancybox").fancybox({
-                loop: false,
+                loop: true,
                 openEffect: 'fade',
                 closeEffect: 'fade',
                 nextEffect: 'none',
@@ -91,14 +91,12 @@
             }
             
             function commentListener(e){
-                
                 e.preventDefault();
-
                 var post_id = e.target.id;
+                var comment_form = document.getElementById('comment-form-'+post_id);
                 var comment_input = document.getElementById('comment-input-'+post_id);
-                var comment_block = document.getElementById('comment-block-'+post_id);
                 var comment_content = comment_input.value;
-                console.log("Id du bouton source de l'event:"+e.target.id);
+                
                 console.log("Contenu de l'input:"+comment_content);
                 
                 if(e.target.innerHTML=="Commenter"){
@@ -106,7 +104,6 @@
                     e.target.innerHTML="Envoyer »";
                     comment_input.focus();
                 }else{
-
                     $('#comment-block-'+post_id).fadeOut(100);
                     if(comment_content.length == 0){
                         e.target.innerHTML="Commenter";
@@ -123,39 +120,72 @@
                                     console.log(data); 
                                     var comments = document.getElementById('comments-'+post_id);
                                     if(data.is_author_of_post == 1){
-                                        comments.innerHTML += '<div class=\"alert alert-success very-close author-comment\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                        var tag = 'alert-success author-comment';
                                     }else{
-                                        comments.innerHTML += '<div class=\"alert alert-info very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                        var tag = 'alert-info';
                                     }
-                                   var comment = document.getElementById('comment-'+data.comment.id);
+                                    comments.innerHTML += '<div class=\"alert '+tag+' very-close\" id=\"comment-'+data.comment.id+'\" style=\"display:none\"><strong>{{app.user.username}}: </strong>'+data.comment.content+'<button class=\"close delete-comment\" id=\"'+data.comment.id+'\">&times;</button></div>';
+                                    var comment = document.getElementById('comment-'+data.comment.id);
                                     e.target.innerHTML="Commenter";
                                     $('#comment-'+data.comment.id).fadeIn(100);
                                     $('#comment-wheel-'+post_id).fadeOut(100);
                                     comment.addEventListener('click', deleteCommentListener, false);
+                                    //add update listener
                                 }
                                 
                            },'json'
                         );
                         current_form.reset();
                     }
-                    
                 }
-                
+            }
+            
+            function updateComment(comment_id,comment_content){
+                console.log("Making POST request to update comment");
+                $.post(
+                   '/comment/'+comment_id,
+                   { comment: comment_content },
+                   function(data, statut){
+                        if(statut=="success"){
+                            $('#comment-content-'+comment_id).html(comment_content);
+                            console.log("Axaj call has been a success");
+                            console.log(data); 
+                        }
+                        
+                   },'json'
+                );
             }
             
             //adding listener on all comment buttons
-            var comment_buttons = document.querySelectorAll(".comment-button");
-            console.log("Total nb comments button:"+comment_buttons.length);
-            for(var k=0;k<comment_buttons.length;k++){
-                comment_buttons[k].addEventListener('click', commentListener, false);
-            }
+            $(".comment-button").click( function (event) {
+                commentListener(event);
+            });
             
             //adding listener on all delete comment buttons
-            var delete_comment_buttons = document.querySelectorAll(".delete-comment");
-            console.log("Total nb delete comments button:"+delete_comment_buttons.length);
-            for(var k=0;k<delete_comment_buttons.length;k++){
-                delete_comment_buttons[k].addEventListener('click', deleteCommentListener, false);
-            }
+            $(".delete-comment").click( function (event) {
+                deleteCommentListener(event);
+            });
+            
+            $(".edit-comment").click( function (event) {
+                var comment_id = event.target.getAttribute("value");
+                $('#edit-comment-'+comment_id).fadeOut(100);
+                $('#comment-content-'+comment_id).fadeOut(100);
+                $('#comment-edit-block-'+comment_id).fadeIn(100);
+                $('#update-comment-'+comment_id).fadeIn(100);
+            });
+            $(".update-comment").click( function (event) {
+                var comment_id = event.target.getAttribute("value");
+                var comment_content = $('#comment-edit-area-'+comment_id).val();
+                $('#comment-edit-block-'+comment_id).fadeOut(100);
+                $('#update-comment-'+comment_id).fadeOut(100);
+                
+                //update content
+                updateComment(comment_id,comment_content);
+                
+                $('#edit-comment-'+comment_id).fadeIn(100);
+                $('#comment-content-'+comment_id).fadeIn(100);
+                
+            });
 
         });
     </script>

@@ -1,0 +1,49 @@
+
+<div id="comments-{{ post.id }}">
+    
+    {% for comment in post.comments %}
+    
+        {% if comment.author.id == post.author.id %}
+            {% set commentClass = 'alert-success author-comment' %}
+        {% else %}
+            {% set commentClass = 'alert-info' %}
+        {% endif %}
+        
+            <div class="alert {{ commentClass }} very-close" id="comment-{{comment.id}}">
+                
+                <strong>{{ comment.author }}: </strong>
+                <span id="comment-content-{{comment.id}}">{{ comment.content }}</span>
+                <span id="comment-edit-block-{{comment.id}}" style="display: none">
+                    <textarea id="comment-edit-area-{{comment.id}}" style="width:95%" rows="2">{{ comment.content }}</textarea>
+                </span>
+            {% if comment.author.id == app.user.id %}
+                {% if date(comment.date) >= date('-1days') %}
+                    <i class="icon-ok update-comment" value="{{comment.id}}" id="update-comment-{{comment.id}}" style="display: none"></i>
+                    <i class="icon-edit edit-comment" value="{{comment.id}}" id="edit-comment-{{comment.id}}"></i>
+                {% endif %}
+                <div class="close delete-comment" id="{{comment.id}}">&times;</div>
+            {% endif %}
+        
+            </div>
+    {% endfor %}
+</div>
+<div>
+    {% if app.user.id == post.author.id %}
+        {% set commentClass = 'alert-success author-comment' %}
+    {% else %}
+        {% set commentClass = 'alert-info' %}
+    {% endif %}
+
+    <img id="comment-wheel-{{ post.id }}" src="{{ asset('/css/icons/loading_small.gif')}}" class="pull-right" style="display: none"/> 
+   
+    <form id="comment-form-{{ post.id }}">
+        <div class="alert {{commentClass}} very-close" id="comment-block-{{ post.id }}" style="display: none">
+            <strong>{{ app.user.username }}: </strong>
+            <input style="width:95%" id="comment-input-{{ post.id }}" size="16" type="text">
+        </div>
+        <button type="submit" class="btn comment-button pull-right" id="{{ post.id }}" >Commenter</button>
+    </form>
+</div>
+
+
+
