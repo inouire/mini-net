@@ -180,12 +180,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/DoctrineBundle.git",
-                "reference": "ac854d9452272d43b80a9043e0f33c2b9dd2cdd5"
+                "reference": "2991d0dfa58a5583d9231c490750e29c45b0a6e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineBundle/archive/ac854d9452272d43b80a9043e0f33c2b9dd2cdd5.zip",
-                "reference": "ac854d9452272d43b80a9043e0f33c2b9dd2cdd5",
+                "url": "https://github.com/doctrine/DoctrineBundle/archive/2991d0dfa58a5583d9231c490750e29c45b0a6e9.zip",
+                "reference": "2991d0dfa58a5583d9231c490750e29c45b0a6e9",
                 "shasum": ""
             },
             "require": {
@@ -203,7 +203,7 @@
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle."
             },
-            "time": "2012-11-21 09:23:38",
+            "time": "2012-12-11 09:53:45",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -319,12 +319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle",
-                "reference": "bfb9edb825628d4312dbdf4a5523409a53962fd4"
+                "reference": "6d1fe1bad7621e618a379aebc45b36e080e7eca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/bfb9edb825628d4312dbdf4a5523409a53962fd4.zip",
-                "reference": "bfb9edb825628d4312dbdf4a5523409a53962fd4",
+                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/6d1fe1bad7621e618a379aebc45b36e080e7eca8.zip",
+                "reference": "6d1fe1bad7621e618a379aebc45b36e080e7eca8",
                 "shasum": ""
             },
             "require": {
@@ -345,7 +345,7 @@
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/mongodb-odm-bundle": "*"
             },
-            "time": "2012-12-05 13:36:08",
+            "time": "2012-12-11 10:26:01",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -388,12 +388,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/avalanche123/Imagine",
-                "reference": "632d24c11cedee6255a4d69149e582f23e8924cb"
+                "reference": "v0.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/avalanche123/Imagine/archive/632d24c11cedee6255a4d69149e582f23e8924cb.zip",
-                "reference": "632d24c11cedee6255a4d69149e582f23e8924cb",
+                "url": "https://github.com/avalanche123/Imagine/archive/v0.4.0.zip",
+                "reference": "v0.4.0",
                 "shasum": ""
             },
             "require": {
@@ -402,7 +402,7 @@
             "require-dev": {
                 "sami/sami": "dev-master"
             },
-            "time": "2012-12-04 15:25:44",
+            "time": "2012-12-07 16:46:12",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -966,22 +966,22 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/schmittjoh/php-option",
-                "reference": "b9c60ebf8242cf409d8734b6a757ba0ce1691493"
+                "reference": "7c3d959ac1ab7677cca6463dbb7d443ef9eea8ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/schmittjoh/php-option/archive/b9c60ebf8242cf409d8734b6a757ba0ce1691493.zip",
-                "reference": "b9c60ebf8242cf409d8734b6a757ba0ce1691493",
+                "url": "https://github.com/schmittjoh/php-option/archive/7c3d959ac1ab7677cca6463dbb7d443ef9eea8ed.zip",
+                "reference": "7c3d959ac1ab7677cca6463dbb7d443ef9eea8ed",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-11-18 14:14:12",
+            "time": "2012-12-07 09:34:13",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "installation-source": "source",
@@ -1381,12 +1381,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "e92597802bcaee0057368fbed59a177c6ffca89f"
+                "reference": "18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/e92597802bcaee0057368fbed59a177c6ffca89f.zip",
-                "reference": "e92597802bcaee0057368fbed59a177c6ffca89f",
+                "url": "https://github.com/symfony/symfony/archive/18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0.zip",
+                "reference": "18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0",
                 "shasum": ""
             },
             "require": {
@@ -1439,7 +1439,7 @@
             "suggest": {
                 "doctrine/data-fixtures": "1.0.*"
             },
-            "time": "2012-12-05 14:02:12",
+            "time": "2012-12-11 17:46:52",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1528,18 +1528,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "6810dbe8a7be204813a4397b1bddcfdb875fe2e2"
+                "reference": "2757f482c679aa00bb8c7fdfcb337f2bb922fa5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/archive/6810dbe8a7be204813a4397b1bddcfdb875fe2e2.zip",
-                "reference": "6810dbe8a7be204813a4397b1bddcfdb875fe2e2",
+                "url": "https://github.com/fabpot/Twig/archive/2757f482c679aa00bb8c7fdfcb337f2bb922fa5a.zip",
+                "reference": "2757f482c679aa00bb8c7fdfcb337f2bb922fa5a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-12-01 18:41:29",
+            "time": "2012-12-11 14:30:16",
             "type": "library",
             "extra": {
                 "branch-alias": {
