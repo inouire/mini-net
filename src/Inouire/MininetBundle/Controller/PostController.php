@@ -122,6 +122,7 @@ class PostController extends Controller
             return $this->render('InouireMininetBundle:Post:editPost.html.twig',array(
                 'post'=> $post,
                 'post_form' => $post_form->createView(),
+                'toleBg' => 'true'
             ));
         }
         

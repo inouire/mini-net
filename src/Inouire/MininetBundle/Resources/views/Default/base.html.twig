@@ -27,10 +27,7 @@
     
     </head>
     
-    <body>
     
-        {% block header %}
-        
         {% set currentPath = app.request.attributes.get('_route') %}
         {% set classHome = '' %}
         {% set classTextHome = 'hidden-phone' %}
@@ -38,6 +35,7 @@
         {% set classTextAlbum = 'hidden-phone' %}
         {% set classArchives = '' %}
         {% set classTextArchives = 'hidden-phone' %}
+        {% set bodyClass = '' %}
         {% if currentPath == 'home' %}
             {% set classHome = ' active' %}
             {% set classTextHome = '' %}
@@ -46,8 +44,16 @@
             {% set classTextAlbum = '' %}
         {% elseif currentPath == 'posts' %}
             {% set classArchives = ' active' %}
-             {% set classTextArchives = '' %}
+            {% set classTextArchives = '' %}
+         {% elseif currentPath == 'edit_post' %}
+            {% set bodyClass = 'tole' %}
         {% endif %}  
+        
+    <body class="{{ bodyClass}}">
+    
+        {% block header %}
+        
+
                     
                     
     <div class="navbar navbar-inverse navbar-fixed-top">

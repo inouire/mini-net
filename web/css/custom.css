@@ -1,6 +1,10 @@
 
 body {
     padding-bottom: 40px;
+    background-image: url('bg/debut_light.png');
+    background-repeat: repeat;
+}
+.tole {
     background-image: url('bg/shl.png');
     background-repeat: repeat;
 }
