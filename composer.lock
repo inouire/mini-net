@@ -1381,12 +1381,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "f9297c103eac98f71f0ecac36ed78da08787b81f"
+                "reference": "18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/f9297c103eac98f71f0ecac36ed78da08787b81f.zip",
-                "reference": "f9297c103eac98f71f0ecac36ed78da08787b81f",
+                "url": "https://github.com/symfony/symfony/archive/18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0.zip",
+                "reference": "18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0",
                 "shasum": ""
             },
             "require": {
