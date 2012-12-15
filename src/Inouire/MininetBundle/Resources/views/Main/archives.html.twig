@@ -1,6 +1,12 @@
-{% extends 'InouireMininetBundle:Default:headerPosts.html.twig' %}
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
 
-{% block posts %}
+{% block title %}archives pour {{requested_date | localeDate('medium','none',null,'MMMM')}} {{ requested_year }}{% endblock %}
+
+{% block body %}
+    
+    <center><h1>{{ requested_year }}</h1></center>
+    
+    {% include 'InouireMininetBundle:Default:archivesRibbon.html.twig' %}
     
     {% set new_day='yes' %}
      
@@ -20,6 +26,9 @@
         
     {% endfor %}
         
+    {% include 'InouireMininetBundle:Default:archivesRibbon.html.twig' %}  
+    
+
 {% endblock %}
 
 {% block javascripts %}
