@@ -388,12 +388,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/avalanche123/Imagine",
-                "reference": "v0.4.0"
+                "reference": "a353d83a74e5d44dd3f336ecfaa38a1090b6d155"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/avalanche123/Imagine/archive/v0.4.0.zip",
-                "reference": "v0.4.0",
+                "url": "https://github.com/avalanche123/Imagine/archive/a353d83a74e5d44dd3f336ecfaa38a1090b6d155.zip",
+                "reference": "a353d83a74e5d44dd3f336ecfaa38a1090b6d155",
                 "shasum": ""
             },
             "require": {
@@ -402,7 +402,7 @@
             "require-dev": {
                 "sami/sami": "dev-master"
             },
-            "time": "2012-12-07 16:46:12",
+            "time": "2012-12-14 15:37:45",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -793,12 +793,12 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/kriswallsmith/assetic.git",
-                "reference": "deed96bb7ba009d8e05aaeeb1b73c1d67a8f3719"
+                "reference": "8ca1861fbed58e2c6ffcca5c0a1726c40a10a77c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/kriswallsmith/assetic/archive/deed96bb7ba009d8e05aaeeb1b73c1d67a8f3719.zip",
-                "reference": "deed96bb7ba009d8e05aaeeb1b73c1d67a8f3719",
+                "url": "https://github.com/kriswallsmith/assetic/archive/8ca1861fbed58e2c6ffcca5c0a1726c40a10a77c.zip",
+                "reference": "8ca1861fbed58e2c6ffcca5c0a1726c40a10a77c",
                 "shasum": ""
             },
             "require": {
@@ -819,7 +819,7 @@
                 "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
                 "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin"
             },
-            "time": "2012-11-27 13:27:38",
+            "time": "2012-12-14 18:31:26",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -910,12 +910,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog",
-                "reference": "546225bed27bea7d00b836e0f7d8954272e0cf42"
+                "reference": "0df12342ef6c5efc748b27bb9ef92e1c95631058"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Seldaek/monolog/archive/546225bed27bea7d00b836e0f7d8954272e0cf42.zip",
-                "reference": "546225bed27bea7d00b836e0f7d8954272e0cf42",
+                "url": "https://github.com/Seldaek/monolog/archive/0df12342ef6c5efc748b27bb9ef92e1c95631058.zip",
+                "reference": "0df12342ef6c5efc748b27bb9ef92e1c95631058",
                 "shasum": ""
             },
             "require": {
@@ -929,7 +929,7 @@
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server"
             },
-            "time": "2012-12-04 11:59:29",
+            "time": "2012-12-14 11:27:44",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1209,12 +1209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/AsseticBundle",
-                "reference": "30d3841dc9643d352503a72f3cdf93d193c439d2"
+                "reference": "bd91880b53f86689f6638c9a28b8cc17792896e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/AsseticBundle/archive/30d3841dc9643d352503a72f3cdf93d193c439d2.zip",
-                "reference": "30d3841dc9643d352503a72f3cdf93d193c439d2",
+                "url": "https://github.com/symfony/AsseticBundle/archive/bd91880b53f86689f6638c9a28b8cc17792896e2.zip",
+                "reference": "bd91880b53f86689f6638c9a28b8cc17792896e2",
                 "shasum": ""
             },
             "require": {
@@ -1234,7 +1234,7 @@
             "suggest": {
                 "symfony/twig-bundle": ">=2.1.0,<2.3-dev"
             },
-            "time": "2012-11-07 10:47:48",
+            "time": "2012-12-14 18:38:42",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1381,18 +1381,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0"
+                "reference": "f9297c103eac98f71f0ecac36ed78da08787b81f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0.zip",
-                "reference": "18c520a5e8f842e980a7f7f7e00d1da7e7d30ad0",
+                "url": "https://github.com/symfony/symfony/archive/f9297c103eac98f71f0ecac36ed78da08787b81f.zip",
+                "reference": "f9297c103eac98f71f0ecac36ed78da08787b81f",
                 "shasum": ""
             },
             "require": {
                 "doctrine/common": ">2.2,<2.4-dev",
                 "php": ">=5.3.3",
-                "twig/twig": ">=1.9.1,<2.0-dev"
+                "twig/twig": ">=1.11.0,<2.0-dev"
             },
             "replace": {
                 "symfony/doctrine-bridge": "self.version",
@@ -1439,7 +1439,7 @@
             "suggest": {
                 "doctrine/data-fixtures": "1.0.*"
             },
-            "time": "2012-12-11 17:46:52",
+            "time": "2012-12-15 17:13:18",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1481,18 +1481,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig-extensions",
-                "reference": "dcdff02fbac1282e6b8f4d0558cc7e9580105688"
+                "reference": "d1990ffaca93302709d1306d50ae153adb169f49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig-extensions/zipball/dcdff02fbac1282e6b8f4d0558cc7e9580105688",
-                "reference": "dcdff02fbac1282e6b8f4d0558cc7e9580105688",
+                "url": "https://github.com/fabpot/Twig-extensions/archive/d1990ffaca93302709d1306d50ae153adb169f49.zip",
+                "reference": "d1990ffaca93302709d1306d50ae153adb169f49",
                 "shasum": ""
             },
             "require": {
                 "twig/twig": "1.*"
             },
-            "time": "2012-10-10 17:13:26",
+            "time": "2012-12-15 09:26:10",
             "type": "library",
             "extra": {
                 "branch-alias": {
