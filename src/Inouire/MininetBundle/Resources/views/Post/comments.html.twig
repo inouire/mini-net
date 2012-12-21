@@ -17,7 +17,7 @@
                     <textarea id="comment-edit-area-{{comment.id}}" style="width:95%" rows="2">{{ comment.content }}</textarea>
                 </span>
             {% if comment.author.id == app.user.id %}
-                {% if date(comment.date) >= date('-1days') %}
+                {% if date(comment.date) >= date('-12hours') %}
                     <i class="icon-ok update-comment" value="{{comment.id}}" id="update-comment-{{comment.id}}" style="display: none"></i>
                     <i class="icon-edit edit-comment" value="{{comment.id}}" id="edit-comment-{{comment.id}}"></i>
                 {% endif %}
