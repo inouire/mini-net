@@ -1,6 +1,12 @@
-{% extends 'InouireMininetBundle:Default:headerAlbum.html.twig' %}
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
 
-{% block album %}
+{% block title %}albums pour l'année {{ requested_year }}{% endblock %}
+
+{% block body %}
+
+    <center><h1>{{ requested_year }}</h1></center>
+
+    {% include 'InouireMininetBundle:Default:monthsOfYearRibbon.html.twig' %}
 
     <div class="row">
         <div class="span12">
