@@ -5,12 +5,15 @@
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
     
     <center>
-        {% for key, message in app.session.getFlashes() %}
-        <div class="{{ key }}">
-            {{ message|trans({}, 'FOSUserBundle') }}
-        </div>
+    
+        {% for type, flashMessages in app.session.flashbag.all() %}
+            {% for flashMessage in flashMessages %}
+                <div class="flash-{{ type }}">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
         {% endfor %}
-
+        
         <div>
             {% block fos_user_content %}
             {% endblock fos_user_content %}
