@@ -26,8 +26,9 @@
         
     {% endfor %}
         
-    {% include 'InouireMininetBundle:Default:archivesRibbon.html.twig' %}  
-    
+    {% if post_list | length > 2 %}
+        {% include 'InouireMininetBundle:Default:archivesRibbon.html.twig' %}  
+    {% endif %}
 
 {% endblock %}
 
