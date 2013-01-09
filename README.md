@@ -1,9 +1,9 @@
 mini-net
 ========
 
-Mini-net is a tiny social network, made for family.
+Mini-net is a very tiny social network, shaped for family.
 
-It is based on the PHP framework Symfony2, and is using third party libraries such as [Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/) and [Fancybox](http://fancyapps.com/fancybox/).
+It is based on the PHP framework Symfony2, and is also using [Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/) and [Fancybox](http://fancyapps.com/fancybox/).
 
 ## Requirements
 
@@ -46,7 +46,7 @@ cp app/config/parameters.yml.default app/config/parameters.yml
 
 Edit `app/config/parameters.yml` with your database and locale settings
 
-Automatically get project dependencies with composer
+Retrieve project dependencies with composer
 ``` bash
 composer install
 ```
@@ -59,7 +59,7 @@ git config --global https.proxy https://login:password@host:port/
 
 ### Configure apache2 virtual host
 
-Configure a new apache2 virtual host on "web" directory of git repository
+Configure a new apache2 virtual host which root is the /web directory of git repository
 
 For clean urls, activate mod_rewrite and AllowOverride of .htaccess in your apache virtual host
 ``` bash
