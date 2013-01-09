@@ -6,7 +6,7 @@
     
     <center><h1>{{ requested_year }}</h1></center>
     
-    {% include 'InouireMininetBundle:Default:archivesRibbon.html.twig' %}
+    {% include 'InouireMininetBundle:Default:monthsOfYearRibbon.html.twig' %}
     
     {% set new_day='yes' %}
      
@@ -27,7 +27,7 @@
     {% endfor %}
         
     {% if post_list | length > 2 %}
-        {% include 'InouireMininetBundle:Default:archivesRibbon.html.twig' %}  
+        {% include 'InouireMininetBundle:Default:monthsOfYearRibbon.html.twig' %}
     {% endif %}
 
 {% endblock %}
