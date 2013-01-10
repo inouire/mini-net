@@ -1,6 +1,8 @@
-{% extends 'InouireMininetBundle:Default:headerAlbum.html.twig' %}
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
 
-{% block album %}
+{% block title %}albums pour l'année {{ requested_year }}{% endblock %}
+
+{% block body %}
    
     {% set current_year = ("now" |date("Y")) %}
     {% set current_month = ("now" |date("m")) %}
@@ -29,6 +31,10 @@
         {% set message='Patience, nous ne sommes qu\'en '~current_year~'.' %}
     {% endif %}     
         
+    <center><h1>{{ requested_year }}</h1></center>
+    
+    {% include 'InouireMininetBundle:Default:monthsOfYearRibbon.html.twig' %}
+    
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
     
     <div class="row">
