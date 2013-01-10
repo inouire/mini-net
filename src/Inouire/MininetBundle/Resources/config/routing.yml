@@ -1,28 +1,26 @@
 #main routes
-root:
-    pattern:  /
-    defaults: { _controller: InouireMininetBundle:Default:root }
-    
 home:
-    pattern:  /home
+    pattern:  /
     defaults: { _controller: InouireMininetBundle:Default:home }
+    
+oldHome:
+    pattern:  /home
+    defaults: { _controller: InouireMininetBundle:Default:oldHome }
 
 archives:
     pattern:  /posts
-    defaults: { _controller: InouireMininetBundle:Default:archives }
+    defaults: { _controller: InouireMininetBundle:Archives:viewCurrentMonth }
     
 posts:
     pattern:  /posts/{year}/{month}
     requirements:
         year:  \d+
         month: \d+
-    defaults: { _controller: InouireMininetBundle:Default:posts }
+    defaults: { _controller: InouireMininetBundle:Archives:posts }
     
-
-#routes for actions on autmatic albums
 albums:
     pattern:  /albums
-    defaults: { _controller: InouireMininetBundle:Album:viewCurrent }
+    defaults: { _controller: InouireMininetBundle:Album:viewCurrentMonth }
     
 album:
     pattern:  /album/{year}/{month}
