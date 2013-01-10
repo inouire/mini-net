@@ -226,7 +226,7 @@ class Post{
         $content = str_replace('/!\\','<i class="icon-warning-sign"></i>',$content);
         
         //add horizontal separator
-        $content = preg_replace('/([-]{3}[-]+)/i','--------------------------------------------------',$content);
+        $content = preg_replace('/([-]{2}[-]+)/i','<hr>',$content);
         
         //add star
         $content = str_replace('*','<i class="icon-asterisk"></i>',$content);
