@@ -37,14 +37,7 @@ view_post:
     requirements:
         post_id:  \d+
         _method:  GET
-    defaults: { _controller: InouireMininetBundle:Post:view }
-
-meta_post:
-    pattern: /metapost
-    requirements:
-        _method: POST
-    defaults: { _controller: InouireMininetBundle:Post:meta }
-    
+    defaults: { _controller: InouireMininetBundle:Post:view }   
     
 new_post:
     pattern:  /post/new
