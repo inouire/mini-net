@@ -3,7 +3,7 @@
         
     <div class="pagination pagination-centered">
         <ul>
-            <li><b><a href="{{ path('posts',{'year':requested_year-1 , 'month': 12 }) }}"> &larr; {{ requested_year - 1}} </a></b></li>
+            <li><b><a href="{{ path(currentPath,{'year':requested_year-1 , 'month': 12 }) }}"> &larr; {{ requested_year - 1}} </a></b></li>
         {% for month in  months_of_year %}
             {% set month_nb = month | date('m') %}
             {% if  month_nb == requested_month  %}
