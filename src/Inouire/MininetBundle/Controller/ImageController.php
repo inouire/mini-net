@@ -37,14 +37,14 @@ class ImageController extends Controller
                 'error_level'=> 'bang',
                 'error_title'=> 'Impossible d\'envoyer ce fichier',
                 'error_message' => 'Le fichier envoyé n\'est pas une image',
-                'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->post_id )),
+                'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->getPostId() )),
                 'follow_link_text' => 'Revenir à l\'édition du post',
             ));
         }
         
         //get image orientation
         $orientation = $this->getImageOrientation($filePath);
-        
+                
         //try to guess the extension
         $file=new File($filePath,true);
         $extension = $file->guessExtension();
@@ -83,22 +83,12 @@ class ImageController extends Controller
      */
     private function getImageOrientation($filePath){
 
-        //$logger = $this->get('logger');
         //default: normal orientation
         $orientation = 1;
-                
         try{
-            //get exif data
+            //get IFDO.Orientation from exif data
             $exif = exif_read_data($filePath, 0, true);
-            //get IFDO.Orientation
-            foreach ($exif as $key => $section) {
-                foreach ($section as $name => $val) {
-                    //$logger->info($key.'.'.$name.': '.$val);
-                    if($key == 'IFD0' && $name == 'Orientation'){
-                        $orientation = $val;
-                    }
-                }
-            }
+            $orientation = $exif['IFD0']['Orientation'];
         }catch(\Exception $e){
             $orientation = 1;
         }
@@ -118,9 +108,9 @@ class ImageController extends Controller
             if( $orientation == 3 ){
                 $angle = 180;
             }else if( $orientation == 6 ){
-                $angle = -90;
-            }else if( $orientation == 8 ){
                 $angle = 90;
+            }else if( $orientation == 8 ){
+                $angle = -90;
             }else{
                 $angle = 0;
             }
