@@ -34,7 +34,7 @@ class AlbumController extends Controller
         }
         
         //get entity manager and Image repository
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $image_repo = $em->getRepository('InouireMininetBundle:Image');
         
         //get all the images of the posts of the requested year

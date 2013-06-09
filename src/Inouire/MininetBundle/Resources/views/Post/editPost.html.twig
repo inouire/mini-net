@@ -7,9 +7,9 @@
 
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
     
-        <div class="row post-editor" id={{post.id}}>
+    <div class="row post-editor" id={{post.id}}>
             
-            <form method="post" action="{{ path('update_post') }}" id="{{ post.id }}" {{ form_enctype(post_form) }}>
+        <form method="post" action="{{ path('update_post') }}" id="{{ post.id }}" {{ form_enctype(post_form) }}>
             
             <div class="span2" style="text-align: center;">
                 {% if post.published %}
@@ -44,22 +44,21 @@
                     }}
 
             </div>
-        </div>
-        
-        <center>
-            <div class="btn btn-primary" id="add-image-button" ><i class="icon-picture icon-white"></i> Ajouter une photo</div>
-            <div id="add-image-block" style="display: none">
-                {{ form_errors(post_form.file) }}
-                {{ form_widget(post_form.file) }}
-                <br>
-                <button class="btn btn-success" id="upload-image-button" type="submit" name="submitButton" value="upload"><i class="icon-picture icon-white"></i> Ajouter cette photo</button>
-            </div>
-            <br><br>
-        </center>
-        
-        {{ form_rest(post_form) }}
-    </form>
 
+            <center>
+                <div class="btn btn-primary" id="add-image-button" ><i class="icon-picture icon-white"></i> Ajouter une photo</div>
+                <div id="add-image-block" style="display: none">
+                    {{ form_errors(post_form.file) }}
+                    {{ form_widget(post_form.file) }}
+                    <br>
+                    <button class="btn btn-success" id="upload-image-button" type="submit" name="submitButton" value="upload"><i class="icon-picture icon-white"></i> Ajouter cette photo</button>
+                </div>
+                <br><br>
+            </center>
+
+            {{ form_rest(post_form) }}
+        </form>
+    </div>
     {% if post.hasImages %}
     <div class="row">
         <div class="span9 offset2">
@@ -125,7 +124,7 @@
                         },
                         error : function(data, statut, error){
                             console.log("Error during ajax call");
-                        },
+                        }
                     });
                 }
             }

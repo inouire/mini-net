@@ -5,8 +5,6 @@ namespace Inouire\MininetBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Post;
-use Inouire\MininetBundle\Entity\Comment;
-use Inouire\MininetBundle\Entity\Image;
 use Inouire\MininetBundle\Entity\PostForm;
 use Inouire\MininetBundle\Controller\ImageController;
 
@@ -19,7 +17,7 @@ class PostController extends Controller
     public function viewAction($post_id){
         
         //get corresponding post
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
         
         //check that this post exists
@@ -37,7 +35,7 @@ class PostController extends Controller
 
     }
     
-   /*
+    /*
      * Controler for the page to create a new post
      * If a non-published post already exits for the current user,
      * use this one instead of creating a new post
@@ -46,9 +44,9 @@ class PostController extends Controller
         
         //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
-        
+
         //check if this user has a current non-published post
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
         $unpublished_post = $post_repo->findOneBy(array(
             'published' => 0,
@@ -57,7 +55,7 @@ class PostController extends Controller
             1,
             0
         );
-        
+
         if($unpublished_post == null){
             //if no current post for this user, create one and redirect to it
             $post = new Post();
@@ -85,7 +83,7 @@ class PostController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         
         //get corresponding post
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
         
         //check that this post exists, and that it belongs to this user
@@ -113,12 +111,9 @@ class PostController extends Controller
             $post_for_form = new PostForm();
             $post_for_form->setContent($post->getContent());
             $post_for_form->setId($post->getId());
-            $post_form = $this->createFormBuilder($post_for_form)
-                            ->add('content', 'textarea',array('required' => false))
-                            ->add('id','hidden')
-                            ->add('file','file',array('required' => false))
-                            ->getForm();
-        
+
+            $post_form = $this->getPostForm($post_for_form);
+
             return $this->render('InouireMininetBundle:Post:editPost.html.twig',array(
                 'post'=> $post,
                 'post_form' => $post_form->createView(),
@@ -128,22 +123,29 @@ class PostController extends Controller
         
     }
     
-    
+
+    private function getPostForm(PostForm $post){
+
+        $form = $this->createFormBuilder($post)
+            ->add('content', 'textarea',array('required' => false))
+            ->add('id','hidden')
+            ->add('file','file',array('required' => false))
+            //->add('save', 'submit')
+            //->add('publish', 'submit')
+            ->getForm();
+
+        return $form;
+    }
+
     /*
      * Controler that handles post submission
      */
     public function updateContentAction(){
 
-            
         $post_from_form = new PostForm();
-        $form = $this->createFormBuilder($post_from_form)
-                        ->add('content', 'textarea',array('required' => false))
-                        ->add('id','hidden')
-                        ->add('file','file',array('required' => false))
-                        ->getForm();
+        $form = $this->getPostForm($post_from_form);
+        $form->handleRequest($this->getRequest());
 
-        $form->bindRequest($this->getRequest());
-                
         if ($form->isValid()) {
             
             //get method type (save/publish/udpate/delete) and post id
@@ -151,7 +153,7 @@ class PostController extends Controller
             $post_id = $post_from_form->getId();
             
             //get the post from the Post repository
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
             
             //check that the post exist
@@ -217,7 +219,9 @@ class PostController extends Controller
              
             //persist changes and redirect to next page (home or post editor)
             $em->flush();
-            return $this->redirect($redirect_to);  
+            return $this->redirect($redirect_to);
+
+            return $this->redirect($this->generateUrl('home'));
 
         }else{
             return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
