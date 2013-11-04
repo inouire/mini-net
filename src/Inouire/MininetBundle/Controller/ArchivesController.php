@@ -36,7 +36,7 @@ class ArchivesController extends Controller
         }
         
         //get entity manager and post repository
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
         
         //retrieve posts of the requested month

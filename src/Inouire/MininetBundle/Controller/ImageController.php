@@ -209,8 +209,8 @@ class ImageController extends Controller
         $actual_size = $image_to_resize->getSize();
         
         //if necessary, resize to a height of 600, and save to disk with the same name
-        if( $actual_size->getHeight() > 600 ){
-            $new_size = $actual_size->heighten(600);
+        if( $actual_size->getHeight() > 800 ){
+            $new_size = $actual_size->heighten(800);
             $save_options = array('quality' => 90);
             $image_to_resize->resize($new_size)
                             ->save($image->getAbsolutePath(),$save_options);
