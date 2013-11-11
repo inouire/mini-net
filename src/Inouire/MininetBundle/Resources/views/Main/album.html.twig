@@ -4,23 +4,22 @@
 
 {% block body %}
 
-    <center><h1>{{ requested_year }}</h1></center>
+    <h1 style="text-align:center">{{ requested_year }}</h1>
 
     {% include 'InouireMininetBundle:Default:monthsOfYearRibbon.html.twig' %}
 
     <div class="row">
+        
         <div class="span12">
             <ul class="thumbnails">   
-    
-                {% for image in image_list %}
 
-                    <li class="span2">
-                        <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="fancybox[{{requested_year}}]">
-                             <img src="{{ image.webpath | imagine_filter('small_thumb') }}" class="img-polaroid" />
-                        </a>
-                    </li>
-
-                {% endfor %}
+{% for image in image_list %}
+                <li class="span2" style="text-align:center">
+                    <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="fancybox[{{requested_year}}]">
+                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" class="img-polaroid" />
+                    </a>
+                </li>
+{% endfor %}
             
             </ul>
         </div>
