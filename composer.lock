@@ -657,12 +657,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "0cb03029c7c1c833a11c7bebf30125276f0aa5b9"
+                "reference": "e543600e49216765315610b6281349ee86dfe87e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/0cb03029c7c1c833a11c7bebf30125276f0aa5b9",
-                "reference": "0cb03029c7c1c833a11c7bebf30125276f0aa5b9",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/e543600e49216765315610b6281349ee86dfe87e",
+                "reference": "e543600e49216765315610b6281349ee86dfe87e",
                 "shasum": ""
             },
             "require": {
@@ -717,7 +717,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-10-28 10:50:07"
+            "time": "2013-11-07 03:54:10"
         },
         {
             "name": "imagine/imagine",
@@ -949,12 +949,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "e298ebb190dd5fa2a1fab2f4efc6f61bb034a0ad"
+                "reference": "61597fc20329ccce762b07c89f6ba2d8fa0f4c09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/e298ebb190dd5fa2a1fab2f4efc6f61bb034a0ad",
-                "reference": "e298ebb190dd5fa2a1fab2f4efc6f61bb034a0ad",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/61597fc20329ccce762b07c89f6ba2d8fa0f4c09",
+                "reference": "61597fc20329ccce762b07c89f6ba2d8fa0f4c09",
                 "shasum": ""
             },
             "require": {
@@ -966,6 +966,7 @@
                 "symfony/options-resolver": ">=2.0.16,~2.0"
             },
             "require-dev": {
+                "doctrine/cache": "~1.1",
                 "symfony/yaml": ">=2.0.16,~2.0",
                 "twig/twig": ">=1.0,<2.0-dev"
             },
@@ -994,7 +995,7 @@
                 "image",
                 "imagine"
             ],
-            "time": "2013-09-30 15:27:15"
+            "time": "2013-11-11 13:41:33"
         },
         {
             "name": "monolog/monolog",
