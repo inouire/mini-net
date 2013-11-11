@@ -2,42 +2,41 @@
 
 {% block fos_user_content %}
 
-{% if error %}
-    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
-{% endif %}
-
-<div class="row">
-
     <img src="{{asset('css/icons/persona.png')}}"/>
     <h1>
         Bienvenue !<br>
         <small>Veuillez vous authentifier</small>
     </h1>
+    
+    {% if error %}
+        <div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+    {% endif %}
 
-
-    <form class="aaa" action="{{ path("fos_user_security_check") }}" method="post">
+    <form role="form" action="{{ path("fos_user_security_check") }}" method="post" >
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-        <label class="control-label" for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        <div class="form-group">
+            <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+            <input type="text" class="form-control input-lg" id="username" name="_username" value="{{ last_username }}">
+        </div>
         
-        <label class="control-label" for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-        <input type="password" id="password" name="_password" />
+        <div class="form-group">
+            <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+            <input type="password" class="form-control input-lg" id="password"  name="_password">
+        </div>
         
-        <label class="control-label" for="remember_me">
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-            {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
-        </label>
+        <div class="checkbox">
+            <label>
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on">
+            {#{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}#}
+            Rester connecté
+            </label>
+        </div>
         
-        <br>
-        
-        <input class="btn btn-inverse" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+        <input class="btn btn-primary" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
     </form>
-    
+
+
     <!--<a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a>-->
         
-
-
-</div>
-
 {% endblock fos_user_content %}

@@ -9,108 +9,99 @@
         <meta name="author" content="">
         
         <title>
-            Mini-net : 
-            {% block title %}le réseau social familial{% endblock %}
-            
+            Mini-net : {% block title %}le réseau social familial{% endblock %}
         </title>
         
     {% block stylesheets %}
-    
-        <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">       
-        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">        
+        <link href="{{ asset('bootstrap2/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('bootstrap2/css/bootstrap-responsive.css') }}" rel="stylesheet">          
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('fancybox/jquery.fancybox.css?v=2.1.5') }}" rel="stylesheet" type="text/css" media="screen" />
         <link href="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7') }}" rel="stylesheet" type="text/css" />
     
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-            
     {% endblock %}
     
     </head>
     
-    
-        {% set currentPath = app.request.attributes.get('_route') %}
-        {% set classHome = '' %}
-        {% set classTextHome = 'hidden-phone' %}
-        {% set classAlbum = '' %}
-        {% set classTextAlbum = 'hidden-phone' %}
-        {% set classArchives = '' %}
-        {% set classTextArchives = 'hidden-phone' %}
-        {% set bodyClass = '' %}
-        {% if currentPath == 'home' %}
-            {% set classHome = ' active' %}
-            {% set classTextHome = '' %}
-        {% elseif currentPath == 'album' %}
-            {% set classAlbum = ' active' %}
-            {% set classTextAlbum = '' %}
-        {% elseif currentPath == 'posts' %}
-            {% set classArchives = ' active' %}
-            {% set classTextArchives = '' %}
-         {% elseif currentPath == 'edit_post' %}
-            {% set bodyClass = 'tole' %}
-        {% endif %}  
+{% set currentPath = app.request.attributes.get('_route') %}
+{% set classHome = '' %}
+{% set classAlbum = '' %}
+{% set classArchives = '' %}
+{% set bodyClass = '' %}
+{% if currentPath == 'home' %}
+    {% set classHome = ' active' %}
+{% elseif currentPath == 'album' %}
+    {% set classAlbum = ' active' %}
+{% elseif currentPath == 'posts' %}
+    {% set classArchives = ' active' %}
+ {% elseif currentPath == 'edit_post' %}
+    {% set bodyClass = 'tole' %}
+{% endif %}  
         
-    <body class="{{ bodyClass}}">
+    <body class="{{bodyClass}}">
     
-        {% block header %}
-        
-
-                    
-                    
+    <!-- offset for navbar -->
+    <div class="hidden-phone" style="padding-top:70px"></div>
+    
+    {% block header %}
+    
+    <!-- navbar -->    
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand hidden-phone" href="{{ path('home') }}">Mini-net</a>
-          
-          {% if app.user != null %}
-              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                  <div class="pull-right">
-                    <a class="btn btn-success" href="{{ path('new_post') }}">
-                        <span class="hidden-phone">Ajouter des nouvelles</span>
-                        <span class="visible-phone">Ecrire</span>
-                    </a>
-                    <a class="btn btn-inverse" id="user-logout-button" href="{{ path('fos_user_security_logout') }}">
-                        <i class="icon-remove icon-white visible-phone"></i>
-                        <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i>  
-                        <span class="hidden-phone">{{ app.user.username }}</span>
-                    </a>
-                  </div>  
-              {% endif %}
-          {% endif %}
-       
-            <!-- nav menu -->
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="{{ path('home') }}">Mini-net</a>
+          <div class="nav-collapse collapse">
             <ul class="nav">
-                <li class="{{ classHome }}"><a href="{{ path('home') }}"><i class="icon-home icon-white"></i> <span class="hidden-small-phone {{classTextHome}}">Accueil</span></a></li>
-                <li class="{{ classAlbum }}"><a href="{{ path('albums') }}"><i class="icon-eye-open icon-white"></i> <span class="hidden-small-phone {{classTextAlbum}}">Albums</span></a></li>
-                <li class="{{ classArchives }}"><a href="{{ path('archives') }}"><i class="icon-calendar icon-white"></i> <span class="hidden-small-phone {{classTextArchives}}">Archives</span></a></li>
+                <li class="{{classHome}}"><a href="{{ path('home') }}"><i class="icon-home icon-white"></i> Accueil</a></li>
+                <li class="{{classAlbum}}"><a href="{{ path('albums') }}"><i class="icon-eye-open icon-white"></i> Albums</a></li>
+                <li class="{{classArchives}}"><a href="{{ path('archives') }}"><i class="icon-calendar icon-white"></i> Archives</a></li>
             </ul>
+{% if app.user != null %}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <form class="navbar-form pull-right">
+                <a class="btn btn-success" href="{{ path('new_post') }}">
+                    Ajouter des nouvelles
+                </a>
+                <a class="btn btn-inverse" style="margin-left:5px" id="user-logout-button" href="{{ path('fos_user_security_logout') }}">
+                    <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i>  
+                    <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}
+                </a>
+            </form>
+    {% endif %}
+{% endif %}
+
+          </div>
         </div>
       </div>
-    </div>
+    </div><!-- navbar-->
     
+    {% endblock %}
+        
+    <div class="container">
 
+    {% block body %}
+    {% endblock %}
+    
+    {% block footer %}
+        <hr>
+        <center>
+            <p><span class="label label-primary">mini-net</span> - le réseau social familial autoproclamé le plus simple au monde</p>
+        </center>
+    {% endblock %}
         
-        {% endblock %}
-        
-        <div class="container">
-        
-        {% block body %}
-        {% endblock %}
-        
-        {% block footer %}
-            <hr>
-            <center>
-                <p><span class="label label-info">mini-net</span> , le réseau social familial le plus simple au monde</p>
-            </center>
-            
-        {% endblock %}
-        
-        </div><!-- container-->
+    </div><!-- container-->
         
     {% block javascripts %}
         
         <script type="text/javascript" src="{{ asset('jquery/jquery-1.10.1.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('jquery/jquery.color.js') }}" ></script>
-        <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.js') }}" ></script>
+        <script type="text/javascript" src="{{ asset('bootstrap2/js/bootstrap.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.1.5' )}}"></script>
         <script type="text/javascript" src="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7') }}"></script>
         
