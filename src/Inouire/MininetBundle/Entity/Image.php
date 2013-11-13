@@ -10,8 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="mininet_image")
  * @ORM\Entity(repositoryClass="Inouire\MininetBundle\Entity\ImageRepository")
  */
-class Image
-{
+class Image{
+    
+    public function __construct(){
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * @var integer $id
      *
@@ -33,10 +37,14 @@ class Image
      */
     private $post;
 
-    //non mapped fileds:
+    /**
+     * @ORM\ManyToMany(targetEntity="Inouire\MininetBundle\Entity\Tag", mappedBy="images")
+     **/
+    private $tags;
+    
+    //non mapped fields:
     private $file;
     private $post_id;
-    
     
     /**
      * Get id
