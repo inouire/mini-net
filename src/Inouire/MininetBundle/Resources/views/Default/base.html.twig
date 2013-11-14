@@ -65,13 +65,22 @@
 {% if app.user != null %}
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <form class="navbar-form pull-right">
+            
                 <a class="btn btn-success" href="{{ path('new_post') }}">
                     Ajouter des nouvelles
                 </a>
-                <a class="btn btn-inverse" style="margin-left:5px" id="user-logout-button" href="{{ path('fos_user_security_logout') }}">
-                    <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i>  
-                    <span class="glyphicon glyphicon-user"></span> {{ app.user.username }}
-                </a>
+                
+                <div class="btn-group">
+                    <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i> {{ app.user.username }}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('fos_user_profile_edit') }}">Profil</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">Déconnection</a></li>
+                    </ul>
+                </div>
+                
             </form>
     {% endif %}
 {% endif %}
