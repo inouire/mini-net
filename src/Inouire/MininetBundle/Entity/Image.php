@@ -74,6 +74,15 @@ class Image{
     }
 
     /**
+     * Get list of tags
+     * 
+     * @return 
+     */
+    public function getTags(){
+        return $this->tags;
+    }
+    
+    /**
      * Get the corresponding post
      * @return \Inouire\MininetBundle\Entity\Post
      */

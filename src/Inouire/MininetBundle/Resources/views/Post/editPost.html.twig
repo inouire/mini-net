@@ -71,13 +71,13 @@
                         <span class="text-align:center"></span>
                         <a href="{{path('rotate_image',{'image_id':image.id,'direction':'clockwise'})}}" class="pull-right"><img src="{{asset('css/icons/rotate-cw.png')}}"/></a>
                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" class="img-polaroid"/>
-                        <i class="icon-trash delete-image-button" id="{{image.id}}"></i>
+                        {% for tag in image.tags %}
+                            <span class="label">{{tag.name}}</span>
+                        {% endfor %}
+                        <i class="icon-trash delete-image-button pull-right" id="{{image.id}}"></i>
                     </div>
                 </li>
-                
-                
-        
-                    
+
                 {% endfor %}
             </ul>
         </div>
