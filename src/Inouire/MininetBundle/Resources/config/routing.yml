@@ -29,6 +29,10 @@ album:
         month: \d+
     defaults: { _controller: InouireMininetBundle:Album:view }
 
+tags:
+    pattern: /tags
+    defaults: { _controller: InouireMininetBundle:Tag:view }
+    
 tag_album:
     pattern: /album/{tag}
     defaults: { _controller: InouireMininetBundle:Album:viewByTag }

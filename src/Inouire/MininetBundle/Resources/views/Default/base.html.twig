@@ -28,6 +28,7 @@
 {% set classHome = '' %}
 {% set classAlbum = '' %}
 {% set classArchives = '' %}
+{% set classTags = '' %}
 {% set bodyClass = '' %}
 {% if currentPath == 'home' %}
     {% set classHome = ' active' %}
@@ -35,7 +36,9 @@
     {% set classAlbum = ' active' %}
 {% elseif currentPath == 'posts' %}
     {% set classArchives = ' active' %}
- {% elseif currentPath == 'edit_post' %}
+{% elseif currentPath == 'tags' %}
+    {% set classTags = ' active' %}
+{% elseif currentPath == 'edit_post' %}
     {% set bodyClass = 'tole' %}
 {% endif %}  
         
@@ -60,6 +63,7 @@
             <ul class="nav">
                 <li class="{{classHome}}"><a href="{{ path('home') }}"><i class="icon-home icon-white"></i> Accueil</a></li>
                 <li class="{{classAlbum}}"><a href="{{ path('albums') }}"><i class="icon-eye-open icon-white"></i> Albums</a></li>
+                <li class="{{classTags}}"><a href="{{ path('tags') }}"><i class="icon-tag icon-white"></i> Tags</a></li>
                 <li class="{{classArchives}}"><a href="{{ path('archives') }}"><i class="icon-calendar icon-white"></i> Archives</a></li>
             </ul>
 {% if app.user != null %}
