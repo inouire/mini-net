@@ -77,7 +77,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ path('fos_user_profile_edit') }}">Profil</a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}">Déconnection</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
                     </ul>
                 </div>
                 
@@ -113,30 +113,6 @@
         <script type="text/javascript" src="{{ asset('bootstrap2/js/bootstrap.js') }}" ></script>
         <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.js?v=2.1.5' )}}"></script>
         <script type="text/javascript" src="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7') }}"></script>
-        
-        <script type="text/javascript">
-            $(document).ready(function() {
-                
-                //add an effect on logout button
-                $('#user-logout-button').mouseenter(function(event){
-                    button = $('#user-logout-button');
-                    button.removeClass('btn-inverse');
-                    button.addClass('btn-danger');
-                    icon=$('#user-logout-icon');
-                    icon.removeClass('icon-user');
-                    icon.addClass('icon-remove');
-                });
-                $('#user-logout-button').mouseleave(function(event){
-                    button = $('#user-logout-button');
-                    button.addClass('btn-inverse');
-                    button.removeClass('btn-danger');
-                    icon=$('#user-logout-icon');
-                    icon.addClass('icon-user');
-                    icon.removeClass('icon-remove');
-                });
-                });
-        </script>
-
         
     {% endblock %}
         
