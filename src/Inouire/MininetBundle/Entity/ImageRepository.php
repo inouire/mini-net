@@ -35,4 +35,17 @@ class ImageRepository extends EntityRepository{
         return $qb->getQuery()
                   ->getResult();
     }
+    
+    public function getImagesWithTag($tag){
+        $qb = $this->createQueryBuilder('image');
+          
+        $qb->join('image.tags','tag')
+           ->where('tag.name = :tag')
+           ->setParameter('tag', $tag)
+           ->leftJoin('image.post','post')
+           ->orderBy('post.date', 'ASC');
+           
+        return $qb->getQuery()
+                  ->getResult();
+    }
 }

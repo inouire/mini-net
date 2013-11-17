@@ -29,11 +29,9 @@ album:
         month: \d+
     defaults: { _controller: InouireMininetBundle:Album:view }
 
-export_content:
-    pattern: /export/content
-    defaults: 
-        _controller: InouireMininetBundle:Export:content
-        _format: txt
+tag_album:
+    pattern: /album/{tag}
+    defaults: { _controller: InouireMininetBundle:Album:viewByTag }
     
 #routes for actions on posts
 view_post:

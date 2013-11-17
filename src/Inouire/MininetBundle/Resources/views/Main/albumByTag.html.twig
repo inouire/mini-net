@@ -1,0 +1,52 @@
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
+
+{% block title %}albums pour le tag {{tag}}{% endblock %}
+
+{% block body %}
+
+    <h1 style="text-align:center">{{tag}}</h1>
+
+
+    <div class="row">
+        
+        <div class="span12">
+            <ul class="thumbnails">   
+
+{% for image in image_list %}
+                <li class="span2" style="text-align:center">
+                    <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="fancybox[{{tag}}]">
+                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" class="img-polaroid" />
+                    </a>
+                </li>
+{% endfor %}
+            
+            </ul>
+        </div>
+   </div>
+   
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            
+            //init fancybox on all pictures, with thumb
+            $(".fancybox").fancybox({
+                loop: false,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+                helpers:  {
+                    thumbs : {
+                        width: 50,
+                        height: 50
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

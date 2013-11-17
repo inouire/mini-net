@@ -69,9 +69,25 @@ class AlbumController extends Controller
             ));
         }
 
-
-
     }
-    
+
+    public function viewByTagAction($tag){
+     
+        //get entity manager and Image repository
+        $em = $this->getDoctrine()->getManager();
+        $image_repo = $em->getRepository('InouireMininetBundle:Image');   
+        
+        //check that the requested tag does exist
+        //TODO
+        
+        //get all the images with a given tag
+        $image_list = $image_repo->getImagesWithTag($tag);
+        
+        return $this->render('InouireMininetBundle:Main:albumByTag.html.twig',array(
+            'image_list' => $image_list,
+            'tag' => $tag,
+        ));
+            
+    }
     
 }
