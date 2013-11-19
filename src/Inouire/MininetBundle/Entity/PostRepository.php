@@ -29,7 +29,7 @@ class PostRepository extends EntityRepository
            ->andWhere('post.published = true')
            ->setParameter('monthBeginning',  $time_from)
            ->setParameter('monthEnd', $time_to )
-           ->orderBy('post.date', 'ASC');
+           ->orderBy('post.date', 'DESC');
         
         return $qb->getQuery()->getResult();
     }
