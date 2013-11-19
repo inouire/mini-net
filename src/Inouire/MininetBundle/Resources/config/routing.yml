@@ -112,3 +112,11 @@ rotate_image:
         image_id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Image:rotateImage }
+    
+tag_image:
+    pattern: /image/{image_id}.jpg/tag/{tag_id}
+    requirements:
+        image_id: \d+
+        tag_id:   \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Tag:addTagToImage }

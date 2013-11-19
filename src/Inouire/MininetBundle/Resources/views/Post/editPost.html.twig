@@ -74,6 +74,17 @@
                         {% for tag in image.tags %}
                             <span class="label">{{tag.name}}</span>
                         {% endfor %}
+                        <div class="btn-group ">
+                            <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+                            Ajouter tag
+                            <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for tag in all_tags %}
+                                <li><a href="{{path('tag_image',{'image_id':image.id,'tag_id':tag.id})}}">{{tag.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                         <i class="icon-trash delete-image-button pull-right" id="{{image.id}}"></i>
                     </div>
                 </li>

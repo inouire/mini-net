@@ -3,6 +3,7 @@
 namespace Inouire\MininetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Inouire\MininetBundle\Entity\Image;
 
 /**
  * Inouire\MininetBundle\Entity\Tag
@@ -52,6 +53,13 @@ class Tag{
      */
     public function getImages(){
         return $this->images;
+    }
+    
+    /**
+     * Add an image for this tag
+     */
+    public function addImage($image){
+        $this->images->add($image);
     }
     
     /**

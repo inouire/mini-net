@@ -107,17 +107,20 @@ class PostController extends Controller
             )); 
         }else{
             
-            //create post form from post object
+            //get all available tags
+            $all_tags = $em->getRepository('InouireMininetBundle:Tag')
+                           ->findAll();   
+
+            //create post form
             $post_for_form = new PostForm();
             $post_for_form->setContent($post->getContent());
             $post_for_form->setId($post->getId());
-
             $post_form = $this->getPostForm($post_for_form);
 
             return $this->render('InouireMininetBundle:Post:editPost.html.twig',array(
                 'post'=> $post,
                 'post_form' => $post_form->createView(),
-                'toleBg' => 'true'
+                'all_tags' => $all_tags
             ));
         }
         
@@ -130,6 +133,7 @@ class PostController extends Controller
             ->add('content', 'textarea',array('required' => false))
             ->add('id','hidden')
             ->add('file','file',array('required' => false))
+            //TODO use new SF feature for multi button post
             //->add('save', 'submit')
             //->add('publish', 'submit')
             ->getForm();

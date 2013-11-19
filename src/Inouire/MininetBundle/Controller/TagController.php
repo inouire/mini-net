@@ -5,6 +5,7 @@ namespace Inouire\MininetBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Tag;
+use Inouire\MininetBundle\Entity\Image;
 
 class TagController extends Controller
 {
@@ -22,6 +23,31 @@ class TagController extends Controller
             'tags' => $tags,
         ));
 
+    }
+    
+    public function addTagToImageAction($image_id, $tag_id){
+        
+        //TODO use entity converter to avoid boilerplate code
+        
+        //get entities
+        $em = $this->getDoctrine()->getManager(); 
+        $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
+        $tag = $em->getRepository('InouireMininetBundle:Tag')->find($tag_id);
+        
+        //check that this image does not already have this tag
+        if(!$image->getTags()->contains($tag)){
+            //add tag to image
+            $image->addTag($tag);
+            
+            //persist
+            $em->persist($image);
+            $em->flush();
+        }
+        
+        return $this->redirect($this->generateUrl('edit_post',array(
+            'post_id' => $image->getPost()->getId()
+        ))); 
+        
     }
     
     

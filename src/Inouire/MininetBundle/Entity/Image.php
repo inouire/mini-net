@@ -3,6 +3,7 @@
 namespace Inouire\MininetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Inouire\MininetBundle\Entity\Tag;
 
 /**
  * Inouire\MininetBundle\Entity\Image
@@ -103,6 +104,14 @@ class Image{
     }
     public function setPostId($id){
         $this->post_id = $id;
+    }
+    
+    /**
+     * Add a tag for this image
+     */
+    public function addTag($tag){
+        $this->tags->add($tag);
+        $tag->addImage($this);
     }
 
     /**
