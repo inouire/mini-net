@@ -113,6 +113,14 @@ class Image{
         $this->tags->add($tag);
         $tag->addImage($this);
     }
+    
+    /**
+     * Remove a tag for this image
+     */
+    public function removeTag($tag){
+        $this->tags->removeElement($tag);
+        $tag->removeImage($this);
+    }
 
     /**
      * Set the corresponding post

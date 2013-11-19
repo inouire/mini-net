@@ -64,11 +64,33 @@ class TagController extends Controller
         if(!$image->getTags()->contains($tag)){
             //add tag to image
             $image->addTag($tag);
-            
-            //persist
             $em->persist($image);
             $em->flush();
         }
+        
+        return $this->redirect($this->generateUrl('edit_post',array(
+            'post_id' => $image->getPost()->getId()
+        ))); 
+        
+    }
+    
+    public function removeTagFromImageAction($image_id, $tag_id){
+        
+        //TODO use entity converter to avoid boilerplate code
+        
+        //get entities
+        $em = $this->getDoctrine()->getManager(); 
+        $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
+        $tag = $em->getRepository('InouireMininetBundle:Tag')->find($tag_id);
+        
+        //check that this image has this tag
+        //if($image->getTags()->contains($tag)){
+            //add tag to image
+            $image->removeTag($tag);
+            $em->persist($image);
+            //$em->persist($tag);
+            $em->flush();
+        //}
         
         return $this->redirect($this->generateUrl('edit_post',array(
             'post_id' => $image->getPost()->getId()

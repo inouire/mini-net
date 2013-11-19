@@ -63,6 +63,13 @@ class Tag{
     }
     
     /**
+     * Remove an image for this tag
+     */
+    public function removeImage($image){
+        $this->images->removeElement($image);
+    }
+    
+    /**
      * Get id
      *
      * @return integer 

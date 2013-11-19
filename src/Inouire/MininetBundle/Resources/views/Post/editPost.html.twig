@@ -72,7 +72,10 @@
                         <a href="{{path('rotate_image',{'image_id':image.id,'direction':'clockwise'})}}" class="pull-right"><img src="{{asset('css/icons/rotate-cw.png')}}"/></a>
                         <img src="{{ image.webpath | imagine_filter('big_thumb') }}" class="img-polaroid"/>
                         {% for tag in image.tags %}
-                            <span class="label">{{tag.name}}</span>
+                            <span class="label">
+                            {{tag.name}}
+                            <a href="{{ path('untag_image',{'image_id':image.id,'tag_id':tag.id})}}">&times;</a>
+                            </span>
                         {% endfor %}
                         <div class="btn-group ">
                             <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">

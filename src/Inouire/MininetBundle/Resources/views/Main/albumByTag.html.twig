@@ -19,7 +19,7 @@
                     <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="fancybox[{{tag}}]">
                          <img src="{{ image.webpath | imagine_filter('big_thumb') }}" class="img-polaroid" />
                     </a>
-                    <a href="{{ path('view_post',{"post_id":image.post.id}) }}"><span class="icon icon-plus-sign" <!--style="display:none"-->> </span></a>
+                    <a href="{{ path('view_post',{"post_id":image.post.id}) }}"><span class="icon icon-plus-sign"<!--style="display:none"--></span></a>
                 </li>
 {% endfor %}
             
