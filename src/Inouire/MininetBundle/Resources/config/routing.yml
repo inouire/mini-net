@@ -29,13 +29,16 @@ album:
         month: \d+
     defaults: { _controller: InouireMininetBundle:Album:view }
 
-tags:
+#route for actions around tags
+
+tag_list:
     pattern: /tags
-    defaults: { _controller: InouireMininetBundle:Tag:view }
+    defaults: { _controller: InouireMininetBundle:Tag:list }
     
 tag_album:
     pattern: /album/{tag}
-    defaults: { _controller: InouireMininetBundle:Album:viewByTag }
+    defaults: { _controller: InouireMininetBundle:Tag:album }
+    
     
 #routes for actions on posts
 view_post:

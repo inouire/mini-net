@@ -10,7 +10,7 @@ use Inouire\MininetBundle\Entity\Image;
 class TagController extends Controller
 {
     
-    public function viewAction(){
+    public function listAction(){
         
         //get entity manager and Tag repository
         $em = $this->getDoctrine()->getManager();
@@ -23,6 +23,32 @@ class TagController extends Controller
             'tags' => $tags,
         ));
 
+    }
+    
+    
+    public function albumAction($tag){
+     
+        //get entity manager
+        $em = $this->getDoctrine()->getManager();
+        
+        //check that the requested tag does exist
+        //TODO
+        
+        //get all the images with the given tag
+        $image_list = $em->getRepository('InouireMininetBundle:Image')
+                         ->getImagesWithTag($tag);
+        
+        //get all tags
+        $tags = $em->getRepository('InouireMininetBundle:Tag')
+                   ->findAll();   
+        
+        
+        return $this->render('InouireMininetBundle:Main:albumByTag.html.twig',array(
+            'image_list' => $image_list,
+            'tag' => $tag,
+            'tags' => $tags
+        ));
+            
     }
     
     public function addTagToImageAction($image_id, $tag_id){

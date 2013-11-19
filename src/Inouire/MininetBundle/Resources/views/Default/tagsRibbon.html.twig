@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="span12">
+        <ul>   
+{% for tag in tags %}
+                <li class="span2" style="text-align:center">
+                    <span style="font-size:1.8em">
+                        <a href="{{ path('tag_album',{'tag':tag.name}) }}">
+                          {{tag.name}}
+                        </a>
+                        {% set count = tag.images | length%}
+                        <span class="label {%if count>0 %}label-info{%endif%}">{{count}}</span>
+                    </span>
+                </li>
+{% endfor %}
+        </ul>
+    </div>
+</div>

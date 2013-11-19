@@ -4,28 +4,9 @@
 
 {% block body %}
 
-    <h1 style="text-align:center">Tags disponibles:</h1>
-    <hr>
-    <div class="row">
-        
-        <div class="span12">
-            <ul>   
+    {% include 'InouireMininetBundle:Default:tagsRibbon.html.twig' %}
+    
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
 
-{% for tag in tags %}
-            
-                <li class="span2" style="text-align:center">
-                
-                    <span style="font-size:1.8em">
-                        <a href="{{ path('tag_album',{'tag':tag.name}) }}">
-                          {{tag.name}}
-                        </a>
-                    </span>
-                
-                </li>
-{% endfor %}
-            
-            </ul>
-        </div>
-   </div>
-   
 {% endblock %}
