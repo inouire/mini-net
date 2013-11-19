@@ -112,10 +112,10 @@
                 
             </div>
             
-            <div class="{{ imagesWidth }}" style="text-align:center">
+            
             
             {% if post.hasImages %}
-
+            <div class="{{ imagesWidth }}" style="text-align:center">
                 <ul class="thumbnails">
                     
                     {% for image in post.images %}
@@ -128,13 +128,13 @@
                     
                     {% endfor %}
                     
-                 </ul>
-                 
+                </ul>
+            </div>
             {% else %}
-            
+            <div class="{{ imagesWidth }}">
                 {% include 'InouireMininetBundle:Post:comments.html.twig' %}
-                
+            </div>
             {% endif %}
 
-            </div>
+            
         </div>
