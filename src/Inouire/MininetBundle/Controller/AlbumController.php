@@ -17,7 +17,20 @@ class AlbumController extends Controller
             'month' => date('m')
         )));
     }
-    
+    public function viewAllAction(){
+        //get entity manager and Image repository
+        $em = $this->getDoctrine()->getManager();
+        $image_list = $this->getDoctrine()->getManager()->getRepository('InouireMininetBundle:Image')->findAll();
+        
+        return $this->render('InouireMininetBundle:Main:album.html.twig',array(
+            'image_list' => $image_list,
+            'requested_date' => $requested_date,
+            'requested_year' => 'All images',
+            'requested_month' => 1,
+            'months_of_year' => 1
+        ));
+        
+    }
     /*
      * Handles the album of a given year
      */
