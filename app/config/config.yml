@@ -32,7 +32,7 @@ services:
 # Image manipulation configuration
 liip_imagine:
     filter_sets:               
-        big_thumb:
+        thumb:
             quality: 95
             filters:
                 thumbnail:
