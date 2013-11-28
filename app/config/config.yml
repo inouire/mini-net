@@ -31,6 +31,8 @@ services:
             
 # Image manipulation configuration
 liip_imagine:
+    cache_clearer: false
+    cache_prefix: /cache
     filter_sets:               
         thumb:
             quality: 95
