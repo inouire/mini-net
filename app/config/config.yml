@@ -34,7 +34,7 @@ liip_imagine:
     cache_clearer: false
     cache_prefix: /cache
     filter_sets:               
-        thumb:
+        big_thumb:
             quality: 95
             filters:
                 thumbnail:
