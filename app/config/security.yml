@@ -29,9 +29,6 @@ security:
                 path:     /
                 domain:   ~ #Defaults to the current domain from $_SERVER
 
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
         
 
 

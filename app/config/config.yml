@@ -31,15 +31,15 @@ services:
             
 # Image manipulation configuration
 liip_imagine:
-    filter_sets:
-        small_thumb:
-            quality: 95
-            filters:
-                thumbnail: { size: [180, 120], mode: outbound }
+    filter_sets:               
         big_thumb:
             quality: 95
             filters:
-                thumbnail: { size: [360, 240], mode: outbound }
+                thumbnail:
+                    size: [360, 240]
+                    mode: outbound
+                    cache_type: private
+                    cache_expires: 2 weeks
                 
 # Assetic Configuration
 assetic:
