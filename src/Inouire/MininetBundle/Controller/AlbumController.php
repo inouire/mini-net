@@ -29,7 +29,6 @@ class AlbumController extends Controller
             'requested_month' => 1,
             'months_of_year' => 1
         ));
-        
     }
     /*
      * Handles the album of a given year
