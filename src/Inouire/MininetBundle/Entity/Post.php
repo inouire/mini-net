@@ -248,49 +248,6 @@ class Post{
     }
     
     /**
-     * Get a resume of the content of the post
-     */   
-    public function getResume() {
-        
-        //retrieve plain content
-        $content = $this->content;
-        $short_content = $content;
-        
-        $limit = 200;
-        $break=".";
-        $pad=" [...]";
-        
-        // return with no change if content is shorter than $limit
-        if(strlen($content) > $limit){
-            // is $break present between $limit and the end of the string?
-            if(false !== ($breakpoint = strpos($content, $break, $limit))) { 
-                if($breakpoint < strlen($content) - 1) { 
-                    $short_content = substr($content, 0, $breakpoint) . $pad; 
-                } 
-            } 
-        }
-        
-        //remove opening braces (security)
-        $short_content = str_replace('<','',$short_content);
-        
-        //add arrows
-        $short_content = str_replace(array('->','=>'),'<i class="icon-arrow-right"></i>',$short_content);
-        
-        //add warning sign
-        $short_content = str_replace('/!\\','<i class="icon-warning-sign"></i>',$short_content);
-       
-        //add star
-        $short_content = str_replace('*','<i class="icon-asterisk"></i>',$short_content);
-        
-        //replace hyperlinks (but doesn't check link validity at all)
-        $hyperlink_pattern = '/((http|https):\/\/[^\s]+)/i';
-        $hyperlink = '<a href="$1">$1</a>';
-        $short_content = preg_replace($hyperlink_pattern, $hyperlink, $short_content);
-        
-        return $short_content;
-    }
-    
-    /**
      * Get the age of the post, in number of days
      */
     public function getAgeInDays(){

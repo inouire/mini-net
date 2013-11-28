@@ -20,36 +20,36 @@
 
     {% endfor %}
         
-    {% set counter = 0 %}
+    <hr>
     
-    <div class="row">
-    {% for post in post_secondary_list %}
-        {% if counter % 3 == 0 and counter != 0 %}
+    {% if has_bonus %}
+    
+        <a id="more" class="anchoroffset"></a>
+        
+        {% for post in post_secondary_list %}
+            
+            {% if current_datestamp is defined %}
+                {% if post.date | date('Ymd') != current_datestamp %}
+                    <hr>
+                    {% set new_day='yes' %}
+                {% else %}
+                    {% set new_day='no' %}
+                {% endif %}
+            {% endif %}
+            {% set current_datestamp = post.date | date('Ymd') %}
+            
+            {% include 'InouireMininetBundle:Post:onePost.html.twig' %}
+
+        {% endfor %}
+    
+    {% else %}
+    
+        <div class="row" style="text-align:center">
+            <a class="btn btn-inverse" href="{{ path('home', {'bonus':6}) }}#more"><i class="icon-chevron-down icon-white"></i> Voir des nouvelles plus anciennes</a>
         </div>
-        <hr>
-        <div class="row">
-        {% endif %}
-            <div class="span4">
-                <h4>
-                    {{ post.author }} - 
-                    {{ post.date | localeDate('medium','none',null,'d MMMM') }}
-                    <span class="pull-right">
-                    {% if post.images | length > 0 %}
-                        <span class="badge badge-success">{{ post.images | length }} <i class="icon-camera icon-white" ></i></span>
-                    {% endif %}
-                    {% if post.comments | length > 0 %}
-                        <span class="badge badge-info">{{ post.comments | length }} <i class="icon-comment icon-white" ></i></span>
-                    {% endif %}
-                    </span>
-                </h4>
-                
-                <p>{{ post.resume | raw }}</p>
-                <p><a href="{{ path('view_post',{'post_id':post.id }) }}" class="pull-right">Lire la suite »</a></p>
-            </div>
-        {% set counter = counter + 1 %}
-    {% endfor %}
-    </div>
     
+    {% endif %}
+       
         
 {% endblock %}
 
