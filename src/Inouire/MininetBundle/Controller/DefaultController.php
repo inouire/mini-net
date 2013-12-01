@@ -22,23 +22,27 @@ class DefaultController extends Controller
         
         $request = $this->getRequest();
         
-        if($request->query->has('bonus')){
-            $bonus = $request->query->get('bonus');
-            $has_bonus = 1;
+        //compute values for "more posts" action
+        $bonus_nb = 4;
+        if($request->query->has('more')){
+            $more = $request->query->get('more');
+            $primary_nb = 8 + ($more-1)*$bonus_nb;
+            $secondary_nb = $bonus_nb;
         }else{
-            $bonus = 0;
-            $has_bonus = 0;
+            $more = 0;
+            $primary_nb = 8;
+            $secondary_nb = 0;
         }
-        
+
         //get entity manager and post repository
         $em = $this->getDoctrine()->getEntityManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
         
-        //retrieve last 8 published posts from database
+        //retrieve the posts for the main par (last 8 published posts by default)
         $post_list = $post_repo->findBy(
             array('published' => true),
             array('date' => 'desc'),
-            8,
+            $primary_nb,
             0
         );
         
@@ -46,8 +50,8 @@ class DefaultController extends Controller
         $post_secondary_list = $post_repo->findBy(
             array('published' => true),
             array('date' => 'desc'),
-            $bonus,
-            8
+            $secondary_nb,
+            $primary_nb
         );
 
         if(count($post_list)==0){
@@ -56,7 +60,7 @@ class DefaultController extends Controller
             return $this->render('InouireMininetBundle:Main:home.html.twig',array(
                 'post_list'=> $post_list,
                 'post_secondary_list' => $post_secondary_list,
-                'has_bonus' => $has_bonus
+                'current_bonus' => $more
             ));
         }
     }

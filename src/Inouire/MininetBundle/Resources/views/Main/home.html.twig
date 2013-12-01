@@ -22,7 +22,7 @@
         
     <hr>
     
-    {% if has_bonus %}
+    {% if current_bonus > 0 %}
     
         <a id="more" class="anchoroffset"></a>
         
@@ -40,16 +40,14 @@
             
             {% include 'InouireMininetBundle:Post:onePost.html.twig' %}
 
-        {% endfor %}
-    
-    {% else %}
-    
-        <div class="row" style="text-align:center">
-            <a class="btn btn-inverse" href="{{ path('home', {'bonus':6}) }}#more"><i class="icon-chevron-down icon-white"></i> Voir des nouvelles plus anciennes</a>
-        </div>
-    
+        {% endfor %}  
+        
     {% endif %}
        
+    <div class="row" style="text-align:center">
+        <a class="btn btn-inverse" href="{{ path('home', {'more':current_bonus+1}) }}#more"><i class="icon-chevron-down icon-white"></i> Voir des nouvelles plus anciennes</a>
+    </div>
+        
         
 {% endblock %}
 
