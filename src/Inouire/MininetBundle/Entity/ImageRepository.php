@@ -43,6 +43,8 @@ class ImageRepository extends EntityRepository{
            ->where('tag.name = :tag')
            ->setParameter('tag', $tag)
            ->leftJoin('image.post','post')
+           ->addSelect('post')
+           ->andWhere('post.published = true')
            ->orderBy('post.date', 'DESC');
            
         return $qb->getQuery()
