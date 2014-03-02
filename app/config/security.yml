@@ -2,7 +2,7 @@ security:
 
     providers:
         fos_userbundle:
-            id: fos_user.user_manager
+            id: fos_user.user_provider.username
 
     encoders:
         "FOS\UserBundle\Model\UserInterface": sha512
@@ -28,7 +28,5 @@ security:
                 lifetime: 2592000 #1 month in seconds 
                 path:     /
                 domain:   ~ #Defaults to the current domain from $_SERVER
-
-        
 
 
