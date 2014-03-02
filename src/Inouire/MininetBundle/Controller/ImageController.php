@@ -15,118 +15,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ImageController extends Controller
 {
     
-    
-    //TODO this should be done as a service
-    public function handleImageUpload($file,$post,$em){
-        
-        //create new image object
-        $image = new Image();
-        $image->setFile($file);
-        $image->setPost($post);
-        
-        //save file to disk
-        $newFilename = rand(1000000, 999999999).rand(1000000, 999999999);
-        $image->getFile()->move($image->getUploadDir(), $newFilename);
-        $filePath = $image->getUploadDir().'/'.$newFilename;
-        
-        //check that it is an image
-        $is_an_image = $this->checkTypeImage($filePath);
-        if(!$is_an_image){
-            //render an error page 
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
-                'error_level'=> 'bang',
-                'error_title'=> 'Impossible d\'envoyer ce fichier',
-                'error_message' => 'Le fichier envoyé n\'est pas une image',
-                'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->getPostId() )),
-                'follow_link_text' => 'Revenir à l\'édition du post',
-            ));
-        }
-        
-        //get image orientation
-        $orientation = $this->getImageOrientation($filePath);
-                
-        //try to guess the extension
-        $file=new File($filePath,true);
-        $extension = $file->guessExtension();
-        if (!$extension) {// extension cannot be guessed
-            $extension = 'bin';
-        }
-        $file->move($image->getUploadDir(), $newFilename.'.'.$extension);
-        $image->setPath($newFilename.'.'.$extension);
-        $image->setFile(null);        
-        
-        //persisting changes to database
-        $em->persist($image);
-        $em->flush();
-
-        //automatic image rotation and resize (for low disk footprint)
-        //TODO handle errors
-        $this->rotateImage($image,$orientation);
-        $this->resizeImage($image);
-    }
-        
-    /*
-     * Util function: check that the file is an image
-     */
-    private function checkTypeImage($filePath){
-        try{
-            $imagine = new Imagine();
-            $image = $imagine->open($filePath);
-            return true;
-        }catch(\Exception $e){
-            return false;
-        }
-    }
-    
-    /*
-     * Util function: get image orientation
-     */
-    private function getImageOrientation($filePath){
-
-        //default: normal orientation
-        $orientation = 1;
-        try{
-            //get IFDO.Orientation from exif data
-            $exif = exif_read_data($filePath, 0, true);
-            $orientation = $exif['IFD0']['Orientation'];
-        }catch(\Exception $e){
-            $orientation = 1;
-        }
-        
-        return $orientation;
-    }
-    
-    /*
-     * Util function: rotate an image depending on its orientation
-     */
-    private function rotateImage($image,$orientation){
-        
-        //compute angle
-        if( $orientation == 1){
-            return;
-        }else{        
-            if( $orientation == 3 ){
-                $angle = 180;
-            }else if( $orientation == 6 ){
-                $angle = 90;
-            }else if( $orientation == 8 ){
-                $angle = -90;
-            }else{
-                $angle = 0;
-            }
-        }
-        
-        //open image
-        $imagine = new Imagine();
-        $image_to_rotate = $imagine->open($image->getAbsolutePath());
-           
-        //rotate it and save it
-        $save_options = array('quality' => 100);
-        $image_to_rotate->rotate($angle)
-                        ->save($image->getAbsolutePath(),$save_options);
-                            
-    }
-    
     public function rotateImageAction($image_id){
         
         //get operation: clockwise or counter clockwise ?
@@ -196,28 +84,6 @@ class ImageController extends Controller
         )));
     }
      
-    /*
-     * Util function: resize an image
-     */
-    private function resizeImage($image){
-        
-        //open image
-        $imagine = new Imagine();
-        $image_to_resize = $imagine->open($image->getAbsolutePath());
-        
-        //get actual size
-        $actual_size = $image_to_resize->getSize();
-        
-        //if necessary, resize to a height of 600, and save to disk with the same name
-        if( $actual_size->getHeight() > 800 ){
-            $new_size = $actual_size->heighten(800);
-            $save_options = array('quality' => 90);
-            $image_to_resize->resize($new_size)
-                            ->save($image->getAbsolutePath(),$save_options);
-        }
-        
-    }
-    
     public function getImageAction($image_id){
         
         //get entity manager
@@ -253,8 +119,6 @@ class ImageController extends Controller
         $response->setContent(file_get_contents($image_file));
         
         return $response;
-        
-        
     }
     
     /*

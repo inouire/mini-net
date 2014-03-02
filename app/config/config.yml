@@ -28,6 +28,12 @@ services:
         class: BCC\ExtraToolsBundle\Twig\TwigExtension
         tags:
             -  { name: twig.extension }
+    inouire.image_resize:
+        class: Inouire\MininetBundle\Service\ImageResize
+        argument: 
+    inouire.image_upload:
+        class: Inouire\MininetBundle\Service\ImageUpload
+        arguments: ["@doctrine.orm.entity_manager", "@inouire.image_resize"]
             
 # Image manipulation configuration
 liip_imagine:

@@ -185,8 +185,9 @@ class PostController extends Controller
             
             //get image if any
             if( $post_from_form->getFile() != null){
-                $ic = new ImageController();
-                $ic->handleImageUpload($post_from_form->getFile(),$post,$this->getDoctrine()->getEntityManager());
+                $image_upload = $this->get('inouire.image_upload');
+                //$ic = new ImageController();
+                $image_upload->handleImageUpload($post_from_form->getFile(),$post);
             }
             
             //modify post object depending on action
