@@ -4,6 +4,7 @@ namespace Inouire\MininetBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Inouire\MininetBundle\Service\ImageResize;
+use Inouire\MininetBundle\Service\Thumbnailer;
 use Inouire\MininetBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -12,11 +13,13 @@ class ImageUpload
 
     protected $em;
     protected $resizer;
+    protected $thumbnailer;
     
-    public function __construct(EntityManager $em, ImageResize $resizer)
+    public function __construct(EntityManager $em, ImageResize $resizer, Thumbnailer $thumbnailer)
     {
         $this->em = $em;
         $this->resizer = $resizer;
+        $this->thumbnailer = $thumbnailer;
     }
     
     public function handleImageUpload($file,$post)
@@ -65,6 +68,9 @@ class ImageUpload
         //TODO handle errors
         $this->resizer->rotateImage($image,$orientation);
         $this->resizer->resizeImage($image, 800);
+        
+        $this->thumbnailer->generateThumbnail($newFilename.'.'.$extension);
+        
     }
 
     
