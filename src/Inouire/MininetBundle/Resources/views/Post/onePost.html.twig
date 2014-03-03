@@ -122,7 +122,7 @@
                     
                     <li class="{{thumbWidth}}">
                         <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
-                             <img src="{{ image.webpath | imagine_filter('big_thumb') }}" class="img-polaroid"/>
+                             <img src="{{ path('get_thumbnail',{"image_id":image.id}) }}" class="img-polaroid"/>
                         </a>
                     </li>
                     
