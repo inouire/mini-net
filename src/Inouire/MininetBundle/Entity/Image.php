@@ -133,6 +133,10 @@ class Image{
     public function getAbsolutePath(){
         return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
     }
+    
+    public function getThumbnailAbsolutePath(){
+        return $this->getUploadRootDir().'/thumbnail/'.$this->path;
+    }
 
     public function getWebPath(){
         return null === $this->path ? null : '/'.$this->getUploadDir().'/'.$this->path;

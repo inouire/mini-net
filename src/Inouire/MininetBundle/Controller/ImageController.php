@@ -84,12 +84,10 @@ class ImageController extends Controller
         )));
     }
      
-    public function getImageAction($image_id){
-        
-        //get entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+    public function getImageAction($image_id, $is_thumbnail=false){
         
         //get image
+        $em = $this->getDoctrine()->getEntityManager();
         $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
         
         //check that this image exists
@@ -98,7 +96,12 @@ class ImageController extends Controller
             $image_file=__DIR__.'/../../../../web/css/icons/exit.png';
             $status_code=404;
         } else {
-            $image_file=$image->getAbsolutePath();
+            if($is_thumbnail){
+                $image_file=$image->getThumbnailAbsolutePath();
+            }else{
+                $image_file=$image->getAbsolutePath();
+            }
+            
             $status_code=200;
         }
         

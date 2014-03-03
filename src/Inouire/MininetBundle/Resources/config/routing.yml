@@ -104,8 +104,15 @@ get_image:
     requirements:
         image_id:  \d+
         _method:  GET
-    defaults: { _controller: InouireMininetBundle:Image:getImage }   
+    defaults: { _controller: InouireMininetBundle:Image:getImage}   
 
+get_thumbnail:
+    pattern:  /thumbnail/{image_id}.jpg
+    requirements:
+        image_id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Image:getImage, is_thumbnail: true}   
+    
 delete_image:
     pattern:  /image/{image_id}.jpg
     requirements:
