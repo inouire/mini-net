@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new BCC\ExtraToolsBundle\BCCExtraToolsBundle(),
-            new Liip\ImagineBundle\LiipImagineBundle(),
             new Inouire\MininetBundle\InouireMininetBundle(),
             new Inouire\UserBundle\InouireUserBundle(),
         );

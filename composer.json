@@ -20,7 +20,7 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "2.0.x-dev",
-        "liip/imagine-bundle": "dev-master",
+        "imagine/imagine": "0.5.*",
         "bcc/extra-tools-bundle": "dev-master"
     },
     "scripts": {

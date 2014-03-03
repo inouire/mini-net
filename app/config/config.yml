@@ -43,20 +43,6 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@inouire.image_resize"
             - "@inouire.thumbnailer"
-            
-# Image manipulation configuration
-liip_imagine:
-    cache_clearer: false
-    cache_prefix: /cache
-    filter_sets:               
-        big_thumb:
-            quality: 95
-            filters:
-                thumbnail:
-                    size: [360, 240]
-                    mode: outbound
-                    cache_type: private
-                    cache_expires: 2 weeks
                 
 # Assetic Configuration
 assetic:
