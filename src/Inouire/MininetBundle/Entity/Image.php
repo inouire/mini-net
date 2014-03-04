@@ -43,10 +43,6 @@ class Image{
      **/
     private $tags;
     
-    //non mapped fields:
-    private $file;
-    private $post_id;
-    
     /**
      * Get id
      *
@@ -90,20 +86,12 @@ class Image{
     public function getPost(){
         return $this->post;
     }
-    
 
-    public function getFile(){
-        return $this->file;
-    }
-    public function setFile($file){
-        $this->file = $file;
-    }
-    
-    public function getPostId(){
-        return $this->post_id;
-    }
-    public function setPostId($id){
-        $this->post_id = $id;
+    /**
+     * Set the corresponding post
+     */
+    public function setPost(\Inouire\MininetBundle\Entity\Post $post){
+        $this->post = $post;
     }
     
     /**
@@ -122,33 +110,18 @@ class Image{
         $tag->removeImage($this);
     }
 
-    /**
-     * Set the corresponding post
-     */
-    public function setPost(\Inouire\MininetBundle\Entity\Post $post){
-        $this->post = $post;
-    }
+ 
     
-    //copied from cookbook
     public function getAbsolutePath(){
-        return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+        return $this->getUploadRootDir().'/'.$this->path;
     }
     
     public function getThumbnailAbsolutePath(){
         return $this->getUploadRootDir().'/thumbnail/'.$this->path;
     }
 
-    public function getWebPath(){
-        return null === $this->path ? null : '/'.$this->getUploadDir().'/'.$this->path;
-    }
-
     public function getUploadRootDir(){
-        // the absolute directory path where uploaded documents should be saved
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../../web/img';
     }
 
-    public function getUploadDir(){
-        // get rid of the __DIR__ so it doesn't screw when displaying uploaded doc/image in the view.
-        return 'img';
-    }
 }

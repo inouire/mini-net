@@ -24,52 +24,37 @@ class ImageUpload
     
     public function handleImageUpload($file,$post)
     {
-        //create new image object
-        $image = new Image();
-        $image->setFile($file);
-        $image->setPost($post);
         
-        //save file to disk
-        $newFilename = rand(1000000, 999999999).rand(1000000, 999999999);
-        $image->getFile()->move($image->getUploadDir(), $newFilename);
-        $filePath = $image->getUploadDir().'/'.$newFilename;
-        
-        //check that it is an image
-        $is_an_image = $this->resizer->checkFileIsImage($filePath);
-        if(!$is_an_image){
-            //render an error page 
-            return $this->render('InouireMininetBundle:Default:errorPage.html.twig',array(
-                'error_level'=> 'bang',
-                'error_title'=> 'Impossible d\'envoyer ce fichier',
-                'error_message' => 'Le fichier envoyé n\'est pas une image',
-                'follow_link' => $this->generateUrl('edit_post',array('post_id' => $image->getPostId() )),
-                'follow_link_text' => 'Revenir à l\'édition du post',
-            ));
-        }
-        
-        //get image orientation
-        $orientation = $this->resizer->getImageOrientation($filePath);
-                
-        //try to guess the extension
-        $file=new File($filePath,true);
+        // try to guess the extension
         $extension = $file->guessExtension();
         if (!$extension) {// extension cannot be guessed
             $extension = 'bin';
         }
-        $file->move($image->getUploadDir(), $newFilename.'.'.$extension);
-        $image->setPath($newFilename.'.'.$extension);
-        $image->setFile(null);        
+        $image_filename = rand(1000000, 999999999).rand(1000000, 999999999).'.'.$extension;
         
-        //persisting changes to database
-        $this->em->persist($image);
-        $this->em->flush();
+        // check that it is an image
+        $is_an_image = $this->resizer->checkFileIsImage($file);
+        if(!$is_an_image){
+            throw new \Exception('Le fichier envoyé n\'est pas reconnu comme une image');
+        }
 
-        //automatic image rotation and resize (for low disk footprint)
-        //TODO handle errors
+        // create image object
+        $image = new Image();
+        $image->setPost($post);
+        $image->setPath($image_filename);
+        
+        // move uploaded file to upload dir
+        $file->move($image->getUploadRootDir(), $image_filename);
+        
+        // automatic image rotation/resize/thumbnails
+        $orientation = $this->resizer->getImageOrientation($image);
         $this->resizer->rotateImage($image,$orientation);
         $this->resizer->resizeImage($image, 800);
+        $this->thumbnailer->generateThumbnail($image_filename);
         
-        $this->thumbnailer->generateThumbnail($newFilename.'.'.$extension);
+        // save image object to database
+        $this->em->persist($image);
+        $this->em->flush();
         
     }
 

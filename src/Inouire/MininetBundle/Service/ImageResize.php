@@ -32,13 +32,13 @@ class ImageResize
     /*
      * Get image orientation
      */
-    public function getImageOrientation($filePath)
+    public function getImageOrientation($image)
     {
         //default: normal orientation
         $orientation = 1;
         try{
             //get IFDO.Orientation from exif data
-            $exif = exif_read_data($filePath, 0, true);
+            $exif = exif_read_data($image->getAbsolutePath(), 0, true);
             $orientation = $exif['IFD0']['Orientation'];
         }catch(\Exception $e){
             $orientation = 1;
