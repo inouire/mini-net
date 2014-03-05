@@ -48,8 +48,12 @@ class Thumbnailer
         // perform check on each database entry
         foreach($all_images as $image){
             if(!file_exists($image->getThumbnailAbsolutePath())){
-                $this->generateThumbnail($image);
-                echo 'o';
+                try{
+                    $this->generateThumbnail($image);
+                    echo 'o';
+                }catch(\Exception $ex){
+                    echo 'x('.$image->getId().')';
+                }
             }else{
                 echo '.';
             }
