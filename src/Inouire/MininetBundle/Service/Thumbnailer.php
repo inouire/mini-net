@@ -40,9 +40,20 @@ class Thumbnailer
         
     }
     
-    public function synchroniseThumbnailDirectory()
+    public function createMissingThumbnails()
     {
+        // fetch all images from database
+        $all_images = $this->em->getRepository('InouireMininetBundle:Image')->findAll();
         
+        // perform check on each database entry
+        foreach($all_images as $image){
+            if(!file_exists($image->getThumbnailAbsolutePath())){
+                $this->generateThumbnail($image);
+                echo 'o';
+            }else{
+                echo '.';
+            }
+        }
     }
 
 }
