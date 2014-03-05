@@ -50,7 +50,7 @@ class ImageUpload
         $orientation = $this->resizer->getImageOrientation($image);
         $this->resizer->rotateImage($image,$orientation);
         $this->resizer->resizeImage($image, 800);
-        $this->thumbnailer->generateThumbnail($image_filename);
+        $this->thumbnailer->generateThumbnail($image);
         
         // save image object to database
         $this->em->persist($image);

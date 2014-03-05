@@ -32,6 +32,7 @@ services:
     inouire.thumbnailer:
         class: Inouire\MininetBundle\Service\Thumbnailer
         arguments: 
+            - "@doctrine.orm.entity_manager"
             - "%images_path%"
         
     inouire.image_resize:
