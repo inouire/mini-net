@@ -16,6 +16,8 @@ class PostForm{
     
     protected $file;
 
+    protected $video;
+    
     public function getContent(){
         return $this->content;
     }
@@ -35,6 +37,13 @@ class PostForm{
     }
     public function setFile($file){
         $this->file = $file;
+    }
+    
+    public function getVideo(){
+        return $this->video;
+    }
+    public function setVideo($video){
+        $this->video = $video;
     }
     
 }
