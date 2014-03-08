@@ -61,8 +61,15 @@ class ImageUpload
 
     public function handleVideoUpload($file, $post)
     {
-        // buld name
+        // get information
         $original_name = $file->getClientOriginalName();
+        $original_mimetype = $file->getMimeType();
+        // TODO improve extension detection
+        $extension = substr($original_name, -3); 
+        
+        // build name
+        $random_filename = rand(1000000, 999999999).rand(1000000, 999999999).'.'.$extension;
+        // TODO check that the name has not already been taken
         
         // check that it is a video
         // todo
@@ -70,17 +77,17 @@ class ImageUpload
         // create video object
         $video = new Video();
         $video->setPost($post);
-        $video->setName($original_name);
+        $video->setName($random_filename);
         
         // move uploaded file to upload dir
-        $file->move($video->getUploadRootDir(), $original_name);
+        $file->move($video->getUploadRootDir(), $random_filename);
         
         // generate thumbnail
         $this->thumbnailer->generateThumbnailFromVideo($video);
         
         // save video object to database
-        //this->em->persist($video);
-        //$this->em->flush();
+        $this->em->persist($video);
+        $this->em->flush();
         
     }
     
