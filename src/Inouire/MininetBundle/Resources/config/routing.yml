@@ -93,12 +93,6 @@ update_comment:
     defaults: { _controller: InouireMininetBundle:Comment:updateComment }
 
 #routes for actions on images
-add_image:
-    pattern:  /image
-    requirements:
-        _method:  POST
-    defaults: { _controller: InouireMininetBundle:Image:addImage }   
-
 get_image:
     pattern:  /image/{image_id}.jpg
     requirements:
@@ -142,3 +136,18 @@ untag_image:
         tag_id:   \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Tag:removeTagFromImage }
+
+get_video:
+    pattern:  /video/{video_id}
+    requirements:
+        video_id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Video:getVideo}   
+
+get_video_thumbnail:
+    pattern:  /video/thumbnail/{video_id}.jpg
+    requirements:
+        video_id:  \d+
+        _method:  GET
+    defaults: { _controller: InouireMininetBundle:Video:getVideo, is_thumbnail: true}  
+    
