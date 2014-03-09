@@ -1,10 +1,9 @@
-
-{% if post.hasImages %}
-    {% if post.images|length == 1 %}
+{% if post.hasAttachedFiles %}
+    {% if post.totalAttachedFiles == 1 %}
         {% set contentWidth = 'span6' %}
         {% set imagesWidth = 'span4' %}
         {% set thumbWidth = 'span4' %}
-    {% elseif post.images|length == 2 %}
+    {% elseif post.totalAttachedFiles == 2 %}
         {% if post.weight > 1000 %}
             {% set contentWidth = 'span6' %}
             {% set imagesWidth = 'span4' %}
@@ -14,7 +13,7 @@
             {% set imagesWidth = 'span6' %}
             {% set thumbWidth = 'span3' %}
         {% endif %}
-    {% elseif  post.images|length == 3 %}
+    {% elseif  post.totalAttachedFiles == 3 %}
         {% if post.weight < 800 %}
             {% set contentWidth = 'span4' %}
             {% set imagesWidth = 'span6' %}
@@ -28,7 +27,7 @@
             {% set imagesWidth = 'span4' %}
             {% set thumbWidth = 'span2' %}
         {% endif %}
-    {% elseif  post.images|length == 4 %}
+    {% elseif  post.totalAttachedFiles == 4 %}
         {% set contentWidth = 'span6' %}
         {% set imagesWidth = 'span4' %}
         {% set thumbWidth = 'span2' %}
@@ -114,18 +113,24 @@
             
             
             
-            {% if post.hasImages %}
+            {% if post.hasAttachedFiles %}
             <div class="{{ imagesWidth }}" style="text-align:center">
                 <ul class="thumbnails">
+                
+                    {% for video in post.videos %}
+                    <li class="{{thumbWidth}}">
+                        <a href="{{ path('get_video',{"video_id":video.id}) }}">
+                             <img src="{{ path('get_video_thumbnail',{"video_id":video.id}) }}" class="img-polaroid"/>
+                        </a>
+                    </li>
+                    {% endfor %}
                     
                     {% for image in post.images %}
-                    
                     <li class="{{thumbWidth}}">
                         <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
                              <img src="{{ path('get_thumbnail',{"image_id":image.id}) }}" class="img-polaroid"/>
                         </a>
                     </li>
-                    
                     {% endfor %}
                     
                 </ul>

@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "2.0.x-dev",
         "imagine/imagine": "0.5.*",
-        "bcc/extra-tools-bundle": "dev-master"
+        "bcc/extra-tools-bundle": "dev-master",
+	"php-ffmpeg/php-ffmpeg": "~0.4"
     },
     "scripts": {
         "post-install-cmd": [

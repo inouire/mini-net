@@ -133,6 +133,7 @@ class PostController extends Controller
             ->add('content', 'textarea',array('required' => false))
             ->add('id','hidden')
             ->add('file','file',array('required' => false))
+            ->add('video','file',array('required' => false))
             //TODO use new SF feature for multi button post
             //->add('save', 'submit')
             //->add('publish', 'submit')
@@ -186,8 +187,13 @@ class PostController extends Controller
             //get image if any
             if( $post_from_form->getFile() != null){
                 $image_upload = $this->get('inouire.image_upload');
-                //$ic = new ImageController();
                 $image_upload->handleImageUpload($post_from_form->getFile(),$post);
+            }
+            
+            //get video if any
+            if( $post_from_form->getVideo() != null){
+                $image_upload = $this->get('inouire.image_upload');
+                $image_upload->handleVideoUpload($post_from_form->getVideo(),$post);
             }
             
             //modify post object depending on action

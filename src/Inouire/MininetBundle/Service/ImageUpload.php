@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Inouire\MininetBundle\Service\ImageResize;
 use Inouire\MininetBundle\Service\Thumbnailer;
 use Inouire\MininetBundle\Entity\Image;
+use Inouire\MininetBundle\Entity\Video;
 use Symfony\Component\HttpFoundation\File\File;
 
 class ImageUpload
@@ -50,7 +51,7 @@ class ImageUpload
         $orientation = $this->resizer->getImageOrientation($image);
         $this->resizer->rotateImage($image,$orientation);
         $this->resizer->resizeImage($image, 800);
-        $this->thumbnailer->generateThumbnail($image);
+        $this->thumbnailer->generateThumbnailFromImage($image);
         
         // save image object to database
         $this->em->persist($image);
@@ -58,5 +59,37 @@ class ImageUpload
         
     }
 
+    public function handleVideoUpload($file, $post)
+    {
+        // get information
+        $original_name = $file->getClientOriginalName();
+        $original_mimetype = $file->getClientMimeType();
+        // TODO improve extension detection
+        $extension = substr($original_name, -3); 
+        
+        // build name
+        $random_filename = rand(1000000, 999999999).rand(1000000, 999999999).'.'.$extension;
+        // TODO check that the name has not already been taken
+        
+        // check that it is a video
+        // todo
+        
+        // create video object
+        $video = new Video();
+        $video->setPost($post);
+        $video->setName($random_filename);
+        $video->setType($original_mimetype);
+        
+        // move uploaded file to upload dir
+        $file->move($video->getUploadRootDir(), $random_filename);
+        
+        // generate thumbnail
+        $this->thumbnailer->generateThumbnailFromVideo($video);
+        
+        // save video object to database
+        $this->em->persist($video);
+        $this->em->flush();
+        
+    }
     
 }

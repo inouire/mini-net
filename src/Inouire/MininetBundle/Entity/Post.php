@@ -34,7 +34,6 @@ class Post{
      */
     private $author;
     
-
     /**
      * @var datetime $date
      *
@@ -67,12 +66,29 @@ class Post{
     private $images;
 
     /**
+     * @ORM\OneToMany(targetEntity="Inouire\MininetBundle\Entity\Video", mappedBy="post")
+     */
+    private $videos;
+    
+    /**
      * @var boolean $published
      *
      * @ORM\Column(name="published", type="boolean")
      */
     private $published;
     
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId(){
+        return $this->id;
+    }
+
+    public function setId($id){
+        $this->id = $id;
+    }
     
     /**
      * Get the author of the post 
@@ -120,18 +136,20 @@ class Post{
     }
     
     /**
-     * Get id
-     *
-     * @return integer 
+     * Get all the videos attached to this post
      */
-    public function getId(){
-        return $this->id;
+    public function getVideos(){
+        return $this->videos;
     }
 
-    public function setId($id){
-        $this->id = $id;
+    /**
+     * Add a video to this post
+     */
+    public function addVideo(\Inouire\MininetBundle\Entity\Video $video){
+        $this->videos[] = $video;
+        $video->setPost($this);
     }
-    
+
     /**
      * Set date
      *
@@ -202,12 +220,51 @@ class Post{
     }
 
     /**
+     * Check if the post has images or videos associated
+     */
+    public function getHasAttachedFiles(){
+        return ($this->getHasImages() || $this->getHasVideos());
+    }
+    
+    /**
+     * Get total number of attachement to the post
+     */
+    public function getTotalAttachedFiles(){
+        return count($this->images) + count($this->videos);
+    }
+    
+    /**
      * Check if the post has one or more images associated
      */
     public function getHasImages(){
          return count($this->images) > 0;
     }
 
+    /**
+     * Check if the post has one or more videos associated
+     */
+    public function getHasVideos(){
+         return count($this->videos) > 0;
+    }
+    
+    /**
+     * Set published
+     *
+     * @param boolean $published
+     */
+    public function setPublished($published){
+        $this->published = $published;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean 
+     */
+    public function getPublished(){
+        return $this->published;
+    }
+    
     /**
      * Get content of the post, with html enhancements
      */
@@ -251,7 +308,6 @@ class Post{
      * Get the age of the post, in number of days
      */
     public function getAgeInDays(){
-        
         $today = new \Datetime();
         $today->setTime(23,59);
         $post_age = $this->date->diff($today);
@@ -274,21 +330,5 @@ class Post{
         return $weight;
     }
     
-    /**
-     * Set published
-     *
-     * @param boolean $published
-     */
-    public function setPublished($published){
-        $this->published = $published;
-    }
 
-    /**
-     * Get published
-     *
-     * @return boolean 
-     */
-    public function getPublished(){
-        return $this->published;
-    }
 }
