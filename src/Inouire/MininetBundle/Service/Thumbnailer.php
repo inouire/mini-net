@@ -5,6 +5,7 @@ namespace Inouire\MininetBundle\Service;
 use Inouire\MininetBundle\Entity\Image;
 use Inouire\MininetBundle\Entity\Video;
 use Imagine\Gd\Imagine;
+use Imagine\Image\Point;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Doctrine\ORM\EntityManager;
@@ -52,7 +53,7 @@ class Thumbnailer
         // prepare path
         $video_path     = __DIR__.'/../../../../web/vid/'.$video->getName();
         $thumbnail_path = __DIR__.'/../../../../web/vid/thumbnail/'.$video->getName().'.jpg';
-        
+        $watermark_path = __DIR__.'/../../../../web/vid/thumbnail/watermark.png';
         // extract frame
         $ff = FFMpeg\FFMpeg::create();
         $video = $ff->open($video_path);
@@ -61,6 +62,14 @@ class Thumbnailer
         
         //convert it as a thumbnail
         $this->generateThumbnail($thumbnail_path, $thumbnail_path);
+                
+        // add video watermark
+        $imagine = new Imagine();
+        $watermark = $imagine->open($watermark_path);
+        $image     = $imagine->open($thumbnail_path);
+        $topLeft = new Point(0,0);
+        $image->paste($watermark, $topLeft)
+            ->save($thumbnail_path, array('quality' => 95));;
     }
     
     public function createMissingThumbnails()
