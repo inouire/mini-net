@@ -119,6 +119,7 @@
                          <img src="{{ path('get_video_thumbnail',{"video_id":video.id}) }}" class="img-polaroid"/>
                     </a>
                 </div>
+                <i class="icon-trash delete-video-button pull-right" id="{{video.id}}"></i>
             </li>
             {% endfor %}
             </ul>
@@ -176,6 +177,24 @@
                 }
             }
             
+            function deleteVideoAjax(video_id){
+                console.log("ACTION: delete video "+video_id);
+                if(confirm("Êtes vous sur de vouloir supprimer cette vidéo ?")){
+                    $.ajax({
+                        url : '/video/'+video_id,
+                        type : 'DELETE',
+                        dataType : 'json',
+                        success : function(data, statut){
+                            console.log("Axaj call has been a success");
+                            console.log(data);
+                            $('#video-'+video_id).fadeOut(400);
+                        },
+                        error : function(data, statut, error){
+                            console.log("Error during ajax call");
+                        }
+                    });
+                }
+            }
             
             //adding listener on "delete post" button to display a warning
             var deleteActionLocked = true;
@@ -208,6 +227,12 @@
             $(".delete-image-button").click( function (event) {
                 var image_id = event.target.id;
                 deleteImageAjax(image_id);
+            });
+            
+            //adding listeners on "delete video" icons
+            $(".delete-video-button").click( function (event) {
+                var video_id = event.target.id;
+                deleteVideoAjax(video_id);
             });
             
             //adding listener on all out links

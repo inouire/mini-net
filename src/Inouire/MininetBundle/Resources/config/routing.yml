@@ -151,3 +151,9 @@ get_video_thumbnail:
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Video:getVideoThumbnail}  
     
+delete_video:
+    pattern:  /video/{video_id}
+    requirements:
+        image_id:  \d+
+        _method:  DELETE
+    defaults: { _controller: InouireMininetBundle:Video:deleteVideo } 

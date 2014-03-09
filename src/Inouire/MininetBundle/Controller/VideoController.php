@@ -90,4 +90,39 @@ class VideoController extends Controller
         
         return $response;
     }
+
+    public function deleteVideoAction($video_id){
+
+        //get video
+        $em = $this->getDoctrine()->getEntityManager();
+        $video = $em->getRepository('InouireMininetBundle:Video')->find($video_id);
+    
+        //check that this video exists and that it belongs to this user
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if($video==null ){
+            $response_status = 'error';
+            $response_message = 'video '.$video_id.' does not exist';
+        }else if( $video->getPost()->getAuthor() != $user){
+            $response_status = 'error';
+            $response_message = 'video '.$video_id.' does not belong to you';
+        } else {
+            //delete video from disk
+            $fs = $this->get('filesystem');
+            $fs->remove($video->getAbsolutePath());
+            $fs->remove($video->getThumbnailAbsolutePath());
+            
+            // delete from database
+            $em->remove($video);
+            $em->flush();
+            
+            $response_status = 'ok';
+            $response_message = 'video '.$video_id.' has been deleted';
+        }
+        
+        //render json response
+        return $this->render('InouireMininetBundle:Post:ajaxResponse.json.twig',array(
+            'status'=> $response_status,
+            'message' => $response_message
+        ));
+    }
 }
