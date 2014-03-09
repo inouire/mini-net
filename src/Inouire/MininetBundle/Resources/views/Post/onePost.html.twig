@@ -103,10 +103,8 @@
 
                 <p>{{ post.htmlcontent | raw }}</p>
                 
-                {% if post.hasImages %}
-                    
+                {% if post.hasAttachedFiles %}
                     {% include 'InouireMininetBundle:Post:comments.html.twig' %}
-                    
                 {% endif %}
                 
             </div>
