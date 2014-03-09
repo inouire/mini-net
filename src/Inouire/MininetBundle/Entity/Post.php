@@ -227,6 +227,13 @@ class Post{
     }
     
     /**
+     * Get total number of attachement to the post
+     */
+    public function getTotalAttachedFiles(){
+        return count($this->images) + count($this->videos);
+    }
+    
+    /**
      * Check if the post has one or more images associated
      */
     public function getHasImages(){
