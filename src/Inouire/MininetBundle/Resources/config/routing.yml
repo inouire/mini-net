@@ -149,5 +149,5 @@ get_video_thumbnail:
     requirements:
         video_id:  \d+
         _method:  GET
-    defaults: { _controller: InouireMininetBundle:Video:getVideo, is_thumbnail: true}  
+    defaults: { _controller: InouireMininetBundle:Video:getVideoThumbnail}  
     

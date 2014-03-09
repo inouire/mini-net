@@ -63,7 +63,7 @@ class ImageUpload
     {
         // get information
         $original_name = $file->getClientOriginalName();
-        $original_mimetype = $file->getMimeType();
+        $original_mimetype = $file->getClientMimeType();
         // TODO improve extension detection
         $extension = substr($original_name, -3); 
         
@@ -78,6 +78,7 @@ class ImageUpload
         $video = new Video();
         $video->setPost($post);
         $video->setName($random_filename);
+        $video->setType($original_mimetype);
         
         // move uploaded file to upload dir
         $file->move($video->getUploadRootDir(), $random_filename);

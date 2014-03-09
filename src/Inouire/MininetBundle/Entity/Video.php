@@ -38,6 +38,11 @@ class Video{
     private $post;
     
     /**
+     * @ORM\Column(name="type",type="string", length=255)
+     */
+    private $type;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -64,6 +69,14 @@ class Video{
         return $this->name;
     }
 
+    
+    public function getType(){
+        return $this->type;
+    }
+    
+    public function setType($type){
+        $this->type = $type;
+    }
     
     /**
      * Get the corresponding post
