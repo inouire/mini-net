@@ -45,16 +45,25 @@
 
             </div>
 
-            <center>
+            <div class="span4 offset4">
                 <div class="btn btn-primary" id="add-image-button" ><i class="icon-picture icon-white"></i> Ajouter une photo</div>
                 <div id="add-image-block" style="display: none">
                     {{ form_errors(post_form.file) }}
-                    {{ form_widget(post_form.file) }}
+                    {{ form_widget(post_form.file, {'attr': {'class':'add-image-input'} }) }}
                     <br>
-                    <button class="btn btn-success" id="upload-image-button" type="submit" name="submitButton" value="upload"><i class="icon-picture icon-white"></i> Ajouter cette photo</button>
+                    <button class="btn btn-primary" id="upload-image-button" type="submit" name="submitButton" value="upload"><i class="icon-picture icon-white"></i> Ajouter cette photo</button>
+                </div>
+            </div>
+            <div class="span4">
+                <div class="btn btn-info" id="add-video-button" ><i class="icon-camera icon-white"></i> Ajouter une vidéo</div>
+                <div id="add-video-block" style="display: none">
+                    {{ form_errors(post_form.video) }}
+                    {{ form_widget(post_form.video, {'attr': {'class':'add-video-input'} }) }}
+                    <br>
+                    <button class="btn btn-info" id="upload-video-button" type="submit" name="submitButton" value="upload"><i class="icon-camera icon-white"></i> Ajouter cette vidéo</button>
                 </div>
                 <br><br>
-            </center>
+            </div>
 
             {{ form_rest(post_form) }}
         </form>
@@ -166,9 +175,16 @@
             $("#add-image-button").click( function (event) {
                 $('#add-image-block').fadeIn(400);
                 $('#add-image-button').fadeOut(400);
-                //$('input[type=file]').click();
+                $('.add-image-input').click();
             });
 
+            //adding listener on "add video" button
+            $("#add-video-button").click( function (event) {
+                $('#add-video-block').fadeIn(400);
+                $('#add-video-button').fadeOut(400);
+                $('.add-video-input').click();
+            });
+            
             //adding listeners on "delete image" icons
             $(".delete-image-button").click( function (event) {
                 var image_id = event.target.id;
