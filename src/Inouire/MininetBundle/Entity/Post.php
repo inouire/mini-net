@@ -220,6 +220,13 @@ class Post{
     }
 
     /**
+     * Check if the post has images or videos associated
+     */
+    public function getHasAttachedFiles(){
+        return ($this->getHasImages() || $this->getHasVideos());
+    }
+    
+    /**
      * Check if the post has one or more images associated
      */
     public function getHasImages(){

@@ -73,7 +73,6 @@
         <div class="span9 offset2">
             <ul class="thumbnails">
                 {% for image in post.images %}
-
                 <li class="span3" id="image-{{image.id}}">
                     <div>
                         <a href="{{path('rotate_image',{'image_id':image.id,'direction':'counter-clockwise'})}}"><img src="{{asset('css/icons/rotate-ccw.png')}}"/></a>
@@ -102,13 +101,31 @@
                         <i class="icon-trash delete-image-button pull-right" id="{{image.id}}"></i>
                     </div>
                 </li>
-
                 {% endfor %}
             </ul>
         </div>
     </div>
     {% endif %}
 
+    {% if post.hasVideos %}
+    <div class="row">
+        <div class="span9 offset2">
+            <ul class="thumbnails">
+            
+            {% for video in post.videos %}
+            <li class="span3" id="video-{{video.id}}">
+                <div>
+                    <a href="{{ path('get_video',{"video_id":video.id}) }}">
+                         <img src="{{ path('get_video_thumbnail',{"video_id":video.id}) }}" class="img-polaroid"/>
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+                
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
     
 {% endblock %}
