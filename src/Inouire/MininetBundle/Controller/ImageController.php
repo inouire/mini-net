@@ -114,7 +114,7 @@ class ImageController extends Controller
         //set some cache informations
         $response->setPrivate();
         $response->setMaxAge(172800);//48h
-        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('must-revalidate', false);
         
         //set file content
         $response->headers->set('Content-Type','image/jpeg');
