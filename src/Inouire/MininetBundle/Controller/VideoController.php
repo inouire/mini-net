@@ -40,7 +40,7 @@ class VideoController extends Controller
         $response->headers->set('Content-Disposition', $disposition);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
-        $response->headers->set('Cache-Control', 'private, max-age=172800');//48h
+        $response->headers->set('Cache-Control', 'private, max-age=2592000');//1 month
         
         //set file content
         $response->headers->set('Content-Type',$file_type);
@@ -73,7 +73,7 @@ class VideoController extends Controller
         $response->setStatusCode($status_code);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
-        $response->headers->set('Cache-Control', 'private, max-age=172800');//48h
+        $response->headers->set('Cache-Control', 'private, max-age=2592000');//1 month
         
         //set file content
         $response->headers->set('Content-Type','image/jpeg');
