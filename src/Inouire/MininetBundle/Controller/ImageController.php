@@ -142,13 +142,17 @@ class ImageController extends Controller
             $response_status = 'error';
             $response_message = 'image '.$image_id.' does not belong to you';
         } else {
-            //delete image
+            //delete image from disk
+            $fs = $this->get('filesystem');
+            $fs->remove($image->getAbsolutePath());
+            $fs->remove($image->getThumbnailAbsolutePath());
+            
+            //delete from database
             $em->remove($image);
+            $em->flush();
+             
             $response_status = 'ok';
             $response_message = 'image '.$image_id.' has been deleted';
-  
-            //persit changes in the database
-            $em->flush();
         }
         
         //render json response
