@@ -107,14 +107,10 @@ class ImageController extends Controller
         
         //prepare response
         $response = new Response();
+        $response->setStatusCode($status_code);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
-        $response->setStatusCode($status_code);
-        
-        //set some cache informations
-        $response->setPrivate();
-        $response->setMaxAge(172800);//48h
-        $response->headers->addCacheControlDirective('must-revalidate', false);
+        $response->headers->set('Cache-Control', 'private, max-age=172800');//48h
         
         //set file content
         $response->headers->set('Content-Type','image/jpeg');

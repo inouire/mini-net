@@ -30,8 +30,9 @@ class VideoController extends Controller
             $status_code=200;
         }
         
-        //prepare response as attachment
+        //prepare response with attachement
         $response = new Response();
+        $response->setStatusCode($status_code);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $video->getName()
@@ -39,12 +40,7 @@ class VideoController extends Controller
         $response->headers->set('Content-Disposition', $disposition);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
-        $response->setStatusCode($status_code);
-        
-        //set some cache informations
-        $response->setPrivate();
-        $response->setMaxAge(172800);//48h
-        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->set('Cache-Control', 'private, max-age=172800');//48h
         
         //set file content
         $response->headers->set('Content-Type',$file_type);
@@ -74,14 +70,10 @@ class VideoController extends Controller
         
         //prepare response
         $response = new Response();
+        $response->setStatusCode($status_code);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
-        $response->setStatusCode($status_code);
-        
-        //set some cache informations
-        $response->setPrivate();
-        $response->setMaxAge(172800);//48h
-        $response->headers->addCacheControlDirective('must-revalidate', false);
+        $response->headers->set('Cache-Control', 'private, max-age=172800');//48h
         
         //set file content
         $response->headers->set('Content-Type','image/jpeg');
