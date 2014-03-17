@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class VideoRepository extends EntityRepository{
     
+    /*
+     * Get all the videos
+     */
+    public function getAllVideos(){
+        
+        $qb = $this->createQueryBuilder('video');
+          
+        $qb->leftJoin('video.post','post')
+           ->orderBy('post.date', 'DESC');
+           
+        return $qb->getQuery()
+                  ->getResult();
+    }
 }

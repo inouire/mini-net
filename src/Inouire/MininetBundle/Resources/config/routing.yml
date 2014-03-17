@@ -18,6 +18,8 @@ posts:
         month: \d+
     defaults: { _controller: InouireMininetBundle:Archives:posts }
     
+# galleries
+    
 albums:
     pattern:  /albums
     defaults: { _controller: InouireMininetBundle:Album:viewCurrentMonth }
@@ -29,8 +31,6 @@ album:
         month: \d+
     defaults: { _controller: InouireMininetBundle:Album:view }
 
-#route for actions around tags
-
 tag_list:
     pattern: /tags
     defaults: { _controller: InouireMininetBundle:Tag:list }
@@ -39,7 +39,11 @@ tag_album:
     pattern: /album/{tag}
     defaults: { _controller: InouireMininetBundle:Tag:album }
     
-    
+videos:
+    pattern: /videos
+    defaults: { _controller: InouireMininetBundle:Album:viewVideos }
+
+
 #routes for actions on posts
 view_post:
     pattern:  /post/{post_id}

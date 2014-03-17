@@ -1,0 +1,27 @@
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
+
+{% block title %}toutes les vidéos{% endblock %}
+
+{% block body %}
+
+    <h1 style="text-align:center">Toutes les vidéos</h1>
+
+    <div class="row">
+        
+        <div class="span12">
+            <ul class="thumbnails">   
+
+{% for video in video_list %}
+                <li class="span2" style="text-align:center">
+                    <a href="{{ path('get_video',{"video_id":video.id}) }}"">
+                         <img src="{{ path('get_video_thumbnail',{"video_id":video.id}) }}" class="img-polaroid" />
+                    </a>
+                </li>
+{% endfor %}
+            
+            </ul>
+        </div>
+   </div>
+   
+{% endblock %}
+

@@ -4,6 +4,7 @@ namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Inouire\MininetBundle\Entity\Post;
+use Inouire\MininetBundle\Entity\Video;
 
 class AlbumController extends Controller
 {
@@ -33,11 +34,9 @@ class AlbumController extends Controller
             ));
         }
         
-        //get entity manager and Image repository
+        //get all the images of the posts of the requested year
         $em = $this->getDoctrine()->getManager();
         $image_repo = $em->getRepository('InouireMininetBundle:Image');
-        
-        //get all the images of the posts of the requested year
         $image_list = $image_repo->getImagesOfMonth($year,$month);
         
         //build date of current month
@@ -71,5 +70,20 @@ class AlbumController extends Controller
 
     }
 
+    /**
+     * View the album of all videos
+     */
+    public function viewVideosAction(){
+        
+        //get all the videos
+        $em = $this->getDoctrine()->getManager();
+        $video_repo = $em->getRepository('InouireMininetBundle:Video');
+        $video_list = $video_repo->getAllVideos();
+
+        // display gallery
+        return $this->render('InouireMininetBundle:Main:videos.html.twig',array(
+            'video_list' => $video_list,
+        ));
+    }
     
 }
