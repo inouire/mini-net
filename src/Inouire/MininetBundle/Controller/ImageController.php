@@ -38,7 +38,7 @@ class ImageController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         
         //get image
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
         
         //check that this image exists and that it belongs to this user
@@ -87,7 +87,7 @@ class ImageController extends Controller
     public function getImageAction($image_id, $is_thumbnail=false){
         
         //get image
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
         
         //check that this image exists
@@ -125,13 +125,9 @@ class ImageController extends Controller
      */ 
     public function deleteImageAction($image_id){
         
-        //get entity manager
-        $em = $this->getDoctrine()->getEntityManager();
-        
-        //get image
+        //get image + current user
+        $em = $this->getDoctrine()->getManager();
         $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
-        
-        //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
         
         //check that this image exists and that it belongs to this user

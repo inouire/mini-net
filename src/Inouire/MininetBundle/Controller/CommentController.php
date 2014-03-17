@@ -21,7 +21,7 @@ class CommentController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         
         //get corresponding post
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
         
         //check that this post exists
@@ -67,7 +67,7 @@ class CommentController extends Controller
         $comment_content = $request->request->get('comment');
         
         //get requested comment
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $comment = $em->getRepository('InouireMininetBundle:Comment')->find($comment_id);
         
         //get current user
@@ -107,7 +107,7 @@ class CommentController extends Controller
     public function deleteCommentAction($comment_id){
 
         //get requested comment
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $comment = $em->getRepository('InouireMininetBundle:Comment')->find($comment_id);
         
         //get current user

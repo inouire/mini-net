@@ -16,7 +16,7 @@ class VideoController extends Controller
     public function getVideoAction($video_id){
         
         //get video object
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $video = $em->getRepository('InouireMininetBundle:Video')->find($video_id);
         
         //check that this video exists
@@ -56,7 +56,7 @@ class VideoController extends Controller
     public function getVideoThumbnailAction($video_id){
         
         //get video object
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $video = $em->getRepository('InouireMininetBundle:Video')->find($video_id);
         
         //check that this video exists
@@ -86,7 +86,7 @@ class VideoController extends Controller
     public function deleteVideoAction($video_id){
 
         //get video
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $video = $em->getRepository('InouireMininetBundle:Video')->find($video_id);
     
         //check that this video exists and that it belongs to this user

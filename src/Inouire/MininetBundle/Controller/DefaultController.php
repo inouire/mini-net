@@ -34,11 +34,9 @@ class DefaultController extends Controller
             $secondary_nb = 0;
         }
 
-        //get entity manager and post repository
-        $em = $this->getDoctrine()->getEntityManager();
-        $post_repo = $em->getRepository('InouireMininetBundle:Post');
-        
         //retrieve the posts for the main par (last 8 published posts by default)
+        $em = $this->getDoctrine()->getManager();
+        $post_repo = $em->getRepository('InouireMininetBundle:Post');
         $post_list = $post_repo->findBy(
             array('published' => true),
             array('date' => 'desc'),
