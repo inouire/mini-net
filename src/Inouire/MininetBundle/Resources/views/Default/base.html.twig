@@ -25,23 +25,12 @@
     </head>
     
 {% set currentPath = app.request.attributes.get('_route') %}
-{% set classHome = '' %}
-{% set classAlbum = '' %}
-{% set classArchives = '' %}
-{% set classTags = '' %}
-{% set bodyClass = '' %}
-{% if currentPath == 'home' %}
-    {% set classHome = ' active' %}
-{% elseif currentPath == 'album' %}
-    {% set classAlbum = ' active' %}
-{% elseif currentPath == 'posts' %}
-    {% set classArchives = ' active' %}
-{% elseif currentPath == 'tag_list' or currentPath == 'tag_album' %}
-    {% set classTags = ' active' %}
-{% elseif currentPath == 'edit_post' %}
+{% if currentPath == 'edit_post' %}
     {% set bodyClass = 'tole' %}
+{% else %}
+    {% set bodyClass = '' %}
 {% endif %}  
-        
+    
     <body class="{{bodyClass}}">
     
     <!-- offset for navbar -->
@@ -61,10 +50,10 @@
           <a class="brand" href="{{ path('home') }}">Mini-net</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-                <li class="{{classHome}}"><a href="{{ path('home') }}"><i class="icon-home icon-white"></i> Accueil</a></li>
-                <li class="{{classAlbum}}"><a href="{{ path('albums') }}"><i class="icon-camera icon-white"></i> Albums</a></li>
-                <li class="{{classTags}}"><a href="{{ path('tag_list') }}"><i class="icon-tags icon-white"></i> Tags</a></li>
-                <li class="{{classArchives}}"><a href="{{ path('archives') }}"><i class="icon-calendar icon-white"></i> Archives</a></li>
+                <li class="{% if currentPath == 'album' %}active{% endif %}"><a href="{{ path('albums') }}"><i class="icon-camera icon-white"></i> Albums</a></li>
+                <li class="{% if currentPath == 'tag_list' or currentPath == 'tag_album' %}active{% endif %}"><a href="{{ path('tag_list') }}"><i class="icon-tags icon-white"></i> Tags</a></li>
+                <li class="{% if currentPath == 'videos' %}active{% endif %}"><a href="{{ path('videos') }}"><i class="icon-film icon-white"></i> Vidéos</a></li>
+                <li class="{% if currentPath == 'posts' %}active{% endif %}"><a href="{{ path('archives') }}"><i class="icon-calendar icon-white"></i> Archives</a></li>
             </ul>
 {% if app.user != null %}
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
