@@ -21,10 +21,6 @@ posts:
 albums:
     pattern:  /albums
     defaults: { _controller: InouireMininetBundle:Album:viewCurrentMonth }
-
-album_all:
-    pattern:  /album/all
-    defaults: { _controller: InouireMininetBundle:Album:viewAll }
     
 album:
     pattern:  /album/{year}/{month}
