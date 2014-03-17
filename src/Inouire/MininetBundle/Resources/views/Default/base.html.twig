@@ -47,7 +47,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+    
           <a class="brand" href="{{ path('home') }}">Mini-net</a>
+          
+        {% if app.user != null %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    
           <div class="nav-collapse collapse">
             <ul class="nav">
                 <li class="{% if currentPath == 'album' %}active{% endif %}"><a href="{{ path('albums') }}"><i class="icon-camera icon-white"></i> Albums</a></li>
@@ -55,8 +60,7 @@
                 <li class="{% if currentPath == 'videos' %}active{% endif %}"><a href="{{ path('videos') }}"><i class="icon-film icon-white"></i> Vidéos</a></li>
                 <li class="{% if currentPath == 'posts' %}active{% endif %}"><a href="{{ path('archives') }}"><i class="icon-calendar icon-white"></i> Archives</a></li>
             </ul>
-{% if app.user != null %}
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
             <form class="navbar-form pull-right">
             
                 <a class="btn btn-success" href="{{ path('new_post') }}">
@@ -75,13 +79,14 @@
                 </div>
                 
             </form>
-    {% endif %}
-{% endif %}
 
           </div>
-        </div>
+        {% endif %}
+        {% endif %}
+
+        </div><!-- container -->
       </div>
-    </div><!-- navbar-->
+    </div><!-- navbar -->
     
     {% endblock %}
         
