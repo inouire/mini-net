@@ -175,7 +175,7 @@ class PostController extends Controller
             $redirect_to = $this->generateUrl('home');
             
             if( $method == 'save'){
-                $redirect_to = $this->generateUrl('edit_post',array('post_id' => $post_id));
+                $redirect_to = $this->generateUrl('edit_post',array('id' => $post_id));
             }else if($method == 'publish'){
                 if( !$post->getPublished() ){
                     if( strlen($post->getContent()) > 0 || $post->getHasImages() ){
@@ -198,7 +198,7 @@ class PostController extends Controller
                 //delete post
                 $em->remove($post);
             }else if($method='upload'){
-                $redirect_to = $this->generateUrl('edit_post',array('post_id' => $post_id));
+                $redirect_to = $this->generateUrl('edit_post',array('id' => $post_id));
             }
              
             //persist changes and redirect to next page (home or post editor)

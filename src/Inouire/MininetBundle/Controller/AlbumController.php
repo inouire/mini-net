@@ -5,6 +5,7 @@ namespace Inouire\MininetBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\Video;
+use Inouire\MininetBundle\Entity\Tag;
 
 class AlbumController extends Controller
 {
@@ -89,7 +90,6 @@ class AlbumController extends Controller
         //get all tags
         $tags = $em->getRepository('InouireMininetBundle:Tag')
                    ->findAll();   
-        
         
         return $this->render('InouireMininetBundle:Main:albumByTag.html.twig',array(
             'image_list' => $image_list,

@@ -13,26 +13,17 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class VideoController extends Controller
 {
     
-    public function getVideoAction($video_id){
+    /**
+     * Download video file
+     */
+    public function getVideoAction(Video $video){
         
-        //get video object
-        $em = $this->getDoctrine()->getManager();
-        $video = $em->getRepository('InouireMininetBundle:Video')->find($video_id);
-        
-        //check that this video exists
-        if($video==null ){
-            //TODO put a better error image file
-            $video_file=__DIR__.'/../../../../web/css/icons/exit.png';
-            $status_code=404;
-        } else {
-            $video_file=$video->getAbsolutePath();
-            $file_type=$video->getType(); 
-            $status_code=200;
-        }
+        $video_file=$video->getAbsolutePath();
+        $file_type=$video->getType(); 
         
         //prepare response with attachement
         $response = new Response();
-        $response->setStatusCode($status_code);
+        $response->setStatusCode(200);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $video->getName()
@@ -53,24 +44,16 @@ class VideoController extends Controller
         //http://symfony.com/doc/current/components/http_foundation/introduction.html#serving-files
     }
     
-    public function getVideoThumbnailAction($video_id){
-        
-        //get video object
-        $em = $this->getDoctrine()->getManager();
-        $video = $em->getRepository('InouireMininetBundle:Video')->find($video_id);
-        
-        //check that this video exists
-        if($video==null ){
-            $thumbnail_file=__DIR__.'/../../../../web/css/icons/exit.png';
-            $status_code=404;
-        } else {
-            $thumbnail_file=$video->getThumbnailAbsolutePath();
-            $status_code=200;
-        }
+    /**
+     * Get video thumbnail
+     */
+    public function getVideoThumbnailAction(Video $video){
+       
+        $thumbnail_file=$video->getThumbnailAbsolutePath();
         
         //prepare response
         $response = new Response();
-        $response->setStatusCode($status_code);
+        $response->setStatusCode(200);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
         $response->headers->set('Cache-Control', 'private, max-age=2592000');//1 month
@@ -83,11 +66,10 @@ class VideoController extends Controller
         return $response;
     }
 
-    public function deleteVideoAction($video_id){
-
-        //get video
-        $em = $this->getDoctrine()->getManager();
-        $video = $em->getRepository('InouireMininetBundle:Video')->find($video_id);
+    /**
+     * Delete video file
+     */
+    public function deleteVideoAction(Video $video){
     
         //check that this video exists and that it belongs to this user
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -104,6 +86,7 @@ class VideoController extends Controller
             $fs->remove($video->getThumbnailAbsolutePath());
             
             // delete from database
+            $em = $this->getDoctrine()->getManager();
             $em->remove($video);
             $em->flush();
             

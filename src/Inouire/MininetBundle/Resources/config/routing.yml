@@ -138,21 +138,21 @@ untag_image:
     defaults: { _controller: InouireMininetBundle:Tag:removeTagFromImage }
 
 get_video:
-    pattern:  /video/{video_id}
+    pattern:  /video/{id}
     requirements:
         video_id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Video:getVideo}   
 
 get_video_thumbnail:
-    pattern:  /video/thumbnail/{video_id}.jpg
+    pattern:  /video/thumbnail/{id}.jpg
     requirements:
         video_id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Video:getVideoThumbnail}  
     
 delete_video:
-    pattern:  /video/{video_id}
+    pattern:  /video/{id}
     requirements:
         image_id:  \d+
         _method:  DELETE

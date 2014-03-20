@@ -117,8 +117,8 @@
                 
                     {% for video in post.videos %}
                     <li class="{{thumbWidth}}">
-                        <a href="{{ path('get_video',{"video_id":video.id}) }}">
-                             <img src="{{ path('get_video_thumbnail',{"video_id":video.id}) }}" class="img-polaroid"/>
+                        <a href="{{ path('get_video',{"id":video.id}) }}">
+                             <img src="{{ path('get_video_thumbnail',{"id":video.id}) }}" class="img-polaroid"/>
                         </a>
                     </li>
                     {% endfor %}

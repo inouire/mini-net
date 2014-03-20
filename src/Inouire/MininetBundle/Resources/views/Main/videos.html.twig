@@ -15,8 +15,8 @@
 {% set post_date = video.post.date | localeDate('medium','none',null,'d MMMM YYYY') %}
 
                 <li class="span2" style="text-align:center">
-                    <a href="{{ path('get_video',{"video_id":video.id}) }}"">
-                        <img src="{{ path('get_video_thumbnail',{"video_id":video.id}) }}" class="img-polaroid" />
+                    <a href="{{ path('get_video',{"id":video.id}) }}"">
+                        <img src="{{ path('get_video_thumbnail',{"id":video.id}) }}" class="img-polaroid" />
                     </a>
                     <a href="{{ path('view_post',{"id":video.post.id}) }}"">
                         {{post_date}}

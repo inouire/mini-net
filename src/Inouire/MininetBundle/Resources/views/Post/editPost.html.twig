@@ -115,8 +115,8 @@
             {% for video in post.videos %}
             <li class="span3" id="video-{{video.id}}">
                 <div>
-                    <a href="{{ path('get_video',{"video_id":video.id}) }}">
-                         <img src="{{ path('get_video_thumbnail',{"video_id":video.id}) }}" class="img-polaroid"/>
+                    <a href="{{ path('get_video',{"id":video.id}) }}">
+                         <img src="{{ path('get_video_thumbnail',{"id":video.id}) }}" class="img-polaroid"/>
                     </a>
                 </div>
                 <i class="icon-trash delete-video-button pull-right" id="{{video.id}}"></i>
