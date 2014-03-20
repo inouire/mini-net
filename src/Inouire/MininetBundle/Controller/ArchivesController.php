@@ -8,7 +8,7 @@ use Inouire\MininetBundle\Entity\Post;
 class ArchivesController extends Controller
 {
 
-/*
+    /**
      * Redirect archives root URL to the current year-month archives
      */
     public function viewCurrentMonthAction(){
@@ -20,7 +20,7 @@ class ArchivesController extends Controller
         
     }
     
-    /*
+    /**
      * Handles the archives of a given year and month
      */
     public function postsAction($year,$month){

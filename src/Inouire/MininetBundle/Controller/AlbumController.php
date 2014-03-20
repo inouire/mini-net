@@ -9,20 +9,20 @@ use Inouire\MininetBundle\Entity\Video;
 class AlbumController extends Controller
 {
     
-    /*
-     * Redirects to the album of the current year
+    /**
+     * Redirects to the pictures album of the current year
      */
-    public function viewCurrentMonthAction(){
+    public function viewCurrentMonthPicturesAlbumAction(){
         return $this->redirect($this->generateUrl('album',array(
             'year' => date('Y'),
             'month' => date('m')
         )));
     }
     
-    /*
-     * Handles the album of a given year
+    /**
+     * Display the pictures album of a given year/month
      */
-    public function viewAction($year,$month){
+    public function viewPicturesAlbumAction($year,$month){
         
         //check validity of year and month given
         if( $year > 8000 || $year < 1 || $month < 1 || $month > 12){
@@ -73,14 +73,13 @@ class AlbumController extends Controller
     /**
      * View the album of all videos
      */
-    public function viewVideosAction(){
-        
+    public function viewVideosAlbumAction(){
         //get all the videos
         $em = $this->getDoctrine()->getManager();
         $video_repo = $em->getRepository('InouireMininetBundle:Video');
         $video_list = $video_repo->getAllVideos();
 
-        // display gallery
+        // display video gallery
         return $this->render('InouireMininetBundle:Main:videos.html.twig',array(
             'video_list' => $video_list,
         ));

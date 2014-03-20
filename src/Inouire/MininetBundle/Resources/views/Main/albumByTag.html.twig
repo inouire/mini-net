@@ -20,7 +20,7 @@
                     <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="fancybox[{{tag}}]">
                          <img src="{{ path('get_thumbnail',{"image_id":image.id}) }}" class="img-polaroid" />
                     </a>
-                    <a href="{{ path('view_post',{"post_id":image.post.id}) }}">
+                    <a href="{{ path('view_post',{"id":image.post.id}) }}">
                         {{post_date}}
                     </a>
                 </li>

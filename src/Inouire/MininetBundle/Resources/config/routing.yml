@@ -22,14 +22,14 @@ posts:
     
 albums:
     pattern:  /albums
-    defaults: { _controller: InouireMininetBundle:Album:viewCurrentMonth }
+    defaults: { _controller: InouireMininetBundle:Album:viewCurrentMonthPicturesAlbum }
     
 album:
     pattern:  /album/{year}/{month}
     requirements:
         year:  \d+
         month: \d+
-    defaults: { _controller: InouireMininetBundle:Album:view }
+    defaults: { _controller: InouireMininetBundle:Album:viewPicturesAlbum }
 
 tag_list:
     pattern: /tags
@@ -41,7 +41,7 @@ tag_album:
     
 videos:
     pattern: /videos
-    defaults: { _controller: InouireMininetBundle:Album:viewVideos }
+    defaults: { _controller: InouireMininetBundle:Album:viewVideosAlbum }
 
 
 #routes for actions on posts
