@@ -70,6 +70,35 @@ class AlbumController extends Controller
 
     }
 
+    
+    /**
+     * Display the pictures album of a given tag
+     */
+    public function viewTagAlbumAction($tag){
+     
+        //get entity manager
+        $em = $this->getDoctrine()->getManager();
+        
+        //check that the requested tag does exist
+        //TODO
+        
+        //get all the images with the given tag
+        $image_list = $em->getRepository('InouireMininetBundle:Image')
+                         ->getImagesWithTag($tag);
+        
+        //get all tags
+        $tags = $em->getRepository('InouireMininetBundle:Tag')
+                   ->findAll();   
+        
+        
+        return $this->render('InouireMininetBundle:Main:albumByTag.html.twig',array(
+            'image_list' => $image_list,
+            'tag' => $tag,
+            'tags' => $tags
+        ));
+            
+    }
+    
     /**
      * View the album of all videos
      */

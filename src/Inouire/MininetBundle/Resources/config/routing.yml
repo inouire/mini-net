@@ -24,6 +24,10 @@ albums:
     pattern:  /albums
     defaults: { _controller: InouireMininetBundle:Album:viewCurrentMonthPicturesAlbum }
     
+tag_list:
+    pattern: /tags
+    defaults: { _controller: InouireMininetBundle:Tag:list }
+
 album:
     pattern:  /album/{year}/{month}
     requirements:
@@ -31,14 +35,10 @@ album:
         month: \d+
     defaults: { _controller: InouireMininetBundle:Album:viewPicturesAlbum }
 
-tag_list:
-    pattern: /tags
-    defaults: { _controller: InouireMininetBundle:Tag:list }
-    
 tag_album:
     pattern: /album/{tag}
-    defaults: { _controller: InouireMininetBundle:Tag:album }
-    
+    defaults: { _controller: InouireMininetBundle:Album:viewTagAlbum }
+
 videos:
     pattern: /videos
     defaults: { _controller: InouireMininetBundle:Album:viewVideosAlbum }

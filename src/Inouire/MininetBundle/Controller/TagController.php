@@ -26,31 +26,6 @@ class TagController extends Controller
     }
     
     
-    public function albumAction($tag){
-     
-        //get entity manager
-        $em = $this->getDoctrine()->getManager();
-        
-        //check that the requested tag does exist
-        //TODO
-        
-        //get all the images with the given tag
-        $image_list = $em->getRepository('InouireMininetBundle:Image')
-                         ->getImagesWithTag($tag);
-        
-        //get all tags
-        $tags = $em->getRepository('InouireMininetBundle:Tag')
-                   ->findAll();   
-        
-        
-        return $this->render('InouireMininetBundle:Main:albumByTag.html.twig',array(
-            'image_list' => $image_list,
-            'tag' => $tag,
-            'tags' => $tags
-        ));
-            
-    }
-    
     public function addTagToImageAction($image_id, $tag_id){
         
         //TODO use entity converter to avoid boilerplate code
