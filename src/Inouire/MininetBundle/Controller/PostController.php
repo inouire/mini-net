@@ -7,36 +7,28 @@ use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\PostForm;
 use Inouire\MininetBundle\Controller\ImageController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PostController extends Controller
 {
     
-    /*
-     * Controler for the page for viewing the content of a post
+    /**
+     * View the content of a post (+ attachments)
      */
-    public function viewAction($post_id){
+    public function viewAction(Post $post){
+        // get post date
+        $year = $post->getDate()->format('Y');
+        $month = $post->getDate()->format('m');
         
-        //get corresponding post
-        $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
-        
-        //check that this post exists
-        if($post==null){
-            //TODO return a more accurate redirection
-            return $this->redirect($this->generateUrl('home'));     
-        }else{
-            $year = $post->getDate()->format('Y');
-            $month = $post->getDate()->format('m');
-            return $this->redirect($this->generateUrl('posts',array(
-                'year' => $year,
-                'month' => $month,
-            )).'#'.$post->getId()); 
-        }
-
+        // generate url to corresponding month, with anchor
+        return $this->redirect($this->generateUrl('posts',array(
+            'year' => $year,
+            'month' => $month,
+        )).'#'.$post->getId()); 
     }
     
-    /*
-     * Controler for the page to create a new post
+    /**
+     * Create a new post
      * If a non-published post already exits for the current user,
      * use this one instead of creating a new post
      */
@@ -63,28 +55,24 @@ class PostController extends Controller
             $em->persist($post);
             $em->flush();
             return $this->redirect($this->generateUrl('edit_post',array(
-                'post_id' => $post->getId()
+                'id' => $post->getId()
             )));            
         }else{
             //else redirect to the current draft post for this user
             return $this->redirect($this->generateUrl('edit_post',array(
-                'post_id' => $unpublished_post->getId()
+                'id' => $unpublished_post->getId()
             )));            
         }                
         
     }
    
-    /*
-     * Controler for the page to edit a post
+    /**
+     * Edit a post
      */
-    public function editAction($post_id){
+    public function editAction(Post $post){
         
         //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
-        
-        //get corresponding post
-        $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
         
         //check that this post exists, and that it belongs to this user
         if($post==null){
@@ -108,8 +96,9 @@ class PostController extends Controller
         }else{
             
             //get all available tags
-            $all_tags = $em->getRepository('InouireMininetBundle:Tag')
-                           ->findAll();   
+            $all_tags = $this->getDoctrine()->getManager()
+                             ->getRepository('InouireMininetBundle:Tag')
+                             ->findAll();   
 
             //create post form
             $post_for_form = new PostForm();
@@ -126,24 +115,8 @@ class PostController extends Controller
         
     }
     
-
-    private function getPostForm(PostForm $post){
-
-        $form = $this->createFormBuilder($post)
-            ->add('content', 'textarea',array('required' => false))
-            ->add('id','hidden')
-            ->add('file','file',array('required' => false))
-            ->add('video','file',array('required' => false))
-            //TODO use new SF feature for multi button post
-            //->add('save', 'submit')
-            //->add('publish', 'submit')
-            ->getForm();
-
-        return $form;
-    }
-
-    /*
-     * Controler that handles post submission
+    /**
+     * Handle post update
      */
     public function updateContentAction(){
 
@@ -242,8 +215,26 @@ class PostController extends Controller
             ));
         }
 
-    
     }
+    
+    /**
+     * Build post form
+     */
+    private function getPostForm(PostForm $post){
+
+        $form = $this->createFormBuilder($post)
+            ->add('content', 'textarea',array('required' => false))
+            ->add('id','hidden')
+            ->add('file','file',array('required' => false))
+            ->add('video','file',array('required' => false))
+            //TODO use new SF feature for multi button post
+            //->add('save', 'submit')
+            //->add('publish', 'submit')
+            ->getForm();
+
+        return $form;
+    }
+
     
 
 }

@@ -45,19 +45,19 @@ videos:
 
 
 #routes for actions on posts
+new_post:
+    pattern:  /post/new
+    defaults: { _controller: InouireMininetBundle:Post:new }
+    
 view_post:
-    pattern:  /post/{post_id}
+    pattern:  /post/{id}
     requirements:
         post_id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Post:view }   
-    
-new_post:
-    pattern:  /post/new
-    defaults: { _controller: InouireMininetBundle:Post:new }
 
 edit_post:
-    pattern:  /post/{post_id}/edit
+    pattern:  /post/{id}/edit
     requirements:
         post_id:  \d+
     defaults: { _controller: InouireMininetBundle:Post:edit }   

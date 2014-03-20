@@ -93,9 +93,9 @@
             
             <div class="{{ contentWidth }}">
                 <h4>
-                    <a href="{{ path('view_post',{'post_id': post.id }) }}" >{{ post.author }}</a>
+                    <a href="{{ path('view_post',{'id': post.id }) }}" >{{ post.author }}</a>
                 {% if post.author == app.user.username %}
-                    <a href="{{ path('edit_post', {'post_id': post.id }) }}" class="pull-right">
+                    <a href="{{ path('edit_post', {'id': post.id }) }}" class="pull-right">
                         <i class="icon-pencil"></i>
                     </a>
                 {% endif %} 
