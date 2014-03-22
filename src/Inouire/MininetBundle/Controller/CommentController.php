@@ -10,6 +10,9 @@ use Inouire\MininetBundle\Entity\Comment;
 class CommentController extends Controller
 {
     
+    /**
+     * Add new comment to a post
+     */
     public function postCommentAction(){
 
         //get content of HTTP POST request
@@ -60,15 +63,14 @@ class CommentController extends Controller
             
     }
     
-    public function updateCommentAction($comment_id){
+    /**
+     * Update an existing comment
+     */
+    public function updateCommentAction(Comment $comment){
 
         //get content of HTTP POST request
         $request = $this->getRequest();
         $comment_content = $request->request->get('comment');
-        
-        //get requested comment
-        $em = $this->getDoctrine()->getManager();
-        $comment = $em->getRepository('InouireMininetBundle:Comment')->find($comment_id);
         
         //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -91,6 +93,7 @@ class CommentController extends Controller
         
         //update comment 
         $comment->setContent($comment_content);
+        $em = $this->getDoctrine()->getManager();
         $em->persist($comment);
         $em->flush();
         
@@ -104,11 +107,10 @@ class CommentController extends Controller
             
     }
     
-    public function deleteCommentAction($comment_id){
-
-        //get requested comment
-        $em = $this->getDoctrine()->getManager();
-        $comment = $em->getRepository('InouireMininetBundle:Comment')->find($comment_id);
+    /**
+     * Delete an existing comment
+     */
+    public function deleteCommentAction(Comment $comment){
         
         //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -134,6 +136,7 @@ class CommentController extends Controller
         $comment_content = $comment->getContent();
         
         //remove comment
+        $em = $this->getDoctrine()->getManager();
         $em->remove($comment);
         $em->flush();
         

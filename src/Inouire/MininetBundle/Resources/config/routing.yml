@@ -77,21 +77,21 @@ post_comment:
         _format:  json
     defaults: { _controller: InouireMininetBundle:Comment:postComment }
 
+update_comment:
+    pattern:  /comment/{id}
+    requirements:
+        _method:  POST
+        _format:  json
+    defaults: { _controller: InouireMininetBundle:Comment:updateComment }
+    
 delete_comment:
-    pattern:  /comment/{comment_id}
+    pattern:  /comment/{id}
     requirements:
         comment_id:  \d+
         _method:  DELETE
         _format:  json
     defaults: { _controller: InouireMininetBundle:Comment:deleteComment }
     
-update_comment:
-    pattern:  /comment/{comment_id}
-    requirements:
-        _method:  POST
-        _format:  json
-    defaults: { _controller: InouireMininetBundle:Comment:updateComment }
-
 #routes for actions on images
 get_image:
     pattern:  /image/{image_id}.jpg
