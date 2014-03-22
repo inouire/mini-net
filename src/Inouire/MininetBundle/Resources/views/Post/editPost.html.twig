@@ -75,10 +75,10 @@
                 {% for image in post.images %}
                 <li class="span3" id="image-{{image.id}}">
                     <div>
-                        <a href="{{path('rotate_image',{'image_id':image.id,'direction':'counter-clockwise'})}}"><img src="{{asset('css/icons/rotate-ccw.png')}}"/></a>
-                        <a href="{{path('rotate_image',{'image_id':image.id,'direction':'clockwise'})}}" class="pull-right"><img src="{{asset('css/icons/rotate-cw.png')}}"/></a>
-                        <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
-                             <img src="{{ path('get_thumbnail',{"image_id":image.id}) }}" class="img-polaroid"/>
+                        <a href="{{path('rotate_image',{'id':image.id,'direction':'counter-clockwise'})}}"><img src="{{asset('css/icons/rotate-ccw.png')}}"/></a>
+                        <a href="{{path('rotate_image',{'id':image.id,'direction':'clockwise'})}}" class="pull-right"><img src="{{asset('css/icons/rotate-cw.png')}}"/></a>
+                        <a href="{{ path('get_image',{'id':image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
+                             <img src="{{ path('get_thumbnail',{'id':image.id}) }}" class="img-polaroid"/>
                         </a>
                     
                         {% for tag in image.tags %}

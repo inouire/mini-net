@@ -94,28 +94,28 @@ delete_comment:
     
 #routes for actions on images
 get_image:
-    pattern:  /image/{image_id}.jpg
+    pattern:  /image/{id}.jpg
     requirements:
         image_id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Image:getImage}   
 
 get_thumbnail:
-    pattern:  /thumbnail/{image_id}.jpg
+    pattern:  /thumbnail/{id}
     requirements:
         image_id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Image:getImage, is_thumbnail: true}   
     
 delete_image:
-    pattern:  /image/{image_id}.jpg
+    pattern:  /image/{id}
     requirements:
         image_id:  \d+
         _method:  DELETE
     defaults: { _controller: InouireMininetBundle:Image:deleteImage }  
      
 rotate_image:
-    pattern:  /image/{image_id}.jpg/rotate
+    pattern:  /image/{id}/rotate
     requirements:
         image_id:  \d+
         _method:  GET

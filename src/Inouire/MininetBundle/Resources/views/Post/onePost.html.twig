@@ -117,16 +117,16 @@
                 
                     {% for video in post.videos %}
                     <li class="{{thumbWidth}}">
-                        <a href="{{ path('get_video',{"id":video.id}) }}">
-                             <img src="{{ path('get_video_thumbnail',{"id":video.id}) }}" class="img-polaroid"/>
+                        <a href="{{ path('get_video',{'id':video.id}) }}">
+                             <img src="{{ path('get_video_thumbnail',{'id':video.id}) }}" class="img-polaroid"/>
                         </a>
                     </li>
                     {% endfor %}
                     
                     {% for image in post.images %}
                     <li class="{{thumbWidth}}">
-                        <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
-                             <img src="{{ path('get_thumbnail',{"image_id":image.id}) }}" class="img-polaroid"/>
+                        <a href="{{ path('get_image',{'id':image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
+                             <img src="{{ path('get_thumbnail',{'id':image.id}) }}" class="img-polaroid"/>
                         </a>
                     </li>
                     {% endfor %}

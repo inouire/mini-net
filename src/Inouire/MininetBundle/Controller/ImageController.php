@@ -15,99 +15,20 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ImageController extends Controller
 {
     
-    public function rotateImageAction($image_id){
-        
-        //get operation: clockwise or counter clockwise ?
-        $direction = $this->getRequest()->query->get('direction');
-        if($direction == 'clockwise'){
-            $angle='90';
-        }else if($direction == 'counter-clockwise'){
-            $angle='-90';
+    /**
+     * Get image file (full size or thumbnail)
+     */
+    public function getImageAction(Image $image, $is_thumbnail=false){
+        // get corresponding file path
+        if($is_thumbnail){
+            $image_file=$image->getThumbnailAbsolutePath();
         }else{
-            //illegal operation
-            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
-                'error_level'=> 'bang',
-                'error_title'=> 'Opération inconnue',
-                'error_message' => $direction.' n\'est pas une opération de rotation d\'image connue. Utiliser clockwise ou counter-clockwise',
-                'follow_link' => $this->generateUrl('new_post'),
-                'follow_link_text' => 'Ecrire un post',
-            )); 
-        }
-        
-        //get current user
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        
-        //get image
-        $em = $this->getDoctrine()->getManager();
-        $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
-        
-        //check that this image exists and that it belongs to this user
-        if($image==null ){
-            //post doesn't exist
-            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
-                'error_level'=> 'bang',
-                'error_title'=> 'Image inexistante',
-                'error_message' => 'L\'image sur laquelle vous souhaitez appliquer une rotation n\'existe pas.',
-                'follow_link' => $this->generateUrl('new_post'),
-                'follow_link_text' => 'Ecrire un post',
-            )); 
-        }else if( $image->getPost()->getAuthor() != $user ){
-            //the user is not the author-> throw error
-            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
-                'error_level'=> 'bang',
-                'error_title'=> 'Opération non autorisé',
-                'error_message' => 'Vous ne pouvez pas modifier cette image car vous n\'en êtes pas l\'auteur',
-                'follow_link' => $this->generateUrl('new_post'),
-                'follow_link_text' => 'Ecrire un post',
-            )); 
-        }
-        
-        //open image, rotate it and save it
-        $imagine = new Imagine();
-        $image_to_rotate = $imagine->open($image->getAbsolutePath());
-        $save_options = array('quality' => 100);
-        $image_to_rotate->rotate($angle)
-                        ->save($image->getAbsolutePath(),$save_options);
-                      
-        //rename file (hack to force liip imagine bundle to re-generate cache (not very clean)
-        //TODO use ClacheManager https://github.com/liip/LiipImagineBundle/issues/74
-        $file=new File($image->getAbsolutePath(),true);
-        $new_name = '9'.$image->getPath();
-        $file->move($image->getUploadDir(), $new_name);
-        $image->setPath($new_name);
-        $em->persist($image);
-        $em->flush();
-        
-        //redirect to currently editing post
-        return $this->redirect($this->generateUrl('edit_post',array(
-            'post_id'=> $image->getPost()->getId()
-        )));
-    }
-     
-    public function getImageAction($image_id, $is_thumbnail=false){
-        
-        //get image
-        $em = $this->getDoctrine()->getManager();
-        $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
-        
-        //check that this image exists
-        if($image==null ){
-            //TODO put a better error image file
-            $image_file=__DIR__.'/../../../../web/css/icons/exit.png';
-            $status_code=404;
-        } else {
-            if($is_thumbnail){
-                $image_file=$image->getThumbnailAbsolutePath();
-            }else{
-                $image_file=$image->getAbsolutePath();
-            }
-            
-            $status_code=200;
+            $image_file=$image->getAbsolutePath();
         }
         
         //prepare response
         $response = new Response();
-        $response->setStatusCode($status_code);
+        $response->setStatusCode(200);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
         $response->headers->set('Cache-Control', 'private, max-age=2592000');//1 month
@@ -121,13 +42,12 @@ class ImageController extends Controller
     }
     
     /*
-     * Handles delete action on an image
+     * Delete an existing image
      */ 
-    public function deleteImageAction($image_id){
+    public function deleteImageAction(Image $image){
         
-        //get image + current user
+        //get current user
         $em = $this->getDoctrine()->getManager();
-        $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
         $user = $this->container->get('security.context')->getToken()->getUser();
         
         //check that this image exists and that it belongs to this user
@@ -138,7 +58,7 @@ class ImageController extends Controller
             $response_status = 'error';
             $response_message = 'image '.$image_id.' does not belong to you';
         } else {
-            //delete image from disk
+            //remove image + thumbnail from disk
             $fs = $this->get('filesystem');
             $fs->remove($image->getAbsolutePath());
             $fs->remove($image->getThumbnailAbsolutePath());
@@ -157,6 +77,71 @@ class ImageController extends Controller
             'message' => $response_message
         ));
     }
+    
+    /**
+     * Rotate an existing image
+     */
+    public function rotateImageAction(Image $image){
+        
+        //get operation: clockwise or counter clockwise ?
+        $direction = $this->getRequest()->query->get('direction');
+        if($direction == 'clockwise'){
+            $angle='90';
+        }else if($direction == 'counter-clockwise'){
+            $angle='-90';
+        }else{
+            //illegal operation
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
+                'error_level'=> 'bang',
+                'error_title'=> 'Opération inconnue',
+                'error_message' => $direction.' n\'est pas une opération de rotation d\'image connue. Utiliser clockwise ou counter-clockwise',
+                'follow_link' => $this->generateUrl('new_post'),
+                'follow_link_text' => 'Ecrire un post',
+            )); 
+        }
+        
+        //check that this image belongs to this user
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if( $image->getPost()->getAuthor() != $user ){
+            //the user is not the author-> throw an error
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
+                'error_level'=> 'bang',
+                'error_title'=> 'Opération non autorisé',
+                'error_message' => 'Vous ne pouvez pas modifier cette image car vous n\'en êtes pas l\'auteur',
+                'follow_link' => $this->generateUrl('new_post'),
+                'follow_link_text' => 'Ecrire un post',
+            )); 
+        }
+        
+        //open image, rotate it and save it
+        $imagine = new Imagine();
+        $image_to_rotate = $imagine->open($image->getAbsolutePath());
+        $save_options = array('quality' => 100);
+        $image_to_rotate->rotate($angle)
+                        ->save($image->getAbsolutePath(),$save_options);
+
+        //rename file (legacy hack to force liip imagine bundle to re-generate cache (not very clean)
+        // TODO remove this
+        $file=new File($image->getAbsolutePath(),true);
+        $new_name = '9'.$image->getPath();
+        $file->move($image->getUploadRootDir(), $new_name);
+        $image->setPath($new_name);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($image);
+        $em->flush();
+        
+        // regenerate thumbnail
+        $this->get('inouire.thumbnailer')->generateThumbnailFromImage($image);
+        
+        //redirect to currently editing post
+        return $this->redirect($this->generateUrl('edit_post',array(
+            'id'=> $image->getPost()->getId()
+        )));
+    }
+     
+
+    
+
     
     
 }
