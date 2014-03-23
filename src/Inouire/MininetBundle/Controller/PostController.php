@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\PostForm;
 use Inouire\MininetBundle\Controller\ImageController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PostController extends Controller
 {

@@ -124,15 +124,15 @@ rotate_image:
 tag_image:
     pattern: /image/{id}/tag/{tag_id}
     requirements:
-        image_id: \d+
+        id: \d+
         tag_id:   \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Tag:addTagToImage }
     
 untag_image:
-    pattern: /image/{id}.jpg/untag/{tag_id}
+    pattern: /image/{id}/untag/{tag_id}
     requirements:
-        image_id: \d+
+        id: \d+
         tag_id:   \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Tag:removeTagFromImage }

@@ -84,7 +84,7 @@
                         {% for tag in image.tags %}
                             <span class="label">
                             {{tag.name}}
-                            <a href="{{ path('untag_image',{'image_id':image.id,'tag_id':tag.id})}}">&times;</a>
+                            <a href="{{ path('untag_image',{'id':image.id,'tag_id':tag.id})}}">&times;</a>
                             </span>
                         {% endfor %}
                         <div class="btn-group ">

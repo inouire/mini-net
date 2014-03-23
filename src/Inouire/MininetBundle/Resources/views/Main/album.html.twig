@@ -15,8 +15,8 @@
 
 {% for image in image_list %}
                 <li class="span2" style="text-align:center">
-                    <a href="{{ path('get_image',{"image_id":image.id}) }}" class="fancybox" rel="fancybox[{{requested_year}}]">
-                         <img src="{{ path('get_thumbnail',{"image_id":image.id}) }}" class="img-polaroid" />
+                    <a href="{{ path('get_image',{"id":image.id}) }}" class="fancybox" rel="fancybox[{{requested_year}}]">
+                         <img src="{{ path('get_thumbnail',{"id":image.id}) }}" class="img-polaroid" />
                     </a>
                 </li>
 {% endfor %}
