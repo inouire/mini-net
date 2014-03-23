@@ -96,33 +96,33 @@ delete_comment:
 get_image:
     pattern:  /image/{id}.jpg
     requirements:
-        image_id:  \d+
+        id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Image:getImage}   
 
 get_thumbnail:
     pattern:  /thumbnail/{id}
     requirements:
-        image_id:  \d+
+        id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Image:getImage, is_thumbnail: true}   
     
 delete_image:
     pattern:  /image/{id}
     requirements:
-        image_id:  \d+
+        iid:  \d+
         _method:  DELETE
     defaults: { _controller: InouireMininetBundle:Image:deleteImage }  
      
 rotate_image:
     pattern:  /image/{id}/rotate
     requirements:
-        image_id:  \d+
+        id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Image:rotateImage }
     
 tag_image:
-    pattern: /image/{image_id}.jpg/tag/{tag_id}
+    pattern: /image/{id}/tag/{tag_id}
     requirements:
         image_id: \d+
         tag_id:   \d+
@@ -130,7 +130,7 @@ tag_image:
     defaults: { _controller: InouireMininetBundle:Tag:addTagToImage }
     
 untag_image:
-    pattern: /image/{image_id}.jpg/untag/{tag_id}
+    pattern: /image/{id}.jpg/untag/{tag_id}
     requirements:
         image_id: \d+
         tag_id:   \d+
@@ -140,20 +140,20 @@ untag_image:
 get_video:
     pattern:  /video/{id}
     requirements:
-        video_id:  \d+
+        id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Video:getVideo}   
 
 get_video_thumbnail:
     pattern:  /video/thumbnail/{id}.jpg
     requirements:
-        video_id:  \d+
+        id:  \d+
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Video:getVideoThumbnail}  
     
 delete_video:
     pattern:  /video/{id}
     requirements:
-        image_id:  \d+
+        id:  \d+
         _method:  DELETE
     defaults: { _controller: InouireMininetBundle:Video:deleteVideo } 
