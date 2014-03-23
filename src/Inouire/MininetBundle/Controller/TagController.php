@@ -9,33 +9,28 @@ use Inouire\MininetBundle\Entity\Image;
 
 class TagController extends Controller
 {
-    
+    /**
+     * View the list of available tags
+     */
     public function listAction(){
-        
-        //get entity manager and Tag repository
+        //get all tags
         $em = $this->getDoctrine()->getManager();
         $tag_repo = $em->getRepository('InouireMininetBundle:Tag');   
-        
-        //get all tags
         $tags = $tag_repo->findAll();
         
+        // render tag list only
         return $this->render('InouireMininetBundle:Main:tags.html.twig',array(
             'tags' => $tags,
         ));
 
     }
     
-    
-    public function addTagToImageAction($image_id, $tag_id){
-        
-        //TODO use entity converter to avoid boilerplate code
-        
-        //get entities
-        $em = $this->getDoctrine()->getManager(); 
-        $image = $em->getRepository('InouireMininetBundle:Image')->find($image_id);
-        $tag = $em->getRepository('InouireMininetBundle:Tag')->find($tag_id);
-        
+    /**
+     * Tag an image 
+     */
+    public function addTagToImageAction(Image $image, Tag $tag){
         //check that this image does not already have this tag
+        $em = $this->getDoctrine()->getManager(); 
         if(!$image->getTags()->contains($tag)){
             //add tag to image
             $image->addTag($tag);
@@ -44,11 +39,14 @@ class TagController extends Controller
         }
         
         return $this->redirect($this->generateUrl('edit_post',array(
-            'post_id' => $image->getPost()->getId()
+            'id' => $image->getPost()->getId()
         ))); 
         
     }
     
+    /**
+     * Untag an image
+     */
     public function removeTagFromImageAction($image_id, $tag_id){
         
         //TODO use entity converter to avoid boilerplate code
@@ -68,7 +66,7 @@ class TagController extends Controller
         //}
         
         return $this->redirect($this->generateUrl('edit_post',array(
-            'post_id' => $image->getPost()->getId()
+            'id' => $image->getPost()->getId()
         ))); 
         
     }

@@ -138,10 +138,5 @@ class ImageController extends Controller
             'id'=> $image->getPost()->getId()
         )));
     }
-     
-
-    
-
-    
     
 }

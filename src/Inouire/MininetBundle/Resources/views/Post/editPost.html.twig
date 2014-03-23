@@ -94,7 +94,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 {% for tag in all_tags %}
-                                <li><a href="{{path('tag_image',{'image_id':image.id,'tag_id':tag.id})}}">{{tag.name}}</a></li>
+                                <li><a href="{{path('tag_image',{'id':image.id,'tag_id':tag.id})}}">{{tag.name}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
