@@ -1,4 +1,5 @@
-#main routes
+# main routes
+
 home:
     pattern:  /
     defaults: { _controller: InouireMininetBundle:Default:home }
@@ -18,7 +19,7 @@ posts:
         month: \d+
     defaults: { _controller: InouireMininetBundle:Archives:posts }
     
-# galleries
+# galeries
     
 albums:
     pattern:  /albums
@@ -44,7 +45,8 @@ videos:
     defaults: { _controller: InouireMininetBundle:Album:viewVideosAlbum }
 
 
-#routes for actions on posts
+# routes for actions on posts
+
 new_post:
     pattern:  /post/new
     defaults: { _controller: InouireMininetBundle:Post:new }
@@ -69,7 +71,8 @@ update_post:
     defaults: { _controller: InouireMininetBundle:Post:updateContent }
     
     
-#routes for actions on comments
+# routes for actions on comments
+
 post_comment:
     pattern:  /comment
     requirements:
@@ -92,7 +95,8 @@ delete_comment:
         _format:  json
     defaults: { _controller: InouireMininetBundle:Comment:deleteComment }
     
-#routes for actions on images
+# routes for actions on images
+
 get_image:
     pattern:  /image/{id}.jpg
     requirements:
@@ -137,6 +141,8 @@ untag_image:
         _method:  GET
     defaults: { _controller: InouireMininetBundle:Tag:removeTagFromImage }
 
+# routes for actions on videos
+
 get_video:
     pattern:  /video/{id}
     requirements:
@@ -145,7 +151,7 @@ get_video:
     defaults: { _controller: InouireMininetBundle:Video:getVideo}   
 
 get_video_thumbnail:
-    pattern:  /video/thumbnail/{id}.jpg
+    pattern:  /video/thumbnail/{id}
     requirements:
         id:  \d+
         _method:  GET
