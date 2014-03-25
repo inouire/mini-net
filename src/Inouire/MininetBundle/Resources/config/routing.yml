@@ -166,9 +166,12 @@ delete_video:
 
 # routes for action towards sharing
 
-share_attachments:
+create_sharelink:
     pattern: /post/{id}/share
     requirements:
         id:  \d+
     defaults: { _controller: InouireMininetBundle:ShareLink:new }   
 
+get_sharelink:
+    pattern: /public/{sharelink_hash}
+    defaults: { _controller: InouireMininetBundle:ShareLink:get } 

@@ -15,6 +15,10 @@ security:
         login:
             pattern:   ^/(login$|register|resetting)
             anonymous: true
+        
+        share:
+            pattern: ^/(public)/
+            anonymous: true
             
         main:
             pattern: ^/
