@@ -163,3 +163,12 @@ delete_video:
         id:  \d+
         _method:  DELETE
     defaults: { _controller: InouireMininetBundle:Video:deleteVideo } 
+
+# routes for action towards sharing
+
+share_attachments:
+    pattern: /post/{id}/share
+    requirements:
+        id:  \d+
+    defaults: { _controller: InouireMininetBundle:ShareLink:new }   
+
