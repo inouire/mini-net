@@ -71,6 +71,11 @@ class Post{
     private $videos;
     
     /**
+     * @ORM\OneToMany(targetEntity="Inouire\MininetBundle\Entity\ShareLink", mappedBy="post")
+     */
+    private $sharelinks;
+    
+    /**
      * @var boolean $published
      *
      * @ORM\Column(name="published", type="boolean")
@@ -150,6 +155,21 @@ class Post{
         $video->setPost($this);
     }
 
+    /**
+     * Get all the sharelinks attached to this post
+     */
+    public function getShareLinks(){
+        return $this->sharelinks;
+    }
+    
+    /**
+     * Add a sharelink to a post
+     */
+    public function addShareLink(\Inouire\MininetBundle\Entity\ShareLink $sharelink){
+        $this->sharelinks[] = $sharelink;
+        $sharelink->setPost($this);
+    }
+    
     /**
      * Set date
      *

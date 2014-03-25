@@ -16,11 +16,13 @@ class ShareLink
     public function __construct(){
         
         //set expiration date to now + 8 days
-        $this->expirationDate = new \Datetime();
+        $this->creation_date =  new \DateTime();
+        $this->expiration_date = clone $this->creation_date;
+        $this->expiration_date->add(new \DateInterval('P8D'));
         
         // build random token
-        $pool = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        $token_length = rand(32, 64);
+        $pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        $token_length = rand(16, 32);
         $token = '';
         for ($i = 0; $i < $token_length; $i++) {
             $token .= $pool[rand(0, strlen($pool) - 1)];
@@ -49,7 +51,14 @@ class ShareLink
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="expiration_date", type="datetime")
+     * @ORM\Column(name="creation_date", type="date")
+     */
+    private $creation_date;
+
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="expiration_date", type="date")
      */
     private $expiration_date;
 
@@ -101,7 +110,25 @@ class ShareLink
     }
 
     /**
-     * Set expirationDate
+     * Set creation date
+     * @param \DateTime $creation_date
+     */
+    public function setCreationDate($creation_date)
+    {
+        $this->creation_date = $creation_date;
+        return $this;
+    }
+    /**
+     * Get creation date
+     * @return \DateTime 
+     */
+    public function getCreationDate()
+    {
+        return $this->creation_date;
+    }
+    
+    /**
+     * Set expiration date
      * @param \DateTime $expiration_date
      */
     public function setExpirationDate($expiration_date)
@@ -109,9 +136,8 @@ class ShareLink
         $this->expiration_date = $expiration_date;
         return $this;
     }
-
     /**
-     * Get expirationDate
+     * Get expiration date
      * @return \DateTime 
      */
     public function getExpirationDate()
