@@ -1,0 +1,39 @@
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
+
+
+{% block body %}
+
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    
+    <div class="row">
+        <center>
+            <img src="{{asset('css/icons/about.png')}}"/>
+            
+            <div>
+              <h2>
+                Un lien public a été créé vers les pièce jointes de ce post:<br>
+                {% set hyperlink = url('get_sharelink',{"token":sharelink.token}) %}
+                <a href="{{  hyperlink }}">{{hyperlink}}</a><br>
+                <small>Ce lien expirera le {{sharelink.expirationDate | localeDate('medium','none',null,'d MMMM YYYY')}} </small>
+              </h2>
+            </div>
+            <br>
+            
+            <!--<a href="#" class="btn btn-inverse">
+                Copier le lien dans le press-papier
+            </a>-->
+        
+        </center>
+    </div>
+    
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+
+{% endblock %}
+
+
+{% block footer %}
+    
+    <div class="big-blank-block visible-desktop"></div>
+    {{ parent() }}
+    
+{% endblock %}

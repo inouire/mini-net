@@ -43,13 +43,39 @@ class ShareLinkController extends Controller
             $sharelink = $existing_sharelink;
         }
         
-        return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
-            'error_title'=> 'New Share Link',
-            'error_message' => 'Le lien '.$sharelink->getToken().' a été créé.',
-            'follow_link' => $this->generateUrl('home'),
-            'follow_link_text' => 'Retour à l\'accueil',
+        return $this->render('InouireMininetBundle:Main:createShareLink.html.twig',array(
+            'sharelink' => $sharelink
         )); 
     }
+    
+    /**
+     * Public acess to a sharelink
+     */
+    public function getAction($token){
         
+        // try to find this link
+        $em = $this->getDoctrine()->getManager();
+        $sharelink_repo = $em->getRepository('InouireMininetBundle:ShareLink');
+        $sharelink = $sharelink_repo->findOneBy(array('token' => $token));
+        
+        
+        if($sharelink == null){
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
+                'error_title'=> 'No share link found for token '.$token,
+                'error_message' => 'This access is public',
+                'follow_link' => $this->generateUrl('home'),
+                'follow_link_text' => 'Retour à l\'accueil',
+            ));
+
+        }else{
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
+                'error_title'=> 'Public access to share link '.$token,
+                'error_message' => 'This access is public',
+                'follow_link' => $this->generateUrl('home'),
+                'follow_link_text' => 'Retour à l\'accueil',
+            ));
+        }
+        
+    }
     
 }

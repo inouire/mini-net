@@ -173,5 +173,5 @@ create_sharelink:
     defaults: { _controller: InouireMininetBundle:ShareLink:new }   
 
 get_sharelink:
-    pattern: /public/{sharelink_hash}
+    pattern: /public/{token}
     defaults: { _controller: InouireMininetBundle:ShareLink:get } 
