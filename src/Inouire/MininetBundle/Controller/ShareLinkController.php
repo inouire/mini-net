@@ -4,6 +4,7 @@ namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\ShareLink;
 
@@ -58,23 +59,18 @@ class ShareLinkController extends Controller
         $sharelink_repo = $em->getRepository('InouireMininetBundle:ShareLink');
         $sharelink = $sharelink_repo->findOneBy(array('token' => $token));
         
-        
+        // send error if it does not exist
         if($sharelink == null){
-            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
-                'error_title'=> 'No share link found for token '.$token,
-                'error_message' => 'This access is public',
-                'follow_link' => $this->generateUrl('home'),
-                'follow_link_text' => 'Retour à l\'accueil',
-            ));
-
-        }else{
-            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
-                'error_title'=> 'Public access to share link '.$token,
-                'error_message' => 'This access is public',
-                'follow_link' => $this->generateUrl('home'),
-                'follow_link_text' => 'Retour à l\'accueil',
-            ));
+            throw new NotFoundHttpException('Le lien que vous demandez n\'existe pas');
         }
+        
+        // check expiration date
+        // TODO
+
+        // render public link
+        return $this->render('InouireMininetBundle:Main:getShareLink.html.twig',array(
+            'sharelink' => $sharelink
+        ));
         
     }
     

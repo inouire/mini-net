@@ -144,6 +144,15 @@ class ShareLink
     {
         return $this->expiration_date;
     }
+    
+    /**
+     * Get number of days until expiration
+     */
+    public function getExpirationDays(){
+        $today = new \Datetime();
+        $expiration_days = $today->diff($this->expiration_date);
+        return $expiration_days->format('%a');
+    }
 
     /**
      * Set token

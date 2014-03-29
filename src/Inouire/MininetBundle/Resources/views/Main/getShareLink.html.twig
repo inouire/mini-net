@@ -6,15 +6,11 @@
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
     
     <div class="row">
-        <center>
-            <img src="{{asset('css/icons/about.png')}}"/>
-            
+        <center>           
             <div>
               <h2>
-                Un lien public a été créé vers les pièce jointes de ce post:<br>
-                {% set hyperlink = url('get_sharelink',{"token":sharelink.token}) %}
-                <a href="{{  hyperlink }}">{{hyperlink}}</a><br>
-                <small>Ce lien expirera le {{sharelink.expirationDate | localeDate('medium','none',null,'d MMMM YYYY')}} </small>
+                {{ sharelink.author.username}} a souhaité partager ces fichiers avec vous:<br>
+                <small>Ce lien expirera le {{sharelink.expirationDate | localeDate('medium','none',null,'d MMMM YYYY')}} (dans {{sharelink.getExpirationDays + 1}} jours) </small>
               </h2>
             </div>
             <br>
