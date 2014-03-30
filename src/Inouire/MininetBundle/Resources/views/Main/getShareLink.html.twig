@@ -7,7 +7,7 @@
         <center>
             <div>
               <h2>
-                {{ sharelink.author.username}} a souhaité partager des fichiers avec vous<br>
+                {{ sharelink.author.username}} a souhaité partager {%if sharelink.post.totalAttachedFiles > 1%}des fichiers{%else%}un fichier{%endif%} avec vous<br>
                 <small>Attention, ce lien expirera le {{sharelink.expirationDate | localeDate('medium','none',null,'d MMMM YYYY')}} (dans {{sharelink.getExpirationDays + 1}} jours) </small>
               </h2>
             </div>
