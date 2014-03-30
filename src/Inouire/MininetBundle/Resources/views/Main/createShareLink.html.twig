@@ -21,7 +21,15 @@
             </a>-->
         </center>
         
-        <div class="span12" style="text-align:center">
+        {% if sharelink.post.totalAttachedFiles == 1 %}
+            {% set offset = 'span 8 offset4' %}
+        {% elseif sharelink.post.totalAttachedFiles == 2 %}
+            {% set offset = 'span10 offset2' %}
+        {% else %}
+            {% set offset = 'span12' %}
+        {% endif %}
+            
+        <div class="{{offset}}" style="text-align:center">
             <ul class="thumbnails">
             
                 {% for video in sharelink.post.videos %}
