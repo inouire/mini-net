@@ -4,7 +4,7 @@ namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\ShareLink;
 
@@ -19,7 +19,7 @@ class ShareLinkController extends Controller
         //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
         
-        // check that there is not already a share link on this post created the same day
+        // check that there is not already a share link on this post+user created the same day
         $em = $this->getDoctrine()->getManager();
         $sharelink_repo = $em->getRepository('InouireMininetBundle:ShareLink');
         $existing_sharelink = $sharelink_repo->findOneBy(array(
@@ -54,24 +54,28 @@ class ShareLinkController extends Controller
      */
     public function getAction($token){
         
-        // try to find this link
-        $em = $this->getDoctrine()->getManager();
-        $sharelink_repo = $em->getRepository('InouireMininetBundle:ShareLink');
-        $sharelink = $sharelink_repo->findOneBy(array('token' => $token));
+        // get sharelink validity status
+        $checker = $this->get('inouire.sharelink_checker');
+        $sharelink = $checker->checkShareLinkToken($token);
         
-        // send error if it does not exist
         if($sharelink == null){
-            throw new NotFoundHttpException('Le lien que vous demandez n\'existe pas');
+            // sharelink has expired
+            return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
+                'error_title'=> 'Lien expiré',
+                'error_message' => 'Le lien public que vous avez demandé a expiré',
+                'follow_link' => $this->generateUrl('home'),
+                'follow_link_text' => 'Retourner à la page d\'acceuil',
+            ));
+        }else{
+            // sharelink is valid, render public link
+            return $this->render('InouireMininetBundle:Main:getShareLink.html.twig',array(
+                'sharelink' => $sharelink
+            ));
         }
         
-        // check expiration date
-        // TODO
-
-        // render public link
-        return $this->render('InouireMininetBundle:Main:getShareLink.html.twig',array(
-            'sharelink' => $sharelink
-        ));
+        
         
     }
+    
     
 }
