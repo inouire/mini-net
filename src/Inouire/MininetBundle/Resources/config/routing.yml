@@ -175,3 +175,12 @@ create_sharelink:
 get_sharelink:
     pattern: /public/{token}
     defaults: { _controller: InouireMininetBundle:ShareLink:get } 
+
+get_sharelink_image:
+    pattern: /public/{token}/image/{id}.jpg
+    defaults: { _controller: InouireMininetBundle:ShareLink:getImage } 
+
+get_sharelink_thumbnail:
+    pattern: /public/{token}/thumbnail/{id}
+    defaults: { _controller: InouireMininetBundle:ShareLink:getImage, is_thumbnail: true}   
+    

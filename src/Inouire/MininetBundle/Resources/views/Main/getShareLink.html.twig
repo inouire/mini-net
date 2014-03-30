@@ -9,15 +9,25 @@
         <center>           
             <div>
               <h2>
-                {{ sharelink.author.username}} a souhaité partager ces fichiers avec vous:<br>
-                <small>Ce lien expirera le {{sharelink.expirationDate | localeDate('medium','none',null,'d MMMM YYYY')}} (dans {{sharelink.getExpirationDays + 1}} jours) </small>
+                {{ sharelink.author.username}} a souhaité partager des fichiers avec vous<br>
+                <small>Attention, ce lien expirera le {{sharelink.expirationDate | localeDate('medium','none',null,'d MMMM YYYY')}} (dans {{sharelink.getExpirationDays + 1}} jours) </small>
               </h2>
             </div>
             <br>
-            
-            <!--<a href="#" class="btn btn-inverse">
-                Copier le lien dans le press-papier
-            </a>-->
+        
+            <div class="span12" style="text-align:center">
+                <ul class="thumbnails">
+                
+                    {% for image in sharelink.post.images %}
+                    <li class="span4">
+                        <a href="{{ path('get_sharelink_image',{'token': sharelink.token, 'id':image.id}) }}" class="fancybox" rel="album[{{sharelink.post.id}}]">
+                             <img src="{{ path('get_sharelink_thumbnail',{'token': sharelink.token,'id':image.id}) }}" class="img-polaroid"/>
+                        </a>
+                    </li>
+                    {% endfor %}
+                    
+                </ul>
+            </div>
         
         </center>
     </div>
@@ -32,4 +42,23 @@
     <div class="big-blank-block visible-desktop"></div>
     {{ parent() }}
     
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+       
+    <script type="text/javascript">
+       
+        $(document).ready(function(){
+            //init fancybox on all pictures
+            $(".fancybox").fancybox({
+                loop: true,
+                openEffect: 'fade',
+                closeEffect: 'fade',
+                nextEffect: 'none',
+                prevEffect:'none',
+                nextClick: true,
+            });
+        });
+    </script>
 {% endblock %}

@@ -4,7 +4,8 @@ namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Inouire\MininetBundle\Entity\Image;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\ShareLink;
 
@@ -52,8 +53,8 @@ class ShareLinkController extends Controller
     /**
      * Public acess to a sharelink
      */
-    public function getAction($token){
-        
+    public function getAction($token)
+    {
         // get sharelink validity status
         $checker = $this->get('inouire.sharelink_checker');
         $sharelink = $checker->checkShareLinkToken($token);
@@ -71,10 +72,25 @@ class ShareLinkController extends Controller
             return $this->render('InouireMininetBundle:Main:getShareLink.html.twig',array(
                 'sharelink' => $sharelink
             ));
+        }        
+    }
+    
+    public function getImageAction($token, Image $image, $is_thumbnail=false)
+    {
+        // get sharelink validity status
+        $checker = $this->get('inouire.sharelink_checker');
+        $sharelink = $checker->checkShareLinkToken($token);
+        
+        // error if sharelink expired
+        if($sharelink == null){
+            throw new NotFoundHttpException('Le lien vers cette image a expiré');
         }
         
-        
-        
+        // forward to regular controlelr
+        return $this->forward('InouireMininetBundle:Image:getImage', array(
+            'image'  => $image,
+            'is_thumbnail' => $is_thumbnail,
+        ));
     }
     
     

@@ -18,7 +18,8 @@ class ImageController extends Controller
     /**
      * Get image file (full size or thumbnail)
      */
-    public function getImageAction(Image $image, $is_thumbnail=false){
+    public function getImageAction(Image $image, $is_thumbnail=false)
+    {
         // get corresponding file path
         if($is_thumbnail){
             $image_file=$image->getThumbnailAbsolutePath();
@@ -44,8 +45,8 @@ class ImageController extends Controller
     /*
      * Delete an existing image
      */ 
-    public function deleteImageAction(Image $image){
-        
+    public function deleteImageAction(Image $image)
+    {
         //get current user
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -81,8 +82,8 @@ class ImageController extends Controller
     /**
      * Rotate an existing image
      */
-    public function rotateImageAction(Image $image){
-        
+    public function rotateImageAction(Image $image)
+    {
         //get operation: clockwise or counter clockwise ?
         $direction = $this->getRequest()->query->get('direction');
         if($direction == 'clockwise'){
