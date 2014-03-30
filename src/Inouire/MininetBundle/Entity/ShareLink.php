@@ -22,7 +22,7 @@ class ShareLink
         
         // build random token
         $pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        $token_length = rand(16, 32);
+        $token_length = rand(28, 32);
         $token = '';
         for ($i = 0; $i < $token_length; $i++) {
             $token .= $pool[rand(0, strlen($pool) - 1)];

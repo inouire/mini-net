@@ -184,3 +184,10 @@ get_sharelink_thumbnail:
     pattern: /public/{token}/thumbnail/{id}
     defaults: { _controller: InouireMininetBundle:ShareLink:getImage, is_thumbnail: true}   
     
+get_sharelink_video:
+    pattern: /public/{token}/video/{id}
+    defaults: { _controller: InouireMininetBundle:ShareLink:getVideo } 
+
+get_sharelink_video_thumbnail:
+    pattern: /public/{token}/video/thumbnail/{id}
+    defaults: { _controller: InouireMininetBundle:ShareLink:getVideoThumbnail}

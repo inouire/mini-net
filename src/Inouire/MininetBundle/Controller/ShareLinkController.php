@@ -5,9 +5,10 @@ namespace Inouire\MininetBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Inouire\MininetBundle\Entity\Image;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\ShareLink;
+use Inouire\MininetBundle\Entity\Image;
+use Inouire\MininetBundle\Entity\Video;
 
 class ShareLinkController extends Controller
 {
@@ -15,8 +16,8 @@ class ShareLinkController extends Controller
     /**
      * Create new sharelink on some post attachments
      */
-    public function newAction(Post $post){
-        
+    public function newAction(Post $post)
+    {
         //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
         
@@ -75,6 +76,9 @@ class ShareLinkController extends Controller
         }        
     }
     
+    /**
+     * Get image file through sharelink
+     */
     public function getImageAction($token, Image $image, $is_thumbnail=false)
     {
         // get sharelink validity status
@@ -93,5 +97,43 @@ class ShareLinkController extends Controller
         ));
     }
     
+    /**
+     * Get video file through sharelink
+     */
+    public function getVideoAction($token, Video $video)
+    {
+        // get sharelink validity status
+        $checker = $this->get('inouire.sharelink_checker');
+        $sharelink = $checker->checkShareLinkToken($token);
+        
+        // error if sharelink expired
+        if($sharelink == null){
+            throw new NotFoundHttpException('Le lien vers cette vidéo a expiré');
+        }
+        
+        // forward to regular controlelr
+        return $this->forward('InouireMininetBundle:Video:getVideo', array(
+            'video'  => $video,
+        ));
+    }
     
+    /**
+     * Get video thumbnail through sharelink
+     */
+    public function getVideoThumbnailAction($token, Video $video)
+    {
+        // get sharelink validity status
+        $checker = $this->get('inouire.sharelink_checker');
+        $sharelink = $checker->checkShareLinkToken($token);
+        
+        // error if sharelink expired
+        if($sharelink == null){
+            throw new NotFoundHttpException('Le lien vers cet aperçu de vidéo a expiré');
+        }
+        
+        // forward to regular controlelr
+        return $this->forward('InouireMininetBundle:Video:getVideoThumbnail', array(
+            'video'  => $video,
+        ));
+    }
 }

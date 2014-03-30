@@ -16,8 +16,8 @@ class VideoController extends Controller
     /**
      * Download video file
      */
-    public function getVideoAction(Video $video){
-        
+    public function getVideoAction(Video $video)
+    {
         $video_file=$video->getAbsolutePath();
         $file_type=$video->getType(); 
         
@@ -47,8 +47,8 @@ class VideoController extends Controller
     /**
      * Get video thumbnail
      */
-    public function getVideoThumbnailAction(Video $video){
-       
+    public function getVideoThumbnailAction(Video $video)
+    {
         $thumbnail_file=$video->getThumbnailAbsolutePath();
         
         //prepare response
@@ -69,8 +69,8 @@ class VideoController extends Controller
     /**
      * Delete video file
      */
-    public function deleteVideoAction(Video $video){
-    
+    public function deleteVideoAction(Video $video)
+    {
         //check that this video exists and that it belongs to this user
         $user = $this->container->get('security.context')->getToken()->getUser();
         if($video==null ){

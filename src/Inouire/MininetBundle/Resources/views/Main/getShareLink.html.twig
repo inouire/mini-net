@@ -2,8 +2,6 @@
 
 
 {% block body %}
-
-    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
     
     <div class="row">
         <center>           
@@ -17,6 +15,14 @@
         
             <div class="span12" style="text-align:center">
                 <ul class="thumbnails">
+                
+                    {% for video in sharelink.post.videos %}
+                    <li class="span4">
+                        <a href="{{ path('get_sharelink_video',{'token': sharelink.token,'id':video.id}) }}">
+                             <img src="{{ path('get_sharelink_video_thumbnail',{'token': sharelink.token,'id':video.id}) }}" class="img-polaroid"/>
+                        </a>
+                    </li>
+                    {% endfor %}
                 
                     {% for image in sharelink.post.images %}
                     <li class="span4">
