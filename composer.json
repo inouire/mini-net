@@ -22,7 +22,10 @@
         "friendsofsymfony/user-bundle": "2.0.x-dev",
         "imagine/imagine": "0.5.*",
         "bcc/extra-tools-bundle": "dev-master",
-	"php-ffmpeg/php-ffmpeg": "~0.4"
+        "php-ffmpeg/php-ffmpeg": "~0.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.34"
     },
     "scripts": {
         "post-install-cmd": [
