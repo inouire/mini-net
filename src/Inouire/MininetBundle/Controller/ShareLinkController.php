@@ -90,6 +90,19 @@ class ShareLinkController extends Controller
             throw new NotFoundHttpException('Le lien vers cette image a expiré');
         }
         
+        // check that the requested image is part of the sharelink
+        $authorized_images = $sharelink->getPost()->getImages();
+        $image_id = $image->getId();
+        $is_authorized = false;
+        foreach($authorized_images as $authorized_image){
+            if($authorized_image->getId() == $image_id){
+                $is_authorized = true;
+            }
+        }
+        if(!$is_authorized){
+            throw new NotFoundHttpException('Le lien vers cette image n\'existe pas');
+        }
+        
         // forward to regular controlelr
         return $this->forward('InouireMininetBundle:Image:getImage', array(
             'image'  => $image,
