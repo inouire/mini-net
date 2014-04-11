@@ -1,15 +1,21 @@
 # main routes
-
+        
 home:
     pattern:  /
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Default:home }
     
 oldHome:
     pattern:  /home
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Default:oldHome }
 
 archives:
     pattern:  /posts
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Archives:viewCurrentMonth }
     
 posts:
@@ -17,16 +23,21 @@ posts:
     requirements:
         year:  \d+
         month: \d+
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Archives:posts }
     
 # galeries
     
 albums:
     pattern:  /albums
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Album:viewCurrentMonthPicturesAlbum }
     
 tag_list:
     pattern: /tags
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Tag:list }
 
 album:
@@ -34,14 +45,19 @@ album:
     requirements:
         year:  \d+
         month: \d+
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Album:viewPicturesAlbum }
 
 tag_album:
     pattern: /album/{tag}
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Album:viewTagAlbum }
 
 videos:
     pattern: /videos
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Album:viewVideosAlbum }
 
 
@@ -49,6 +65,8 @@ videos:
 
 new_post:
     pattern:  /post/new
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Post:new }
     
 view_post:
@@ -62,6 +80,7 @@ edit_post:
     pattern:  /post/{id}/edit
     requirements:
         post_id:  \d+
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:Post:edit }   
     
 update_post:
@@ -169,25 +188,35 @@ delete_video:
 create_sharelink:
     pattern: /post/{id}/share
     requirements:
-        id:  \d+
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:ShareLink:new }   
 
 get_sharelink:
     pattern: /public/{token}
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:ShareLink:get } 
 
 get_sharelink_image:
     pattern: /public/{token}/image/{id}.jpg
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:ShareLink:getImage } 
 
 get_sharelink_thumbnail:
     pattern: /public/{token}/thumbnail/{id}
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:ShareLink:getImage, is_thumbnail: true}   
     
 get_sharelink_video:
     pattern: /public/{token}/video/{id}
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:ShareLink:getVideo } 
 
 get_sharelink_video_thumbnail:
     pattern: /public/{token}/video/thumbnail/{id}
+    requirements:
+        _method:  GET
     defaults: { _controller: InouireMininetBundle:ShareLink:getVideoThumbnail}
