@@ -15,7 +15,7 @@ framework:
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale: %locale%
     trusted_proxies: ~
-    session:         ~
+    session:         mininet
 
 # Twig Configuration
 twig:
