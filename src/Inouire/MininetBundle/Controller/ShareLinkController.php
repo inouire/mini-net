@@ -124,6 +124,19 @@ class ShareLinkController extends Controller
             throw new NotFoundHttpException('Le lien vers cette vidéo a expiré');
         }
         
+        // check that the requested video is part of the sharelink
+        $authorized_videos = $sharelink->getPost()->getVideos();
+        $video_id = $video->getId();
+        $is_authorized = false;
+        foreach($authorized_videos as $authorized_video){
+            if($authorized_video->getId() == $video_id){
+                $is_authorized = true;
+            }
+        }
+        if(!$is_authorized){
+            throw new NotFoundHttpException('Le lien vers cette vidéo n\'existe pas');
+        }
+        
         // forward to regular controlelr
         return $this->forward('InouireMininetBundle:Video:getVideo', array(
             'video'  => $video,
@@ -142,6 +155,19 @@ class ShareLinkController extends Controller
         // error if sharelink expired
         if($sharelink == null){
             throw new NotFoundHttpException('Le lien vers cet aperçu de vidéo a expiré');
+        }
+        
+        // check that the requested video is part of the sharelink
+        $authorized_videos = $sharelink->getPost()->getVideos();
+        $video_id = $video->getId();
+        $is_authorized = false;
+        foreach($authorized_videos as $authorized_video){
+            if($authorized_video->getId() == $video_id){
+                $is_authorized = true;
+            }
+        }
+        if(!$is_authorized){
+            throw new NotFoundHttpException('Le lien vers cette aperçu de vidéo n\'existe pas');
         }
         
         // forward to regular controlelr
