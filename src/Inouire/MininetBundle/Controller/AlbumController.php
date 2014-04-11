@@ -3,9 +3,6 @@
 namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Inouire\MininetBundle\Entity\Post;
-use Inouire\MininetBundle\Entity\Video;
-use Inouire\MininetBundle\Entity\Tag;
 
 class AlbumController extends Controller
 {

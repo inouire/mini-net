@@ -313,11 +313,6 @@ class Post{
         $hyperlink = '<a href="$1">$1</a>';
         $content = preg_replace($hyperlink_pattern, $hyperlink, $content);
 
-        //replace iframe link
-        //$video_pattern = '/video:\/\/([^\s]+)/i';
-        //$video_embed = '<iframe width="560" height="315" src="http://$1" frameborder="0"></iframe>';
-        //$content = preg_replace($video_pattern, $video_embed, $content);
-        
         //replace carriage return
         $content = str_replace("\n","<br />",$content);
         

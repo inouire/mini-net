@@ -3,7 +3,6 @@
 namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\ShareLink;

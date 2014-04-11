@@ -3,10 +3,8 @@
 namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Post;
 use Inouire\MininetBundle\Entity\PostForm;
-use Inouire\MininetBundle\Controller\ImageController;
 
 class PostController extends Controller
 {
@@ -203,9 +201,6 @@ class PostController extends Controller
             //persist changes and redirect to next page (home or post editor)
             $em->flush();
             return $this->redirect($redirect_to);
-
-            return $this->redirect($this->generateUrl('home'));
-
         }else{
             return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_level'=> 'bang',

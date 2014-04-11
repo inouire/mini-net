@@ -3,7 +3,6 @@
 namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Inouire\MininetBundle\Entity\Post;
 
 class ArchivesController extends Controller
 {

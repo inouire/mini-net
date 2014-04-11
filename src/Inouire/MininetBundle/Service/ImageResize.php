@@ -3,10 +3,7 @@
 namespace Inouire\MininetBundle\Service;
 
 use Inouire\MininetBundle\Entity\Image;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\File;
 use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
 
 class ImageResize
 {
@@ -22,7 +19,7 @@ class ImageResize
     {
         try{
             $imagine = new Imagine();
-            $image = $imagine->open($filePath);
+            $imagine->open($filePath);
             return true;
         }catch(\Exception $e){
             return false;
@@ -32,7 +29,7 @@ class ImageResize
     /*
      * Get image orientation
      */
-    public function getImageOrientation($image)
+    public function getImageOrientation(Image $image)
     {
         //default: normal orientation
         $orientation = 1;
@@ -49,7 +46,7 @@ class ImageResize
     /*
      * Rotate an image depending on its orientation
      */
-    public function rotateImage($image,$orientation)
+    public function rotateImage(Image $image,$orientation)
     {
         $rotation_angles= array(
             1 =>   0,
@@ -76,7 +73,7 @@ class ImageResize
     /*
      * Resize an image based on a maximum height
      */
-    public function resizeImage($image, $max_height)
+    public function resizeImage(Image $image, $max_height)
     {
         //open image
         $imagine = new Imagine();

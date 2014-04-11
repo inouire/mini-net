@@ -58,14 +58,14 @@ class Tag{
     /**
      * Add an image for this tag
      */
-    public function addImage($image){
+    public function addImage(Image $image){
         $this->images->add($image);
     }
     
     /**
      * Remove an image for this tag
      */
-    public function removeImage($image){
+    public function removeImage(Image $image){
         $this->images->removeElement($image);
     }
     

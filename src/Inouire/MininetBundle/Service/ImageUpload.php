@@ -7,7 +7,6 @@ use Inouire\MininetBundle\Service\ImageResize;
 use Inouire\MininetBundle\Service\Thumbnailer;
 use Inouire\MininetBundle\Entity\Image;
 use Inouire\MininetBundle\Entity\Video;
-use Symfony\Component\HttpFoundation\File\File;
 
 class ImageUpload
 {

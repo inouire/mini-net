@@ -3,8 +3,6 @@
 namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Inouire\MininetBundle\Entity\Post;
 
 class DefaultController extends Controller
 {

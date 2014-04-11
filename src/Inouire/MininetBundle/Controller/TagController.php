@@ -3,7 +3,6 @@
 namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Tag;
 use Inouire\MininetBundle\Entity\Image;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

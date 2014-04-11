@@ -2,7 +2,6 @@
 
 namespace Inouire\MininetBundle\Service;
 
-use Inouire\MininetBundle\Entity\ShareLink;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
