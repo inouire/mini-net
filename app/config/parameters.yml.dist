@@ -12,6 +12,6 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            eovnr9ger642ifbe
     
     images_path: web/img
