@@ -10,7 +10,7 @@ It is based on the PHP framework Symfony2, and is also using [Bootstrap](http://
 * Web server with PHP >= 5.3 
 * Database engine supported by Doctrine ORM, and the PHP driver for this database
 
-## Installation (for Debian 6 + Apache)
+## Installation (for Debian 6 + Apache2)
 
 This guide is made for Debian6 with an Apache web server and a MySQL database, feel free to adapt it to your own configuration.
 
@@ -48,13 +48,7 @@ Edit `app/config/parameters.yml` with your database and locale settings
 
 Retrieve project dependencies with composer
 ``` bash
-composer install
-```
-
-Tip: if you are behing a proxy, set git variables http.proxy and/or https.proxy
-``` bash
-git config --global http.proxy http://login:password@host:port/
-git config --global https.proxy https://login:password@host:port/
+composer install --no-dev
 ```
 
 ### Configure apache2 virtual host
@@ -64,6 +58,8 @@ Configure a new apache2 virtual host which root is the /web directory of git rep
 For clean urls, activate mod_rewrite and AllowOverride of .htaccess in your apache virtual host
 ``` bash
 a2enmod rewrite
+a2enmod headers
+a2enmod expires
 ```
 
 Tip: if you intend to run a production environement, modifiy web/.htaccess like this:
