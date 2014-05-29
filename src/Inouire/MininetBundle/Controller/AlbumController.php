@@ -46,6 +46,13 @@ class AlbumController extends Controller
             $months_of_year[] = new \Datetime('2000-'.$m.'-01');
         }
         
+        // retrieve the "sharelink selection" option
+        if($this->getRequest->query->get('share') !== null){
+            $sharelink_selection = true;
+        }else{
+            $sharelink_selection = false;
+        }
+        
         //check that some pictures are avalaible for this year
         if(count($image_list)>0){
             //render the automatic album
@@ -54,7 +61,7 @@ class AlbumController extends Controller
                 'requested_date' => $requested_date,
                 'requested_year' => $year,
                 'requested_month' => $month,
-                'months_of_year' => $months_of_year
+                'months_of_year' => $months_of_year,
             ));
         }else{
             //render the 'no album' page

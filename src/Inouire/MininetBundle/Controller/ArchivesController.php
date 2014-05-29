@@ -3,6 +3,7 @@
 namespace Inouire\MininetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class ArchivesController extends Controller
 {
@@ -11,10 +12,23 @@ class ArchivesController extends Controller
      * Redirect archives root URL to the current year-month archives
      */
     public function viewCurrentMonthAction(){
-        
+                
         return $this->redirect($this->generateUrl('posts',array(
             'year' => date('Y'),
-            'month' => date('m')
+            'month' => date('m'),
+        )));
+        
+    }
+    
+    /**
+     * Redirect to archives for attachment sharing
+     */
+    public function selectPostToShareFromArchivesAction(){
+                
+        return $this->redirect($this->generateUrl('posts',array(
+            'year' => date('Y'),
+            'month' => date('m'),
+            'share' => 1
         )));
         
     }
@@ -22,7 +36,7 @@ class ArchivesController extends Controller
     /**
      * Handles the archives of a given year and month
      */
-    public function postsAction($year,$month){
+    public function postsAction($year,$month,Request $request){
 
         //check validity of year and month given
         if( $year > 8000 || $year < 1 || $month < 1 || $month > 12){
@@ -50,6 +64,13 @@ class ArchivesController extends Controller
             $months_of_year[] = new \Datetime('2000-'.$m.'-01');
         }
         
+        // retrieve the "sharelink selection" option
+        if($request->query->get('share') != null){
+            $sharelink_selection = true;
+        }else{
+            $sharelink_selection = false;
+        }
+        
         //check that there are some posts for this month
         if( count($monthly_posts) > 0 ){
             return $this->render('InouireMininetBundle:Main:archives.html.twig',array(
@@ -57,14 +78,16 @@ class ArchivesController extends Controller
                 'requested_date' => $requested_date,
                 'requested_year' => $year,
                 'requested_month' => $month,
-                'months_of_year' => $months_of_year
+                'months_of_year' => $months_of_year,
+                'share_selection' => $sharelink_selection,
             ));
         }else{ //if no post available, display the specific page
             return $this->render('InouireMininetBundle:Empty:noArchives.html.twig',array(
                 'requested_date' => $requested_date,
                 'requested_year' => $year,
                 'requested_month' => $month,
-                'months_of_year' => $months_of_year
+                'months_of_year' => $months_of_year,
+                'share_selection' => $sharelink_selection,
             ));
         }
         

@@ -4,6 +4,12 @@
 
 {% block body %}
     
+    {% if share_selection is defined and share_selection %}
+    <div class="alert alert-success pull-center" style="text-align:center">
+        Naviguez dans les archives et sélectionnez le post dont vous voulez partager les pièces jointes avec l'icone <i class="icon-share"></i>.
+    </div>
+    {% endif %}
+    
     <center><h1>{{ requested_year }}</h1></center>
     
     {% include 'InouireMininetBundle:Default:monthsOfYearRibbon.html.twig' %}

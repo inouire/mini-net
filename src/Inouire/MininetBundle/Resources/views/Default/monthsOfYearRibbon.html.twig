@@ -1,18 +1,24 @@
 
     {% set currentPath = app.request.attributes.get('_route') %}
-        
+
+    {% if share_selection is defined and share_selection %}
+        {% set share = '?share=1' %}
+    {% else %}
+        {% set share = '' %}
+    {% endif %}
+            
     <div class="pagination pagination-centered">
         <ul>
-            <li><a href="{{ path(currentPath,{'year':requested_year-1 , 'month': 12 }) }}"> &larr; {{ requested_year - 1}} </a></li>
+            <li><a href="{{ path(currentPath,{'year':requested_year-1 , 'month': 12 , }) }}{{share}}"> &larr; {{ requested_year - 1}} </a></li>
 {% for month in  months_of_year %}
 {% set month_nb = month | date('m') %}
 {% if  month_nb == requested_month  %}
             <li class="active"><span>{{ month | localeDate('medium','none',null,'MMMM') }}</span></li>
 {% else %}
-            <li><a href="{{ path( currentPath ,{'year':requested_year , 'month': month_nb }) }}">{{ month | localeDate('medium','none',null,'MMMM') }}</a></li>
+            <li><a href="{{ path( currentPath ,{'year':requested_year , 'month': month_nb }) }}{{share}}">{{ month | localeDate('medium','none',null,'MMMM') }}</a></li>
 {% endif %}
 {% endfor %}
-            <li><a href="{{ path(currentPath,{'year':requested_year+1 , 'month': 1 }) }}"> {{ requested_year + 1}} &rarr;</a></li>
+            <li><a href="{{ path(currentPath,{'year':requested_year+1 , 'month': 1 }) }}{{share}}"> {{ requested_year + 1}} &rarr;</a></li>
         </ul>
     </div>  
     

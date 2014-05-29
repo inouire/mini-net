@@ -94,11 +94,16 @@
             <div class="{{ contentWidth }}">
                 <h4>
                     <a href="{{ path('view_post',{'id': post.id }) }}" >{{ post.author }}</a>
-                {% if post.author == app.user.username %}
-                    <a href="{{ path('edit_post', {'id': post.id }) }}" class="pull-right">
-                        <i class="icon-pencil"></i>
-                    </a>
-                {% endif %} 
+                    {% if share_selection is defined and share_selection and post.hasAttachedFiles %}
+                        <a href="{{ path('create_sharelink', {'id': post.id }) }}" class="pull-right">
+                            <i class="icon-share"></i>
+                        </a>
+                    {% endif %}
+                    {% if post.author == app.user.username %}
+                        <a href="{{ path('edit_post', {'id': post.id }) }}" class="pull-right">
+                            <i class="icon-pencil"></i>
+                        </a>
+                    {% endif %}
                 </h4>
 
                 <p>{{ post.htmlcontent | raw }}</p>
@@ -109,12 +114,9 @@
                 
             </div>
             
-            
-            
             {% if post.hasAttachedFiles %}
             <div class="{{ imagesWidth }}" style="text-align:center">
                 <ul class="thumbnails">
-                
                     {% for video in post.videos %}
                     <li class="{{thumbWidth}}">
                         <a href="{{ path('get_video',{'id':video.id}) }}">
