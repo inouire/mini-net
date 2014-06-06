@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5adc637c9fad72446f0987c1c919ee50",
+    "hash": "dd4e92c9145a4f61bcca49df5ed6d775",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -65,17 +65,17 @@
         },
         {
             "name": "bcc/extra-tools-bundle",
-            "version": "dev-master",
+            "version": "v1.0",
             "target-dir": "BCC/ExtraToolsBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelsalib/BCCExtraToolsBundle.git",
-                "reference": "f5de5d06454272f17b11c9a9056e7d3b048ea4ab"
+                "reference": "5054efe77710f89b3bdaab19db7822bebf8e7847"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelsalib/BCCExtraToolsBundle/zipball/f5de5d06454272f17b11c9a9056e7d3b048ea4ab",
-                "reference": "f5de5d06454272f17b11c9a9056e7d3b048ea4ab",
+                "url": "https://api.github.com/repos/michelsalib/BCCExtraToolsBundle/zipball/5054efe77710f89b3bdaab19db7822bebf8e7847",
+                "reference": "5054efe77710f89b3bdaab19db7822bebf8e7847",
                 "shasum": ""
             },
             "require": {
@@ -101,7 +101,7 @@
             "keywords": [
                 "datetime unit converter formatter parser"
             ],
-            "time": "2012-11-21 15:10:33"
+            "time": "2012-07-09 09:11:48"
         },
         {
             "name": "doctrine/annotations",
@@ -1049,16 +1049,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.9.1",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "65026b610f8c19e61d7242f600530677b0466aac"
+                "reference": "25b16e801979098cb2f120e697bfce454b18bf23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/65026b610f8c19e61d7242f600530677b0466aac",
-                "reference": "65026b610f8c19e61d7242f600530677b0466aac",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/25b16e801979098cb2f120e697bfce454b18bf23",
+                "reference": "25b16e801979098cb2f120e697bfce454b18bf23",
                 "shasum": ""
             },
             "require": {
@@ -1086,7 +1086,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.9.x-dev"
+                    "dev-master": "1.10.x-dev"
                 }
             },
             "autoload": {
@@ -1113,7 +1113,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-04-24 13:29:03"
+            "time": "2014-06-04 16:30:04"
         },
         {
             "name": "neutron/temporary-filesystem",
@@ -1685,16 +1685,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.15",
+            "version": "v2.3.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "424a567d2c1fb918a32f302b5c2bcb67d2661e76"
+                "reference": "069683a14eb361f892c9bdc9d10d4f5dac3c0ee3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/424a567d2c1fb918a32f302b5c2bcb67d2661e76",
-                "reference": "424a567d2c1fb918a32f302b5c2bcb67d2661e76",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/069683a14eb361f892c9bdc9d10d4f5dac3c0ee3",
+                "reference": "069683a14eb361f892c9bdc9d10d4f5dac3c0ee3",
                 "shasum": ""
             },
             "require": {
@@ -1791,7 +1791,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-05-22 17:23:49"
+            "time": "2014-05-31 02:04:21"
         },
         {
             "name": "twig/extensions",
@@ -2267,18 +2267,13 @@
             "time": "2013-01-13 10:24:48"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 20,
-        "bcc/extra-tools-bundle": 20
+        "friendsofsymfony/user-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
