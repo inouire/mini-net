@@ -80,7 +80,7 @@ class ImageController extends Controller
      */
     public function rotateImageAction(Image $image)
     {
-        //get operation: clockwise or counter clockwise ?
+        // Get operation type: clockwise or counter clockwise ?
         $direction = $this->getRequest()->query->get('direction');
         if($direction == 'clockwise'){
             $angle='90';
@@ -97,7 +97,7 @@ class ImageController extends Controller
             )); 
         }
         
-        //check that this image belongs to this user
+        // Check that this image belongs to this user
         $user = $this->container->get('security.context')->getToken()->getUser();
         if( $image->getPost()->getAuthor() != $user ){
             //the user is not the author-> throw an error
@@ -110,27 +110,19 @@ class ImageController extends Controller
             )); 
         }
         
-        //open image, rotate it and save it
+        // Open image, rotate it and save it
         $imagine = new Imagine();
         $image_to_rotate = $imagine->open($image->getAbsolutePath());
         $save_options = array('quality' => 100);
         $image_to_rotate->rotate($angle)
                         ->save($image->getAbsolutePath(),$save_options);
 
-        //rename file (legacy hack to force liip imagine bundle to re-generate cache (not very clean)
-        // TODO remove this
-        $file=new File($image->getAbsolutePath(),true);
-        $new_name = '9'.$image->getPath();
-        $file->move($image->getUploadRootDir(), $new_name);
-        $image->setPath($new_name);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($image);
-        $em->flush();
         
-        // regenerate thumbnail
+        // Regenerate thumbnail
         $this->get('inouire.thumbnailer')->generateThumbnailFromImage($image);
+        // need to find a way to bust caches on thumbnails during post edition
         
-        //redirect to currently editing post
+        // Redirect to currently editing post
         return $this->redirect($this->generateUrl('edit_post',array(
             'id'=> $image->getPost()->getId()
         )));
