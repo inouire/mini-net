@@ -5,7 +5,6 @@ namespace Inouire\MininetBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Inouire\MininetBundle\Entity\Image;
-use Symfony\Component\HttpFoundation\File\File;
 use Imagine\Gd\Imagine;
 
 class ImageController extends Controller
