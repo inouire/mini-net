@@ -63,15 +63,15 @@ class ImageUpload
         // get information
         $original_name = $file->getClientOriginalName();
         $original_mimetype = $file->getClientMimeType();
-        // TODO improve extension detection
         $extension = substr($original_name, -3); 
         
         // build name
         $random_filename = rand(1000000, 999999999).rand(1000000, 999999999).'.'.$extension;
-        // TODO check that the name has not already been taken
+        // TODO 
         
+        // TODO
+        // check that the name has not already been taken
         // check that it is a video
-        // todo
         
         // create video object
         $video = new Video();

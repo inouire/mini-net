@@ -37,7 +37,7 @@ class VideoController extends Controller
         
         return $response;
 
-        //TODO improve this with binary file response ?
+        //what about binary file response ?
         //http://symfony.com/doc/current/components/http_foundation/introduction.html#serving-files
     }
     

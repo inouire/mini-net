@@ -20,6 +20,5 @@ class User extends BaseUser
     
     public function __construct(){
         parent::__construct();
-        //TODO add custom logic when needed
     }
 }

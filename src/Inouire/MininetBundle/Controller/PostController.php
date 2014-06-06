@@ -83,7 +83,6 @@ class PostController extends Controller
             ));
         }else if( $post->getAuthor() != $user ){
             //the user is not the author-> throw an error
-            //TODO handle this type of errors with exceptions
             return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_title'=> 'Accès non autorisé',
                 'error_message' => 'Vous ne pouvez pas modifier ce post car vous n\'en êtes pas l\'auteur',
@@ -143,7 +142,6 @@ class PostController extends Controller
             }            
             
             //check that the current user own the post
-            //TODO handle this type of errors with exceptions
             $user = $this->container->get('security.context')->getToken()->getUser();
             if( $post->getAuthor() != $user ){
                 return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
@@ -221,7 +219,7 @@ class PostController extends Controller
             ->add('id','hidden')
             ->add('file','file',array('required' => false))
             ->add('video','file',array('required' => false))
-            //TODO use new SF feature for multi button post
+            //Possible improvement: use new SF2 feature for multi button post
             //->add('save', 'submit')
             //->add('publish', 'submit')
             ->getForm();
