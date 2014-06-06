@@ -1,7 +1,33 @@
 parameters:
-#    inouire_mininet.example.class: Inouire\MininetBundle\Example
+    inouire_mininet.thumbnailer.class: Inouire\MininetBundle\Service\Thumbnailer
+    inouire_mininet.image_resize.class: Inouire\MininetBundle\Service\ImageResize
+    inouire_mininet.image_upload.class: Inouire\MininetBundle\Service\ImageUpload
+    inouire_mininet.sharelink_checker.class: Inouire\MininetBundle\Service\ShareLinkChecker
 
 services:
-#    inouire_mininet.example:
-#        class: %inouire_mininet.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    inouire.thumbnailer:
+        class: "%inouire_mininet.thumbnailer.class%"
+        arguments: 
+            - "@doctrine.orm.entity_manager"
+            - "%images_path%"
+            
+    inouire.image_resize:
+        class: "%inouire_mininet.image_resize.class%"
+        argument: 
+        
+    inouire.image_upload:
+        class: "%inouire_mininet.image_upload.class%"
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@inouire.image_resize"
+            - "@inouire.thumbnailer"
+            
+    inouire.sharelink_checker:
+        class: "%inouire_mininet.sharelink_checker.class%"
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    bcc.twig.extension:
+        class: BCC\ExtraToolsBundle\Twig\TwigExtension
+        tags:
+            -  { name: twig.extension }

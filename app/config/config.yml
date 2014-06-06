@@ -1,7 +1,8 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-
+    - { resource: "@InouireMininetBundle/Resources/config/services.yml" }
+    
 framework:
     #esi:             ~
     translator:      { fallback: %locale% }
@@ -23,35 +24,6 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
 
-#BCC configuration
-services:
-    bcc.twig.extension:
-        class: BCC\ExtraToolsBundle\Twig\TwigExtension
-        tags:
-            -  { name: twig.extension }
-            
-    inouire.thumbnailer:
-        class: Inouire\MininetBundle\Service\Thumbnailer
-        arguments: 
-            - "@doctrine.orm.entity_manager"
-            - "%images_path%"
-    inouire.image_resize:
-        class: Inouire\MininetBundle\Service\ImageResize
-        argument: 
-        
-    inouire.image_upload:
-        class: Inouire\MininetBundle\Service\ImageUpload
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@inouire.image_resize"
-            - "@inouire.thumbnailer"
-            
-    inouire.sharelink_checker:
-        class: Inouire\MininetBundle\Service\ShareLinkChecker
-        arguments:
-            - "@doctrine.orm.entity_manager"
-    
-                
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
