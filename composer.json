@@ -1,6 +1,6 @@
 {
     "name": "inouire/mini-net",
-    "license": "GPLv3",
+    "license": "GPL-3.0",
     "type": "project",
     "description": "The most simple family social network",
     "autoload": {
