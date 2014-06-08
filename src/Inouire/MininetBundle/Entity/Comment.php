@@ -50,6 +50,7 @@ class Comment{
      */
     public function setAuthor(\Inouire\UserBundle\Entity\User $author){
         $this->author = $author;
+        return $this;
     }
     
     /**
@@ -65,6 +66,7 @@ class Comment{
      */
     public function setPost(\Inouire\MininetBundle\Entity\Post $post){
         $this->post = $post;
+        return $this;
     }
     
     /**
@@ -98,6 +100,7 @@ class Comment{
      */
     public function setDate($date){
         $this->date = $date;
+        return $this;
     }
 
     /**
@@ -116,6 +119,7 @@ class Comment{
      */
     public function setContent($content){
         $this->content = $content;
+        return $this;
     }
 
     /**
