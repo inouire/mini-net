@@ -1,10 +1,16 @@
 parameters:
+    inouire_mininet.attachment_locator.class: Inouire\MininetBundle\Service\AttachmentLocator
     inouire_mininet.thumbnailer.class: Inouire\MininetBundle\Service\Thumbnailer
     inouire_mininet.image_resize.class: Inouire\MininetBundle\Service\ImageResize
     inouire_mininet.image_upload.class: Inouire\MininetBundle\Service\ImageUpload
     inouire_mininet.sharelink_checker.class: Inouire\MininetBundle\Service\ShareLinkChecker
 
 services:
+    inouire.attachment_locator:
+        class: "%inouire_mininet.attachment_locator.class%"
+        arguments:
+            - "%images_path%"
+        
     inouire.thumbnailer:
         class: "%inouire_mininet.thumbnailer.class%"
         arguments: 

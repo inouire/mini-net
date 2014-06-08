@@ -15,21 +15,23 @@ class ImageController extends Controller
      */
     public function getImageAction(Image $image, $is_thumbnail=false)
     {
-        // get corresponding file path
+        
+        // Get corresponding file path
+        $locator = $this->get('inouire.attachment_locator');
         if($is_thumbnail){
-            $image_file=$image->getThumbnailAbsolutePath();
+            $image_file = $locator->getImageAbsolutePath($image);
         }else{
-            $image_file=$image->getAbsolutePath();
+            $image_file = $locator->getImageThumbnailAbsolutePath($image);
         }
         
-        //prepare response
+        // Prepare response
         $response = new Response();
         $response->setStatusCode(200);
         $response->headers->set('Accept-Ranges', 'bytes');
         $response->headers->set('Connection', 'keep-alive');
         $response->headers->set('Cache-Control', 'private, max-age=2592000');//1 month
         
-        //set file content
+        // Set file content
         $response->headers->set('Content-Type','image/jpeg');
         $response->headers->set('Content-Length',filesize($image_file));
         $response->setContent(file_get_contents($image_file));

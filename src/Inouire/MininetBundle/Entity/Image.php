@@ -109,8 +109,6 @@ class Image{
         $tag->removeImage($this);
     }
 
- 
-    
     public function getAbsolutePath(){
         return $this->getUploadRootDir().'/'.$this->path;
     }
