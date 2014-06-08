@@ -92,16 +92,5 @@ class Video{
         $this->post = $post;
     }
     
-    public function getAbsolutePath(){
-        return $this->getUploadRootDir().'/'.$this->name;
-    }
-    
-    public function getThumbnailAbsolutePath(){
-        return $this->getUploadRootDir().'/thumbnail/'.$this->name.'.jpg';
-    }
-
-    public function getUploadRootDir(){
-        return __DIR__.'/../../../../web/vid';
-    }
 
 }

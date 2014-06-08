@@ -109,16 +109,5 @@ class Image{
         $tag->removeImage($this);
     }
 
-    public function getAbsolutePath(){
-        return $this->getUploadRootDir().'/'.$this->path;
-    }
-    
-    public function getThumbnailAbsolutePath(){
-        return $this->getUploadRootDir().'/thumbnail/'.$this->path;
-    }
-
-    public function getUploadRootDir(){
-        return __DIR__.'/../../../../web/img';
-    }
 
 }
