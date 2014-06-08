@@ -13,19 +13,18 @@ class CommentController extends Controller
      */
     public function postCommentAction(){
 
-        //get content of HTTP POST request
-        $request = $this->getRequest();
-        $post_id = $request->request->get('post_id');
-        $comment_content = $request->request->get('comment');
+        // get content of HTTP POST request
+        $post_id         = $this->getRequest()->request->get('post_id');
+        $comment_content = $this->getRequest()->request->get('comment');
         
-        //get current user (the commenter)
+        // get current user (the commenter)
         $user = $this->container->get('security.context')->getToken()->getUser();
         
-        //get corresponding post
+        // get corresponding post
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('InouireMininetBundle:Post')->find($post_id);
         
-        //check that this post exists
+        // check that this post exists
         if($post==null){
             return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
                 'status'=> 'error',
@@ -33,24 +32,22 @@ class CommentController extends Controller
             ));
         }
         
-        //check if the commenter is the author of the post
+        // check if the commenter is the author of the post (for correct color display)
         if( $post->getAuthor() == $user ){
             $is_author_of_post = 1;
         }else{
             $is_author_of_post = 0;
         }
         
-        //create comment
+        // create comment and persist it to database
         $comment = new Comment();
-        $comment->setContent($comment_content);
-        $comment->setAuthor($user);
-        $comment->setPost($post);
-        
-        //persist the new comment to database
+        $comment->setContent($comment_content)
+                ->setAuthor($user)
+                ->setPost($post);
         $em->persist($comment);
         $em->flush();
         
-        //render json response
+        // render json response
         return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
             'status'=> 'ok',
             'message' => 'comment added to post '.$post_id,
@@ -66,14 +63,13 @@ class CommentController extends Controller
      */
     public function updateCommentAction(Comment $comment){
 
-        //get content of HTTP POST request
-        $request = $this->getRequest();
-        $comment_content = $request->request->get('comment');
+        // get content of HTTP POST request
+        $comment_content = $this->getRequest()->request->get('comment');
         
-        //get current user
+        // get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
         
-        //check that this comment exists
+        // check that this comment exists
         if($comment==null){
             return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
                 'status'=> 'error',
@@ -81,7 +77,7 @@ class CommentController extends Controller
             ));
         }
         
-        //check that the user is the author of this comment
+        // check that the user is the author of this comment
         if($user != $comment->getAuthor() ){
             return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
                 'status'=> 'error',
@@ -89,13 +85,13 @@ class CommentController extends Controller
             ));
         }
         
-        //update comment 
+        // update comment 
         $comment->setContent($comment_content);
         $em = $this->getDoctrine()->getManager();
         $em->persist($comment);
         $em->flush();
         
-        //render json response
+        // render json response
         return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
             'status'=> 'ok',
             'message' => 'comment '.$comment_id.' update',
@@ -110,10 +106,10 @@ class CommentController extends Controller
      */
     public function deleteCommentAction(Comment $comment){
         
-        //get current user
+        // get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
         
-        //check that this comment exists
+        // check that this comment exists
         if($comment==null){
             return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
                 'status'=> 'error',
@@ -121,7 +117,7 @@ class CommentController extends Controller
             ));
         }
         
-        //check that the user is the author of this comment
+        // check that the user is the author of this comment
         if($user != $comment->getAuthor() ){
             return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
                 'status'=> 'error',
@@ -129,16 +125,16 @@ class CommentController extends Controller
             ));
         }
 
-        //remember the id and the content before deletion
+        // remember the id and the content before deletion
         $comment_id = $comment->getId();
         $comment_content = $comment->getContent();
         
-        //remove comment
+        // remove comment
         $em = $this->getDoctrine()->getManager();
         $em->remove($comment);
         $em->flush();
         
-        //render json response
+        // render json response
         return $this->render('InouireMininetBundle:Default:commentAjaxResponse.json.twig',array(
             'status'=> 'ok',
             'message' => 'comment '.$comment_id.' deleted',
