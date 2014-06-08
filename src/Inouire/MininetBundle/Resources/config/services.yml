@@ -10,12 +10,13 @@ services:
         class: "%inouire_mininet.attachment_locator.class%"
         arguments:
             - "%images_path%"
+            - "%videos_path%"
         
     inouire.thumbnailer:
         class: "%inouire_mininet.thumbnailer.class%"
         arguments: 
             - "@doctrine.orm.entity_manager"
-            - "%images_path%"
+            - "@inouire.attachment_locator"
             
     inouire.image_resize:
         class: "%inouire_mininet.image_resize.class%"

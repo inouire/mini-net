@@ -15,3 +15,4 @@ parameters:
     secret:            eovnr9ger642ifbe
     
     images_path: '%kernel.root_dir%/../web/img'
+    videos_path: '%kernel.root_dir%/../web/vid'

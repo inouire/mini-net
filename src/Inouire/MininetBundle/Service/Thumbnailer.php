@@ -9,39 +9,38 @@ use Imagine\Image\Point;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Doctrine\ORM\EntityManager;
+use Inouire\MininetBundle\Service\AttachmentLocator;
 use FFMpeg;
 
 class Thumbnailer
 {
     
-    protected $image_dir;
-    protected $thumb_dir;
     protected $em;
+    protected $locator;
     
-    public function __construct(EntityManager $em, $image_dir)
+    public function __construct(EntityManager $em, AttachmentLocator $locator)
     {
         $this->em = $em;
-        $this->image_dir = __DIR__.'/../../../../'.$image_dir;
-        $this->thumb_dir = $this->image_dir.'/thumbnail';
+        $this->locator = $locator;
     }
     
     public function generateThumbnailFromImage(Image $image)
     {
-        // prepare path
-        $image_path     = $this->image_dir.'/'.$image->getPath();
-        $thumbnail_path = $this->thumb_dir.'/'.$image->getPath();
+        // Retrive absolute paths
+        $image_path     = $this->locator->getImageAbsolutePath($image);
+        $thumbnail_path = $this->locator->getImageThumbnailAbsolutePath($image);
         
-        // generate thumbnail
+        // Generate thumbnail
         $this->generateThumbnail($image_path, $thumbnail_path);        
     }
     
-    public function generateThumbnail($image_path, $thumbnail_path)
+    private function generateThumbnail($image_path, $thumbnail_path)
     {
-        // set resize options
+        // Set resize options
         $size = new Box(360, 240);
         $mode = ImageInterface::THUMBNAIL_OUTBOUND;
         
-        //generate thumbnail
+        // Create thumbnail
         $imagine = new Imagine();
         $imagine->open($image_path)
                 ->thumbnail($size, $mode)
@@ -50,34 +49,35 @@ class Thumbnailer
     
     public function generateThumbnailFromVideo(Video $video)
     {
-        // prepare path
-        $video_path     = __DIR__.'/../../../../web/vid/'.$video->getName();
-        $thumbnail_path = __DIR__.'/../../../../web/vid/thumbnail/'.$video->getName().'.jpg';
-        $watermark_path = __DIR__.'/../../../../web/vid/thumbnail/watermark.png';
-        // extract frame
+        // Retrive absolute paths
+        $video_path     = $this->locator->getVideoAbsolutePath($video);
+        $thumbnail_path = $this->locator->getVideoThumbnailAbsolutePath($video);
+        $watermark_path = $this->locator->getVideoWatermarkAbsolutePath();
+        
+        // Extract frame for thumbnail at t=3sec
         $ff = FFMpeg\FFMpeg::create();
         $video = $ff->open($video_path);
         $frame = $video->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(3));
         $frame->save($thumbnail_path);
         
-        //convert it as a thumbnail
+        // Convert it as a thumbnail
         $this->generateThumbnail($thumbnail_path, $thumbnail_path);
-                
-        // add video watermark
+        
+        // Add video watermark
         $imagine = new Imagine();
         $watermark = $imagine->open($watermark_path);
         $image     = $imagine->open($thumbnail_path);
         $topLeft = new Point(0,0);
         $image->paste($watermark, $topLeft)
-            ->save($thumbnail_path, array('quality' => 95));;
+              ->save($thumbnail_path, array('quality' => 95));
     }
     
     public function createMissingThumbnails()
     {
-        // fetch all images from database
+        // Fetch all images from database
         $all_images = $this->em->getRepository('InouireMininetBundle:Image')->findAll();
         
-        // perform check on each database entry
+        // Perform check on each database entry
         foreach($all_images as $image){
             if(!file_exists($image->getThumbnailAbsolutePath())){
                 try{
