@@ -19,9 +19,9 @@ class ImageController extends Controller
         // Get corresponding file path
         $locator = $this->get('inouire.attachment_locator');
         if($is_thumbnail){
-            $image_file = $locator->getImageAbsolutePath($image);
-        }else{
             $image_file = $locator->getImageThumbnailAbsolutePath($image);
+        }else{
+            $image_file = $locator->getImageAbsolutePath($image);
         }
         
         // Prepare response
@@ -44,11 +44,11 @@ class ImageController extends Controller
      */ 
     public function deleteImageAction(Image $image)
     {
-        //get current user
+        // Get current user
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         
-        //check that this image exists and that it belongs to this user
+        // Check that this image exists and that it belongs to this user
         if($image==null ){
             $response_status = 'error';
             $response_message = 'image '.$image_id.' does not exist';
@@ -57,9 +57,10 @@ class ImageController extends Controller
             $response_message = 'image '.$image_id.' does not belong to you';
         } else {
             //remove image + thumbnail from disk
+            $locator = $this->get('inouire.attachment_locator');
             $fs = $this->get('filesystem');
-            $fs->remove($image->getAbsolutePath());
-            $fs->remove($image->getThumbnailAbsolutePath());
+            $fs->remove($locator->getImageAbsolutePath($image));
+            $fs->remove($locator->getImageThumbnailAbsolutePath($image));
             
             //delete from database
             $em->remove($image);
