@@ -5,12 +5,14 @@ Mini-net is a very tiny social network, shaped for family.
 
 It is based on the PHP framework Symfony2, and is also using [Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/) and [Fancybox](http://fancyapps.com/fancybox/).
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ec22e0aa-cc43-4ab2-9222-5bdcdbedb7cb/big.png)](https://insight.sensiolabs.com/projects/ec22e0aa-cc43-4ab2-9222-5bdcdbedb7cb)
+
 ## Requirements
 
-* Web server with PHP >= 5.3 
-* Database engine supported by Doctrine ORM, and the PHP driver for this database
+* Web server with PHP >= 5.4
+* MySQL / PostgreSQL database (or any database supported by Doctrine ORM)
 
-## Installation (for Debian 6 + Apache2)
+## Installation (for Debian 7 + Apache 2)
 
 This guide is made for Debian6 with an Apache web server and a MySQL database, feel free to adapt it to your own configuration.
 
