@@ -44,11 +44,11 @@ class ImageController extends Controller
      */ 
     public function deleteImageAction(Image $image)
     {
-        // Get current user
+        // get current user
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         
-        // Check that this image exists and that it belongs to this user
+        // check that this image exists and that it belongs to this user
         if($image==null ){
             $response_status = 'error';
             $response_message = 'image '.$image_id.' does not exist';
@@ -56,13 +56,13 @@ class ImageController extends Controller
             $response_status = 'error';
             $response_message = 'image '.$image_id.' does not belong to you';
         } else {
-            //remove image + thumbnail from disk
+            // remove image + thumbnail from disk
             $locator = $this->get('inouire.attachment_locator');
             $fs = $this->get('filesystem');
             $fs->remove($locator->getImageAbsolutePath($image));
             $fs->remove($locator->getImageThumbnailAbsolutePath($image));
             
-            //delete from database
+            // delete from database
             $em->remove($image);
             $em->flush();
              
@@ -70,7 +70,7 @@ class ImageController extends Controller
             $response_message = 'image '.$image_id.' has been deleted';
         }
         
-        //render json response
+        // render json response
         return $this->render('InouireMininetBundle:Post:ajaxResponse.json.twig',array(
             'status'=> $response_status,
             'message' => $response_message
@@ -82,7 +82,7 @@ class ImageController extends Controller
      */
     public function rotateImageAction(Image $image)
     {
-        // Get operation type: clockwise or counter clockwise ?
+        // get operation type: clockwise or counter clockwise ?
         $direction = $this->getRequest()->query->get('direction');
         if($direction == 'clockwise'){
             $angle='90';
@@ -99,7 +99,7 @@ class ImageController extends Controller
             )); 
         }
         
-        // Check that this image belongs to this user
+        // check that this image belongs to this user
         $user = $this->container->get('security.context')->getToken()->getUser();
         if( $image->getPost()->getAuthor() != $user ){
             //the user is not the author-> throw an error
@@ -112,7 +112,7 @@ class ImageController extends Controller
             )); 
         }
         
-        // Open image, rotate it and save it
+        // open image, rotate it and save it
         $imagine = new Imagine();
         $image_to_rotate = $imagine->open($image->getAbsolutePath());
         $save_options = array('quality' => 100);
@@ -120,11 +120,11 @@ class ImageController extends Controller
                         ->save($image->getAbsolutePath(),$save_options);
 
         
-        // Regenerate thumbnail
+        // regenerate thumbnail
         $this->get('inouire.thumbnailer')->generateThumbnailFromImage($image);
         // need to find a way to bust caches on thumbnails during post edition
         
-        // Redirect to currently editing post
+        // redirect to currently editing post
         return $this->redirect($this->generateUrl('edit_post',array(
             'id'=> $image->getPost()->getId()
         )));
