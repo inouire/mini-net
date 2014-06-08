@@ -38,7 +38,7 @@ class ArchivesController extends Controller
      */
     public function postsAction($year,$month,Request $request){
 
-        //check validity of year and month given
+        // check validity of year and month given
         if( $year > 8000 || $year < 1 || $month < 1 || $month > 12){
             return $this->render('InouireMininetBundle:Main:errorPage.html.twig',array(
                 'error_title'=> 'Date invalide',
@@ -48,30 +48,24 @@ class ArchivesController extends Controller
             ));
         }
         
-        //get entity manager and post repository
+        // retrieve posts of the requested month
         $em = $this->getDoctrine()->getManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
-        
-        //retrieve posts of the requested month
         $monthly_posts = $post_repo->getMonthlyPosts($year,$month);
        
-        //build date of current month
+        // build date of current month
         $requested_date = new \Datetime($year.'-'.$month.'-01');
         
-        //build months of year
+        // build months of year
         $months_of_year = array();
         for( $m = 1 ; $m <=12 ; $m++){
             $months_of_year[] = new \Datetime('2000-'.$m.'-01');
         }
         
-        // retrieve the "sharelink selection" option
-        if($request->query->get('share') != null){
-            $sharelink_selection = true;
-        }else{
-            $sharelink_selection = false;
-        }
+        // retrieve the "sharelink selection" option if any
+        $sharelink_selection = ($request->query->get('share') != null);
         
-        //check that there are some posts for this month
+        // check that there are some posts for this month
         if( count($monthly_posts) > 0 ){
             return $this->render('InouireMininetBundle:Main:archives.html.twig',array(
                 'post_list'=> $monthly_posts,
