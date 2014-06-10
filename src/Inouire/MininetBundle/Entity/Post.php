@@ -295,18 +295,7 @@ class Post{
         
         //remove opening braces (security)
         $content = str_replace('<','',$content);
-        
-        //add arrows
-        $content = str_replace(array('->','=>'),'<i class="icon-arrow-right"></i>',$content);
-        
-        //add warning sign
-        $content = str_replace('/!\\','<i class="icon-warning-sign"></i>',$content);
-        
-        //add horizontal separator
-        $content = preg_replace('/([-]{2}[-]+)/i','<hr>',$content);
-        
-        //add star
-        $content = str_replace('*','<i class="icon-asterisk"></i>',$content);
+                
         
         //replace hyperlinks (but doesn't check link validity at all)
         $hyperlink_pattern = '/((http|https):\/\/[^\s]+)/i';
@@ -314,7 +303,7 @@ class Post{
         $content = preg_replace($hyperlink_pattern, $hyperlink, $content);
 
         //replace carriage return
-        $content = str_replace("\n","<br />",$content);
+        $content = str_replace("\n","<br>",$content);
         
         return $content;
     }

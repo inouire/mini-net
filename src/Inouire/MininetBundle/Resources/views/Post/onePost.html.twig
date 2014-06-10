@@ -106,7 +106,7 @@
                     {% endif %}
                 </h4>
 
-                <p>{{ post.htmlcontent | raw }}</p>
+                <p>{{ post.htmlcontent | striptags('<p><a><br>') | raw }}</p>
                 
                 {% if post.hasAttachedFiles %}
                     {% include 'InouireMininetBundle:Post:comments.html.twig' %}
