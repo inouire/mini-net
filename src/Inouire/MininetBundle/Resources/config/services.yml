@@ -20,7 +20,8 @@ services:
             
     inouire.image_resize:
         class: "%inouire_mininet.image_resize.class%"
-        argument: 
+        arguments:
+            - "@inouire.attachment_locator"
         
     inouire.image_upload:
         class: "%inouire_mininet.image_upload.class%"
@@ -28,6 +29,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@inouire.image_resize"
             - "@inouire.thumbnailer"
+            - "@inouire.attachment_locator"
             
     inouire.sharelink_checker:
         class: "%inouire_mininet.sharelink_checker.class%"

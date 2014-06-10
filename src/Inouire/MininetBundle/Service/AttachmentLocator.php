@@ -23,6 +23,16 @@ class AttachmentLocator
         $this->video_thumbnail_dir  = $video_dir.'/thumbnail/';
     }
     
+    public function getImageRootDir()
+    {
+        return $this->images_dir;
+    }
+    
+    public function getVideoRootDir()
+    {
+        return $this->video_dir;
+    }
+    
     /*
      * Get absolute path to the full size version of an image attachment
      */
@@ -38,6 +48,7 @@ class AttachmentLocator
     {
         return $this->images_thumbnail_dir.$image->getPath();
     }
+    
     
     /*
      * Get absolute path to a video attachment

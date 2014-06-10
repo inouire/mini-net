@@ -4,12 +4,15 @@ namespace Inouire\MininetBundle\Service;
 
 use Inouire\MininetBundle\Entity\Image;
 use Imagine\Gd\Imagine;
+use Inouire\MininetBundle\Service\AttachmentLocator;
 
 class ImageResize
 {
 
-    public function __construct(){
-        
+    protected $locator;
+    
+    public function __construct(AttachmentLocator $locator){
+        $this->locator = $locator;
     }
     
     /*
@@ -31,11 +34,15 @@ class ImageResize
      */
     public function getImageOrientation(Image $image)
     {
-        //default: normal orientation
+        // get path
+        $image_path = $this->locator->getImageAbsolutePath($image);
+        
+        // detect orientation
+        // default: normal orientation
         $orientation = 1;
         try{
             //get IFDO.Orientation from exif data
-            $exif = exif_read_data($image->getAbsolutePath(), 0, true);
+            $exif = exif_read_data($image_path, 0, true);
             $orientation = $exif['IFD0']['Orientation'];
         }catch(\Exception $e){
             $orientation = 1;
@@ -48,25 +55,27 @@ class ImageResize
      */
     public function rotateImage(Image $image,$orientation)
     {
+        // get path
+        $image_path = $this->locator->getImageAbsolutePath($image);
+        
+        //compute rotation angle
         $rotation_angles= array(
             1 =>   0,
             3 => 180,
             6 =>  90,
             8 => -90,
         );
-        
-        //compute rotation angle
         $angle = $rotation_angles[$orientation];
         
         if($angle != 0){
             //open image
             $imagine = new Imagine();
-            $image_to_rotate = $imagine->open($image->getAbsolutePath());
+            $image_to_rotate = $imagine->open($image_path);
                
             //rotate it and save it
             $save_options = array('quality' => 100);
             $image_to_rotate->rotate($angle)
-                            ->save($image->getAbsolutePath(),$save_options);
+                            ->save($image_path,$save_options);
         }
     }
     
@@ -75,9 +84,12 @@ class ImageResize
      */
     public function resizeImage(Image $image, $max_height)
     {
+        // get path
+        $image_path = $this->locator->getImageAbsolutePath($image);
+        
         //open image
         $imagine = new Imagine();
-        $image_to_resize = $imagine->open($image->getAbsolutePath());
+        $image_to_resize = $imagine->open($image_path);
         
         //get actual size
         $actual_size = $image_to_resize->getSize();
@@ -87,7 +99,7 @@ class ImageResize
             $new_size = $actual_size->heighten($max_height);
             $save_options = array('quality' => 90);
             $image_to_resize->resize($new_size)
-                            ->save($image->getAbsolutePath(),$save_options);
+                            ->save($image_path,$save_options);
         }
     }
     

@@ -15,7 +15,10 @@ class VideoController extends Controller
      */
     public function getVideoAction(Video $video)
     {
-        $video_file=$video->getAbsolutePath();
+        
+        // Get corresponding file path
+        $locator = $this->get('inouire.attachment_locator');
+        $video_file = $locator->getVideoAbsolutePath($video);
         $file_type=$video->getType(); 
         
         //prepare response with attachement
@@ -46,7 +49,9 @@ class VideoController extends Controller
      */
     public function getVideoThumbnailAction(Video $video)
     {
-        $thumbnail_file=$video->getThumbnailAbsolutePath();
+        // Get corresponding file path
+        $locator = $this->get('inouire.attachment_locator');
+        $thumbnail_file = $locator->getVideoThumbnailAbsolutePath($video);
         
         //prepare response
         $response = new Response();
