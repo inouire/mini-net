@@ -17,7 +17,7 @@ framework:
     default_locale: %locale%
     trusted_proxies: ~
     session:
-        name: mininet
+        handler_id: ~
 
 # Twig Configuration
 twig:
