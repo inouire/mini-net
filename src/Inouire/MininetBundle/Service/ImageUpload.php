@@ -45,7 +45,6 @@ class ImageUpload
         $image = new Image();
         $image->setPost($post);
         $image->setPath($image_filename);
-        $image_path = $this->locator->getImageAbsolutePath($image);
         $root_dir = $this->locator->getImageRootDir();
         
         // move uploaded file to upload dir
