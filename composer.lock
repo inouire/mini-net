@@ -644,16 +644,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.3.5",
+            "version": "v2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "2c31ec4809a28a549bf22d7cb7504add98156cd6"
+                "reference": "c2135b38216c6c8a410e764792aa368e946f2ae5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2c31ec4809a28a549bf22d7cb7504add98156cd6",
-                "reference": "2c31ec4809a28a549bf22d7cb7504add98156cd6",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/c2135b38216c6c8a410e764792aa368e946f2ae5",
+                "reference": "c2135b38216c6c8a410e764792aa368e946f2ae5",
                 "shasum": ""
             },
             "require": {
@@ -711,7 +711,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-02-08 16:28:24"
+            "time": "2014-06-03 19:53:45"
         },
         {
             "name": "evenement/evenement",
@@ -760,12 +760,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "3969d7fe39fd58398bf9a00110ca349c000fa05e"
+                "reference": "71ed2505443f375876a38e82ff0d1929d6078270"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/3969d7fe39fd58398bf9a00110ca349c000fa05e",
-                "reference": "3969d7fe39fd58398bf9a00110ca349c000fa05e",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/71ed2505443f375876a38e82ff0d1929d6078270",
+                "reference": "71ed2505443f375876a38e82ff0d1929d6078270",
                 "shasum": ""
             },
             "require": {
@@ -820,7 +820,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2014-05-18 21:15:38"
+            "time": "2014-06-13 14:56:35"
         },
         {
             "name": "imagine/imagine",
@@ -1405,16 +1405,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.2.0",
+            "version": "v5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "043e336b871f17a117f76ef8e190eddfc04c8d48"
+                "reference": "2b9af56cc676c338d52fca4c657e5bdff73bb7af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/043e336b871f17a117f76ef8e190eddfc04c8d48",
-                "reference": "043e336b871f17a117f76ef8e190eddfc04c8d48",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/2b9af56cc676c338d52fca4c657e5bdff73bb7af",
+                "reference": "2b9af56cc676c338d52fca4c657e5bdff73bb7af",
                 "shasum": ""
             },
             "require": {
@@ -1455,7 +1455,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-05-08 08:11:19"
+            "time": "2014-06-13 11:44:54"
         },
         {
             "name": "symfony/assetic-bundle",
