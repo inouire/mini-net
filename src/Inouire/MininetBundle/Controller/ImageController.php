@@ -114,10 +114,12 @@ class ImageController extends Controller
         
         // open image, rotate it and save it
         $imagine = new Imagine();
-        $image_to_rotate = $imagine->open($image->getAbsolutePath());
+        $locator = $this->get('inouire.attachment_locator');
+        $image_path = $locator->getImageAbsolutePath($image);
+        $image_to_rotate = $imagine->open($image_path);
         $save_options = array('quality' => 100);
         $image_to_rotate->rotate($angle)
-                        ->save($image->getAbsolutePath(),$save_options);
+                        ->save($image_path,$save_options);
 
         
         // regenerate thumbnail
