@@ -66,7 +66,7 @@ class PostController extends Controller
     /**
      * Edit a post
      */
-    public function editAction(Post $post){
+    public function editAction(Post $post, $image_to_reload){
         
         //get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -104,6 +104,7 @@ class PostController extends Controller
 
             return $this->render('InouireMininetBundle:Post:editPost.html.twig',array(
                 'post'=> $post,
+                'image_to_reload' => $image_to_reload,
                 'post_form' => $post_form->createView(),
                 'all_tags' => $all_tags
             ));

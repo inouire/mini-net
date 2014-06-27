@@ -77,11 +77,11 @@ view_post:
     defaults: { _controller: InouireMininetBundle:Post:view }   
 
 edit_post:
-    pattern:  /post/{id}/edit
+    pattern:  /post/{id}/edit/{image_to_reload}
     requirements:
         post_id:  \d+
         _method:  GET
-    defaults: { _controller: InouireMininetBundle:Post:edit }   
+    defaults: { _controller: InouireMininetBundle:Post:edit, image_to_reload: -1 }   
     
 update_post:
     pattern: /post/update

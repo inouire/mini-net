@@ -124,11 +124,11 @@ class ImageController extends Controller
         
         // regenerate thumbnail
         $this->get('inouire.thumbnailer')->generateThumbnailFromImage($image);
-        // need to find a way to bust caches on thumbnails during post edition
         
-        // redirect to currently editing post
+        // redirect to currently editing post and force reload of this image
         return $this->redirect($this->generateUrl('edit_post',array(
-            'id'=> $image->getPost()->getId()
+            'id'=> $image->getPost()->getId(),
+            'image_to_reload' => $image->getId()
         )));
     }
     

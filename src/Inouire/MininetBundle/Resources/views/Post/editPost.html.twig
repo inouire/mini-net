@@ -2,7 +2,6 @@
 
 {% block title %}édition de post{% endblock %}
 
-
 {% block body %}
 
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
@@ -77,8 +76,12 @@
                     <div>
                         <a href="{{path('rotate_image',{'id':image.id,'direction':'counter-clockwise'})}}"><img src="{{asset('css/icons/rotate-ccw.png')}}"/></a>
                         <a href="{{path('rotate_image',{'id':image.id,'direction':'clockwise'})}}" class="pull-right"><img src="{{asset('css/icons/rotate-cw.png')}}"/></a>
-                        <a href="{{ path('get_image',{'id':image.id}) }}" class="fancybox" rel="album[{{post.id}}]">
-                             <img src="{{ path('get_thumbnail',{'id':image.id}) }}" class="img-polaroid"/>
+                        <a href="{{ path('get_image',{'id':image.id, 'rand': random()}) }}" class="fancybox" rel="album[{{post.id}}]">
+                            {% if image.id == image_to_reload %}
+                               <img src="{{ path('get_thumbnail',{'id':image.id, 'rand': random()}) }}" class="img-polaroid"/>
+                            {% else %}
+                                <img src="{{ path('get_thumbnail',{'id':image.id}) }}" class="img-polaroid"/>
+                            {% endif %}
                         </a>
                     
                         {% for tag in image.tags %}
