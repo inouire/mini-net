@@ -82,10 +82,15 @@ class VideoController extends Controller
             $response_status = 'error';
             $response_message = 'video '.$video_id.' does not belong to you';
         } else {
+            // Get corresponding files path
+            $locator = $this->get('inouire.attachment_locator');
+            $video_file = $locator->getVideoAbsolutePath($video);
+            $thumbnail_file = $locator->getVideoThumbnailAbsolutePath($video);
+        
             //delete video from disk
             $fs = $this->get('filesystem');
-            $fs->remove($video->getAbsolutePath());
-            $fs->remove($video->getThumbnailAbsolutePath());
+            $fs->remove($video_file);
+            $fs->remove($thumbnail_file);
             
             // delete from database
             $em = $this->getDoctrine()->getManager();
