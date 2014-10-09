@@ -50,8 +50,7 @@
     
           <a class="brand" href="{{ path('home') }}">Mini-net</a>
           
-        {% if app.user != null %}
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {% if app.user and is_granted("IS_AUTHENTICATED_REMEMBERED")%}
     
           <div class="nav-collapse collapse">
             <ul class="nav">
@@ -83,7 +82,6 @@
             </form>
 
           </div>
-        {% endif %}
         {% endif %}
 
         </div><!-- container -->

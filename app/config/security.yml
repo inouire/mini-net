@@ -11,15 +11,16 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-            
-        login:
-            pattern:   ^/(login$|register|resetting)
-            anonymous: true
-        
+                    
         share:
             pattern: ^/(public)/
             anonymous: true
             
+        login:
+            pattern:   ^/(login$|register|resetting)
+            anonymous: true
+            context: shared_private_context
+
         main:
             pattern: ^/
             form_login:
@@ -27,6 +28,7 @@ security:
                 remember_me: true
             logout:       true
             anonymous:    false
+            context: shared_private_context
             remember_me:
                 key:      "%secret%"
                 lifetime: 2592000 #1 month in seconds 
