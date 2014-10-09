@@ -33,4 +33,14 @@ body {
 .small-blank-block{
     height: 15px;
 }
-
+.tag{
+    background-color: #E6DFB3;
+    font-size:1.6em;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    background-image: url('bg/paper.png');
+    background-repeat: repeat;
+    border: 1px solid #888;
+    margin-right: -2px;
+}
