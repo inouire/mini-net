@@ -10,6 +10,8 @@ parameters:
     mailer_host:       localhost
     mailer_user:       ~
     mailer_password:   ~
+    mailer_sender_email: myadmin@mymininet
+    mailer_sender_name:  Admin mini-net
 
     locale:            en
     secret:            eovnr9ger642ifbe
