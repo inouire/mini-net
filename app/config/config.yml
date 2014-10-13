@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: "@InouireMininetBundle/Resources/config/services.yml" }
+    - { resource: "@InouireUserBundle/Resources/config/services.yml" }
     
 framework:
     #esi:             ~

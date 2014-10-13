@@ -7,6 +7,9 @@ security:
     encoders:
         "FOS\UserBundle\Model\UserInterface": sha512
         
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -35,4 +38,5 @@ security:
                 path:     /
                 domain:   ~ #Defaults to the current domain from $_SERVER
 
-
+    access_control:
+        - { path: ^/admin/, role: ROLE_ADMIN }
