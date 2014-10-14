@@ -4,6 +4,8 @@
 
 {% block body %}
 
+    {% if is_granted("ROLE_ADMIN")%}<a href="{{ path('admin_tags')}}" class="pull-right btn btn-mini admin">Gérer</a><br><br>{% endif %}
+
     {% include 'InouireMininetBundle:Default:tagsRibbon.html.twig' %}
     
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}

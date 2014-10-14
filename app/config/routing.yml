@@ -1,6 +1,10 @@
-InouireMininetBundle:
+inouire_mininet:
     resource: "@InouireMininetBundle/Resources/config/routing.yml"
     prefix:   /
+    
+inouire_mininet_admin:
+    resource: "@InouireMininetBundle/Resources/config/routing_admin.yml"
+    prefix:   /admin
 
 # Internal routing configuration to handle ESI
 #_internal:

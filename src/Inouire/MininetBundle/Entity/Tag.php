@@ -49,6 +49,14 @@ class Tag{
     }
 
     /**
+     * Set the name of the tag
+     */
+    public function setName($name){
+        $this->name = $name;
+        return $this;
+    }
+    
+    /**
      * Get all the pictures with this tag
      */
     public function getImages(){

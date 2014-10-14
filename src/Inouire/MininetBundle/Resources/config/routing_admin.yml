@@ -1,0 +1,5 @@
+# admin routes
+ 
+admin_tags:
+    pattern:  /tags
+    defaults: { _controller: InouireMininetBundle:Tag:adminList }

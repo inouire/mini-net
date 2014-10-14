@@ -1,0 +1,25 @@
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
+
+{% block title %} gestion des tags{% endblock %}
+
+{% block body %}
+        
+    <center><h2 class="admin">Gestion des tags</h2></center>
+    
+    <br>
+        
+    <form class="form-search" style="text-align:center">
+        {{ form_widget(form.name, {'attr': {'class':'input-medium search-query','style':'font-size:1.3em'} }) }}
+        {{ form_widget(form.add, {'attr': {'class':'btn btn-primary'} }) }}
+        <!--<input class="btn btn-inverse" type="submit" value="{{ 'registration.submit'|trans }}" />-->
+        {{ form_end(form) }}
+    </form>
+    
+    <br>
+    
+    {% include 'InouireMininetBundle:Default:tagsRibbon.html.twig' %}
+    
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+
+{% endblock %}

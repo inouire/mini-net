@@ -65,5 +65,37 @@ class TagController extends Controller
         
     }
     
+    /**
+     * View the list of available tags
+     */
+    public function adminListAction(){
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        // build add tag form
+        $tag = new Tag();
+        $form = $this->createFormBuilder($tag)
+            ->add('name', 'text')
+            ->add('add', 'submit', array('label' => 'Ajouter'))
+            ->getForm();
+        
+        // use form data if the form has been submitted
+        $form->handleRequest($this->getRequest());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($tag);
+            $em->flush();
+        }
+    
+        //get all tags
+        $tag_repo = $em->getRepository('InouireMininetBundle:Tag');   
+        $tags = $tag_repo->findAll();
+        
+        // render tags list + form
+        return $this->render('InouireMininetBundle:Admin:tags.html.twig',array(
+            'tags' => $tags,
+            'form' => $form->createView()
+        ));
+    }
+    
     
 }
