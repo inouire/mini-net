@@ -5,3 +5,16 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    inouire.registration.form.type:
+        class: Inouire\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags: [{ name: "form.type", alias: "inouire_user_registration" }]
+
+    inouire.invitation.form.type:
+        class: Inouire\UserBundle\Form\Type\InvitationFormType
+        arguments: [@inouire.invitation.form.data_transformer]
+        tags: [{ name: "form.type", alias: "inouire_invitation_type" }]
+
+    inouire.invitation.form.data_transformer:
+        class: Inouire\UserBundle\Form\DataTransformer\InvitationToCodeTransformer
+        arguments: [@doctrine.orm.entity_manager]
