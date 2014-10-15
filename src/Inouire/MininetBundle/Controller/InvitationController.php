@@ -36,20 +36,38 @@ class InvitationController extends Controller
      */
     public function inviteAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        
         // create invitation form
         $invitation = new Invitation();
         $form = $this->createSendInvitationForm($invitation);
         
+        // check that the invitation has not already been created for this email
+        // TODO
+        
         // use posted form data to create invitation
         $form->handleRequest($this->getRequest());
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($invitation);
             $em->flush();
         }
         
         // send invitation by email to the specified email
-        // TODO
+        $message = \Swift_Message::newInstance()
+                ->setSubject('Invitation à rejoindre mini-net')
+                ->setFrom($this->getUser()->getEmail())
+                ->setTo($invitation->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'InouireMininetBundle:Admin:invite_email.txt.twig',
+                        array(
+                            'admin_name'   => $this->getUser()->getUsername(),
+                            'register_url' => $this->generateUrl('fos_user_registration_register',array(),true),
+                            'register_code'=> $invitation->getCode()
+                        )
+                    )
+                );
+        $this->get('mailer')->send($message);
         
         // redirect to invitations list
         return $this->redirect($this->generateUrl('admin_invitations'));
