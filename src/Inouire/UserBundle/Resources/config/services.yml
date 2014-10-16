@@ -1,7 +1,7 @@
 services:
-    inouire.password_resetting:
+    inouire.register_user_listener:
         class: Inouire\UserBundle\EventListener\RegisterUserListener
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: [@doctrine.orm.entity_manager,@twig,@swiftmailer.mailer]
         tags:
             - { name: kernel.event_subscriber }
 
