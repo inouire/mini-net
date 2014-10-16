@@ -18,7 +18,12 @@
     
     <br>
     
-    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+    <center>
+    {% for invitation in invitations %}
+        {{invitation.email}} / {{invitation.status}}<br>
+    {% endfor %}
+    </center>
+    
     {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
 
 {% endblock %}
