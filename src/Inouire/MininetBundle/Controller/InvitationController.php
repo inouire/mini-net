@@ -46,7 +46,7 @@ class InvitationController extends Controller
         foreach($users as $user){
             if($user->getInvitation() != null){
                 $used_codes[] = $user->getInvitation()->getCode();
-                $list[] = array('email'=>$user->getEmail(),'status'=>'registered');
+                $list[] = array('username'=>$user->getUsername(), 'email'=>$user->getEmail(),'status'=>'registered');
             }
         }
         
