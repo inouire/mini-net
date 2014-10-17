@@ -1,5 +1,15 @@
 # admin routes
- 
+
+admin_invitations:
+    pattern:  /invitations
+    defaults: { _controller: InouireMininetBundle:Invitation:list }
+
+admin_invite:
+    pattern:  /invite
+    requirements:
+        _method:  POST
+    defaults: { _controller: InouireMininetBundle:Invitation:invite }
+    
 admin_tags:
     pattern:  /tags
     defaults: { _controller: InouireMininetBundle:Tag:adminList }

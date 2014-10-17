@@ -10,20 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Invitation
 {
-    /** @ORM\Id @ORM\Column(type="string", length=8) */
+    /**
+     * @ORM\Id @ORM\Column(type="string", length=8)
+     */
     protected $code;
 
-    /** @ORM\Column(type="string", length=256) */
-    protected $email;
-
     /**
-     * When sending invitation be sure to set this value to `true`
-     *
-     * It can prevent invitations from being sent twice
-     *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=250, unique=true)
      */
-    protected $sent = false;
+    protected $email;
 
     /** 
      * @ORM\OneToOne(targetEntity="User", mappedBy="invitation", cascade={"persist", "merge"})
@@ -49,16 +44,6 @@ class Invitation
     public function setEmail($email)
     {
         $this->email = $email;
-    }
-
-    public function isSent()
-    {
-        return $this->sent;
-    }
-
-    public function send()
-    {
-        $this->sent = true;
     }
 
     public function getUser()

@@ -1,0 +1,42 @@
+{% extends 'InouireMininetBundle:Default:base.html.twig' %}
+
+{% block title %} invitations{% endblock %}
+
+{% block body %}
+        
+    <center><h2 class="admin">Invitations</h2></center>
+    
+    <br>
+        
+    {{ form_start(form, {'attr' :{'class': 'form-search', 'style':'text-align:center'} }) }}
+    <!--<form class="form-search" style="text-align:center" method="POST">-->
+        {{ form_widget(form.email, {'attr': {'class':'input-big search-query','style':'font-size:1.3em'} }) }}
+        {{ form_widget(form.send, {'attr': {'class':'btn btn-primary'} }) }}
+        <!--<input class="btn btn-inverse" type="submit" value="{{ 'registration.submit'|trans }}" />-->
+    {{ form_end(form) }}
+    
+    
+    <br>
+    
+    <center>
+        <table class="table table-striped" style="max-width:700px">
+            <thead>
+                <tr>
+                    <td>Email</td>
+                    <td>Nom</td>
+                    <td>Statut</td>
+                </tr>
+            </thead>
+        {% for invitation in invitations %}
+            <tr class="{%if invitation.status == 'registered'%}success{%else%}warning{%endif%}">
+                <td>{{invitation.email}}</td>
+                <td>{%if invitation.username is defined %}{{invitation.username}}{%endif%}</td>
+                <td><span class="label {%if invitation.status == 'registered'%}label-success{%endif%}">{%if invitation.status == 'registered'%}Incrit{%else%}Invité{%endif%}</span></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </center>
+    
+    {% include 'InouireMininetBundle:Default:blankBlock.html.twig' %}
+
+{% endblock %}
