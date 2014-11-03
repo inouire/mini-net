@@ -79,7 +79,7 @@ class Thumbnailer
         
         // Perform check on each database entry
         foreach($all_images as $image){
-            if(!file_exists($image->getThumbnailAbsolutePath())){
+            if(!file_exists($this->locator->getImageThumbnailAbsolutePath($image))){
                 try{
                     $this->generateThumbnailFromImage($image);
                     echo 'o';
