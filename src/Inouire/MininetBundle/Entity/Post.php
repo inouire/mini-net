@@ -296,7 +296,6 @@ class Post{
         //remove opening braces (security)
         $content = str_replace('<','',$content);
                 
-        
         //replace hyperlinks (but doesn't check link validity at all)
         $hyperlink_pattern = '/((http|https):\/\/[^\s]+)/i';
         $hyperlink = '<a href="$1">$1</a>';
@@ -306,6 +305,17 @@ class Post{
         $content = str_replace("\n","<br>",$content);
         
         return $content;
+    }
+    
+    public function getContentPreview(){
+        $max_width = 80;
+        if (strlen($this->content) > $max_width) {
+            $preview = wordwrap($this->content, $max_width);
+            $preview = substr($preview, 0, strpos($preview, "\n")).' [...]';
+        }else{
+            $preview = $this->content;
+        }
+       return $preview;
     }
     
     /**

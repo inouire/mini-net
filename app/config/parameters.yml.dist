@@ -18,3 +18,8 @@ parameters:
     
     images_path: '%kernel.root_dir%/../web/img'
     videos_path: '%kernel.root_dir%/../web/vid'
+
+    router.request_context.host: your.mininet.url.here
+    router.request_context.scheme: http
+    router.request_context.base_url: ~
+    

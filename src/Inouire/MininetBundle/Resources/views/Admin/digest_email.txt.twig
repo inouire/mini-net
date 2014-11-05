@@ -1,0 +1,24 @@
+
+Voici la liste des contributions de la semaine sur votre mini-net:
+{% for post in post_list %}
+    {% set age = post.ageInDays %}
+    {% if age == 0 %}
+        {% set niceDate = "Aujourd'hui" %}
+    {% elseif age == 1%}
+        {% set niceDate = 'Hier' %}
+    {% elseif age == 2 %}
+        {% set niceDate = 'Avant-hier' %}
+    {% elseif age <=7 %}
+        {% set niceDate = (post.date | localeDate('medium','none',null,'EEEE'))~' dernier' %}
+    {% else %}
+        {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
+    {% endif %}
+
+{{niceDate}}, de {{post.author.username}}:
+        {{ post.contentPreview }} {% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}
+        
+        {% if post.hasImages %}+ {{post.images |length }} photos {% endif %}
+        {% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}
+{% endfor %}
+
+Tout le contenu et les photos sur {{ url('home') }}
