@@ -72,10 +72,11 @@
                         <i class="icon-user icon-white hidden-phone" id="user-logout-icon"></i> {{ app.user.username }}
                         <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ path('select_post_for_sharelink')}}">Partager des fichiers</a></li>
-                        <li><a href="{{ path('fos_user_profile_edit') }}">Profil</a></li>
-                        <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                    <ul class="dropdown-menu" style="text-align:right">
+                        <li><a href="{{ path('select_post_for_sharelink')}}">Partager des fichiers <i class="icon-share"></i></a></li> 
+                        {% if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('admin_invitations')}}">Inviter des membres <i class="icon-plus"></i></a></li>{% endif %}
+                        <li><a href="{{ path('fos_user_profile_edit') }}">Modifier mon profil <i class="icon-user"></i></a></li> 
+                        <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter <i class="icon-off"></i></a></li>
                     </ul>
                 </div>
                 
