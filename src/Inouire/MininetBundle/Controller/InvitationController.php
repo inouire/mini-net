@@ -70,14 +70,15 @@ class InvitationController extends Controller
         $invitation = new Invitation();
         $form = $this->createSendInvitationForm($invitation);
         
-        // check that the invitation has not already been created for this email
-        // TODO
         
-        // use posted form data to create invitation
+        // create invitation if it has not already been created for this email
         $form->handleRequest($this->getRequest());
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($invitation);
-            $em->flush();
+            $existing_invite = $em->getRepository('InouireUserBundle:Invitation')->findOneByEmail($invitation->getEmail());
+            if (!$existing_invite) {
+                $em->persist($invitation);
+                $em->flush();
+            }
         }
         
         // send invitation by email to the specified email
