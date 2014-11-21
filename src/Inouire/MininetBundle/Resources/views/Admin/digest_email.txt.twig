@@ -16,7 +16,6 @@ Voici la liste des contributions de la semaine sur votre mini-net:
 
 {{niceDate}}, de {{post.author.username}}:
         {{ post.contentPreview }} {% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}
-        
         {% if post.hasImages %}+ {{post.images |length }} photos {% endif %}
         {% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}
 {% endfor %}

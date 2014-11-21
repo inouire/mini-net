@@ -52,8 +52,8 @@ class DigestSendCommand extends ContainerAwareCommand
                     ->setSubject($subject)
                     ->setFrom('admin@inouire.net')
                     ->setTo($user->getEmail())
-                    ->setBody($html_content, 'text/html')
-                    ->addPart($raw_content, 'text/plain');
+                    ->setBody($raw_content)
+                    ->addPart($html_content, 'text/html');
             $this->getContainer()->get('mailer')->send($message);
         }
         

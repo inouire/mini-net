@@ -14,11 +14,12 @@
         {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
     {% endif %}
 
-{{niceDate}}, de {{post.author.username}}:
-        {{ post.contentPreview }} {% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}
-        
-        {% if post.hasImages %}+ {{post.images |length }} photos {% endif %}
-        {% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}
+    <p>
+        {{niceDate}}, de {{post.author.username}}:<br>
+        {{ post.contentPreview }} {% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}<br>
+        {% if post.hasImages %}+ {{post.images |length }} photos {% endif %}<br>
+        {% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}<br>
+    </p>
 {% endfor %}
 
 Tout le contenu et les photos sur <a href="{{ url('home') }}">{{ url('home') }}</a>

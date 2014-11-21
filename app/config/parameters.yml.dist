@@ -10,11 +10,11 @@ parameters:
     mailer_host:       localhost
     mailer_user:       ~
     mailer_password:   ~
-    mailer_sender_email: myadmin@mymininet
-    mailer_sender_name:  Admin mini-net
+    mailer_sender_email: admin@your.mininet.domain
+    mailer_sender_name:  Administrateur mini-net
 
-    locale:            en
-    secret:            eovnr9ger642ifbe
+    locale: en
+    secret: changeThisSecret
     
     images_path: '%kernel.root_dir%/../web/img'
     videos_path: '%kernel.root_dir%/../web/vid'
