@@ -9,7 +9,7 @@
     </h1>
     
     {% if error %}
-        <div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     <form role="form" action="{{ path("fos_user_security_check") }}" method="post" >
