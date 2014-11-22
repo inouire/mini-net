@@ -11,7 +11,7 @@ class DigestSendCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('digest:send')
+            ->setName('mininet:digest:send')
             ->setDescription('Send a digest of what has been posted during the last 7 days to the users that did not connect recently');
     }
 

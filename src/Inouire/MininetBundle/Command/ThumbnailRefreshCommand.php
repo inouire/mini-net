@@ -11,7 +11,7 @@ class ThumbnailRefreshCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('thumbs:refresh')
+            ->setName('mininet:thumbs:refresh')
             ->setDescription('Refresh thumbnail directory (create the missing needed, delete unused)');
     }
 
