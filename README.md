@@ -5,8 +5,6 @@ Mini-net is a very tiny social network, shaped for family.
 
 It is based on the PHP framework Symfony2, and is also using [Bootstrap](http://twitter.github.com/bootstrap/), [jQuery](http://jquery.com/) and [Fancybox](http://fancyapps.com/fancybox/).
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ec22e0aa-cc43-4ab2-9222-5bdcdbedb7cb/big.png)](https://insight.sensiolabs.com/projects/ec22e0aa-cc43-4ab2-9222-5bdcdbedb7cb)
-
 ## Requirements
 
 * Web server with PHP >= 5.4
@@ -14,7 +12,7 @@ It is based on the PHP framework Symfony2, and is also using [Bootstrap](http://
 
 ## Installation (for Debian 7 + Apache 2)
 
-This guide is made for Debian6 with an Apache web server and a MySQL database, feel free to adapt it to your own configuration.
+This guide is made for Debian 7 (Wheezy) with an Apache 2 web server and a MySQL database, feel free to adapt it to your own configuration.
 
 ### Set up web server / database / tools
 
@@ -41,16 +39,16 @@ Clone mini-get git repository from github
 git clone https://github.com/inouire/mini-net.git
 ```
 
-Copy `app/config/parameters.yml.default` to `app/config/parameters.yml`
+Copy default config file to `app/config/parameters.yml`
 ``` bash
-cp app/config/parameters.yml.default app/config/parameters.yml
+cp app/config/parameters.yml.dist app/config/parameters.yml
 ```
 
-Edit `app/config/parameters.yml` with your database and locale settings
+Edit `app/config/parameters.yml` with your settings
 
 Retrieve project dependencies with composer
 ``` bash
-composer install --no-dev
+composer install --no-dev --prefer-dist
 ```
 
 ### Configure apache2 virtual host
