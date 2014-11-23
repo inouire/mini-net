@@ -53,7 +53,7 @@ class InvitationController extends Controller
         // list all invites and show them that are not in the previous list
         foreach($invitations as $invitation){
             if( ! in_array($invitation->getCode(), $used_codes)){
-                $list[] = array('email'=>$invitation->getEmail(),'status'=>'invited');
+                $list[] = array('email'=>$invitation->getEmail(),'status'=>'invited','code'=>$invitation->getCode());
             }
         }
         return $list;
