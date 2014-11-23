@@ -2,8 +2,13 @@
 
 {% block email_content %}
 
-    <td width="200" valign="top"><h3>Voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
-    
+    <table cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+            <td width="200" valign="top"><h3>Voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
+        </tr>
+    </table>
+        
+    <table cellpadding="0" cellspacing="0" border="0" align="center">
     {% for post in post_list %}
         {% set age = post.ageInDays %}
         {% if age == 0 %}
@@ -17,15 +22,22 @@
         {% else %}
             {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
         {% endif %}
-        <td width="200" valign="top">
-            {{niceDate}}, de {{post.author.username}}:<br>
-            {{ post.contentPreview }} {% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}<br>
-            {% if post.hasImages %}+ {{post.images |length }} photos {% endif %}<br>
-            {% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}<br>
-        </td>
+        <tr>
+            <td width="100" valign="top">{{niceDate}}, de {{post.author.username}}:</td>
+            <td width="200" valign="top">{{ post.contentPreview }}</td>
+            <td width="100" valign="top">{% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}</td>
+            <td width="75" valign="top">{% if post.hasImages %}+ {{post.images |length }} photos {% endif %}</td>
+            <td width="75" valign="top">{% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}</td>
+        </tr>
     {% endfor %}
-    <td width="200" valign="top">Tout le contenu et les photos sur <a href="{{ url('home') }}">{{ url('home') }}</a></td>
-
+    </table>
+    
+    <table cellpadding="0" cellspacing="0" border="0" align="center">
+        <tr>
+            <td width="200" valign="top">Tout le contenu et les photos sur <a href="{{ url('home') }}">{{ url('home') }}</a></td>
+        </tr>
+    </table>
+    
 {% endblock %}
 
 
