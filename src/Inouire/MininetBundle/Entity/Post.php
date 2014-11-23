@@ -316,10 +316,12 @@ class Post{
     
     public function getContentPreview(){
         $max_width = 120;
-        if (strlen($this->content) > $max_width) {
-            $preview = wordwrap($this->content, $max_width).' [...]';
+        $content_without_return = trim(preg_replace('/\s+/', ' ', $this->content));
+        if (strlen($content_without_return) > $max_width) {
+            $preview = wordwrap($content_without_return, $max_width);
+            $preview = substr($preview, 0, strpos($preview, "\n")).' [...]';
         }else{
-            $preview = $this->content;
+            $preview = $content_without_return;
         }
        return $preview;
     }
