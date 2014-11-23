@@ -29,6 +29,12 @@ class DigestSendCommand extends ContainerAwareCommand
         // get weekly posts, and build weekly digest from them
         $posts = $em->getRepository('InouireMininetBundle:Post')->getPostsSince($last_week);
         $output->writeln('<comment>'.count($posts).'</comment><info> news have been posted last week</info>');
+        
+        if(count($posts) == 0){
+            $output->writeln('<error>Nothing to send</error>');
+            return;
+        }
+        
         $subject = "Que s'est il passé sur mini-net cette semaine ?";
         $html_content = $twig->render(
             'InouireMininetBundle:Email:digest_email.html.twig',
