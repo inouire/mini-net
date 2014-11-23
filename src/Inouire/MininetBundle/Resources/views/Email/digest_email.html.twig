@@ -4,7 +4,7 @@
 
     <table cellpadding="0" cellspacing="0" border="0" align="center">
         <tr>
-            <td width="900" valign="top"><h3>Bonjour, voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
+            <td width="900" valign="top"><h3>Voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
         </tr>
     </table>
     <br>
@@ -23,7 +23,7 @@
             {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
         {% endif %}
         <tr>
-            <td width="250" valign="top">{{niceDate}}, de {{post.author.username}}:</td>
+            <td width="250" valign="top">{{niceDate}}, de <b>{{post.author.username}}</b>:</td>
             <td width="300" valign="top">{{ post.contentPreview }}</td>
             <td width="250" valign="top">
                 {% if post.hasComments %}+ {{post.comments |length }} commentaires{% endif %}
@@ -32,7 +32,7 @@
             </td>
             <td width="100" valign="top"><a href="{{ url('view_post',{'id': post.id }) }}">Lire</a></td>
         </tr>
-        <tr><hr></tr>
+        <tr><td colspan="4"><hr></td></tr>
     {% endfor %}
     </table>
     <br>
