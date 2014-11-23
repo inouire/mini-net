@@ -78,6 +78,8 @@ class InvitationController extends Controller
             if (!$existing_invite) {
                 $em->persist($invitation);
                 $em->flush();
+            }else{
+                $invitation = $existing_invite;
             }
         }
         
