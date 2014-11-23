@@ -4,7 +4,7 @@
 
     <table cellpadding="0" cellspacing="0" border="0" align="center">
         <tr>
-            <td width="200" valign="top"><h3>Voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
+            <td width="800" valign="top"><h3>Voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
         </tr>
     </table>
         
@@ -23,18 +23,20 @@
             {% set niceDate = post.date | localeDate('medium','none',null,'EEEE d MMMM') %}
         {% endif %}
         <tr>
-            <td width="100" valign="top">{{niceDate}}, de {{post.author.username}}:</td>
-            <td width="200" valign="top">{{ post.contentPreview }}</td>
-            <td width="100" valign="top">{% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}</td>
-            <td width="75" valign="top">{% if post.hasImages %}+ {{post.images |length }} photos {% endif %}</td>
-            <td width="75" valign="top">{% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}</td>
+            <td width="250" valign="top">{{niceDate}}, de {{post.author.username}}:</td>
+            <td width="300" valign="top">{{ post.contentPreview }}</td>
+            <td width="250" valign="top">
+                {% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}
+                {% if post.hasImages %}+ {{post.images |length }} photos {% endif %}
+                {% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}
+            </td>
         </tr>
     {% endfor %}
     </table>
     
     <table cellpadding="0" cellspacing="0" border="0" align="center">
         <tr>
-            <td width="200" valign="top">Tout le contenu et les photos sur <a href="{{ url('home') }}">{{ url('home') }}</a></td>
+            <td width="800" valign="top">Tout le contenu et les photos sur <a href="{{ url('home') }}">{{ url('home') }}</a></td>
         </tr>
     </table>
     
