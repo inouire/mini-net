@@ -268,6 +268,13 @@ class Post{
     }
     
     /**
+     * Check if the post has one or more comments
+     */
+    public function getHasComments(){
+         return count($this->comments) > 0;
+    }
+    
+    /**
      * Set published
      *
      * @param boolean $published
@@ -308,10 +315,9 @@ class Post{
     }
     
     public function getContentPreview(){
-        $max_width = 80;
+        $max_width = 120;
         if (strlen($this->content) > $max_width) {
-            $preview = wordwrap($this->content, $max_width);
-            $preview = substr($preview, 0, strpos($preview, "\n")).' [...]';
+            $preview = wordwrap($this->content, $max_width).' [...]';
         }else{
             $preview = $this->content;
         }

@@ -4,10 +4,10 @@
 
     <table cellpadding="0" cellspacing="0" border="0" align="center">
         <tr>
-            <td width="800" valign="top"><h3>Voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
+            <td width="800" valign="top"><h3>Bonjour, voici la liste des contributions de la semaine sur votre mini-net:<h3></td>
         </tr>
     </table>
-        
+    <br>
     <table cellpadding="0" cellspacing="0" border="0" align="center">
     {% for post in post_list %}
         {% set age = post.ageInDays %}
@@ -26,17 +26,19 @@
             <td width="250" valign="top">{{niceDate}}, de {{post.author.username}}:</td>
             <td width="300" valign="top">{{ post.contentPreview }}</td>
             <td width="250" valign="top">
-                {% if post.comments | length > 0 %}({{post.comments |length }} commentaires){% endif %}
-                {% if post.hasImages %}+ {{post.images |length }} photos {% endif %}
-                {% if post.hasVideos %}+ {{post.videos |length }} vidéos {% endif %}
+                {% if post.hasComments %}+ {{post.comments |length }} commentaires{% endif %}
+                {% if post.hasImages   %}+ {{post.images |length }} photos {% endif %}
+                {% if post.hasVideos   %}+ {{post.videos |length }} vidéos {% endif %}
             </td>
+            <td width="250" valign="top"><a href="{{ url('view_post',{'id': post.id }) }}">Lire</a></td>
         </tr>
+        <tr><td><hr></td></tr>
     {% endfor %}
     </table>
-    
+    <br>
     <table cellpadding="0" cellspacing="0" border="0" align="center">
         <tr>
-            <td width="800" valign="top">Tout le contenu et les photos sur <a href="{{ url('home') }}">{{ url('home') }}</a></td>
+            <td width="800" valign="top">Tout le contenu sur <a href="{{ url('home') }}">{{ url('home') }}</a></td>
         </tr>
     </table>
     
