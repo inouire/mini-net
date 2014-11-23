@@ -29,16 +29,15 @@ class DigestSendCommand extends ContainerAwareCommand
         // get weekly posts, and build weekly digest from them
         $posts = $em->getRepository('InouireMininetBundle:Post')->getPostsSince($last_week);
         $output->writeln('<comment>'.count($posts).'</comment><info> news have been posted last week</info>');
-        $subject = "Que s'est il passé sur le mini-net cette semaine ?";
+        $subject = "Que s'est il passé sur mini-net cette semaine ?";
         $html_content = $twig->render(
-            'InouireMininetBundle:Admin:digest_email.html.twig',
+            'InouireMininetBundle:Email:digest_email.html.twig',
             array('post_list' => $posts)
         );
         $raw_content = $twig->render(
             'InouireMininetBundle:Admin:digest_email.txt.twig',
             array('post_list' => $posts)
         );
-        print($html_content);
 
         // retrieve list of users for which last connection >= 7 days
         $users = $em->getRepository('InouireUserBundle:User')->getUsersNotConnectedSince($last_week);
