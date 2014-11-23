@@ -44,9 +44,11 @@
         
     {% endif %}
        
+    {% if post_list | length >= 8 %}
     <div class="row" style="text-align:center">
         <a class="btn btn-inverse" href="{{ path('home', {'more':current_bonus+1}) }}#more"><i class="icon-chevron-down icon-white"></i> Voir des nouvelles plus anciennes</a>
     </div>
+    {% endif %}
         
         
 {% endblock %}

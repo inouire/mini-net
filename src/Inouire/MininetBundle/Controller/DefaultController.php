@@ -32,7 +32,7 @@ class DefaultController extends Controller
             $secondary_nb = 0;
         }
 
-        //retrieve the posts for the main par (last 8 published posts by default)
+        //retrieve the posts for the main part (last 8 published posts by default)
         $em = $this->getDoctrine()->getManager();
         $post_repo = $em->getRepository('InouireMininetBundle:Post');
         $post_list = $post_repo->findBy(
