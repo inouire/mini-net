@@ -41,10 +41,10 @@ class DigestSendCommand extends ContainerAwareCommand
             array('post_list' => $posts)
         );
         $raw_content = $twig->render(
-            'InouireMininetBundle:Admin:digest_email.txt.twig',
+            'InouireMininetBundle:Email:digest_email.txt.twig',
             array('post_list' => $posts)
         );
-
+        
         // retrieve list of users for which last connection >= 7 days
         $users = $em->getRepository('InouireUserBundle:User')->getUsersNotConnectedSince($last_week);
         $output->writeln('<comment>'.count($users).'</comment><info> users did not connect since last week</info>');
