@@ -19,9 +19,21 @@ monolog:
     handlers:
         main:
             type: fingers_crossed
-            action_level: error
-            handler: nested
-        nested:
+            action_level: critical
+            handler: grouped
+        grouped:
+            type: group
+            members: [streamed, buffered]
+        streamed:
             type: stream
-            path: %kernel.logs_dir%/%kernel.environment%.log
-            level: debug
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: info
+        buffered:
+            type:    buffer
+            handler: swift
+        swift:
+            type:       swift_mailer
+            from_email: %mailer_sender_email%
+            to_email:   %mininet_admin_email%
+            subject:    "An error occured on the mininet of %mininet_name%"
+            level:      debug

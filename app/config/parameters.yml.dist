@@ -1,4 +1,12 @@
 parameters:
+    # instance settings
+    mininet_name: 'Famille machin'
+    mininet_admin_email: admin@perso.com
+    router.request_context.host: your.mininet.url.here
+    router.request_context.scheme: http
+    router.request_context.base_url: ~
+    
+    # database settings
     database_driver:   pdo_mysql
     database_host:     localhost
     database_port:     ~
@@ -6,20 +14,18 @@ parameters:
     database_user:     admin
     database_password: password
 
+    # path
+    images_path: '%kernel.root_dir%/../web/img'
+    videos_path: '%kernel.root_dir%/../web/vid'
+    
+    # email settings
     mailer_transport:  smtp
     mailer_host:       localhost
     mailer_user:       ~
     mailer_password:   ~
     mailer_sender_email: admin@your.mininet.domain
-    mailer_sender_name:  Administrateur mini-net
+    mailer_sender_name:  'Administrateur mini-net'
 
     locale: en
     secret: changeThisSecret
-    
-    images_path: '%kernel.root_dir%/../web/img'
-    videos_path: '%kernel.root_dir%/../web/vid'
-
-    router.request_context.host: your.mininet.url.here
-    router.request_context.scheme: http
-    router.request_context.base_url: ~
     
