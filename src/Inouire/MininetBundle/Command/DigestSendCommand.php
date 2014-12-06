@@ -55,8 +55,8 @@ class DigestSendCommand extends ContainerAwareCommand
             $output->writeln('    <info>Sending email to</info> <comment>'.$user->getUsername().' ('.$user->getEmail().')</comment>');
             $message = \Swift_Message::newInstance()
                     ->setSubject($subject)
-                    ->setFrom('admin@inouire.net')
-                    ->setTo($user->getEmail())
+                    ->setFrom(array('admin@inouire.net' => 'Mini-net'))
+                    ->setTo(array($user->getEmail() => $user->getName()))
                     ->setBody($raw_content)
                     ->addPart($html_content, 'text/html');
             $this->getContainer()->get('mailer')->send($message);
